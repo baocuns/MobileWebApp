@@ -1,14 +1,19 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Home from './Home';
 import Map from './Map';
 
-function Feed() {
+function Feed({ navigation }) {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>Feed 123456</Text>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('Map')}
+                style={{ borderWidth: 1, padding: 20 }}>
+                <Text>Map</Text>
+            </TouchableOpacity>
         </View>
     );
 }
