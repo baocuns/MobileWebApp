@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Home from './Home';
+import Map from './Map';
 
 function Feed() {
     return (
@@ -65,10 +66,10 @@ function Index() {
                 }}
             />
             <Tab.Screen
-                name="Feed1"
-                component={Feed1}
+                name="Map"
+                component={Map}
                 options={{
-                    tabBarLabel: 'Travel',
+                    tabBarLabel: 'Map',
                     tabBarIcon: ({ color, size }) => (
                         <Icon name="compass" size={30} color={color} />
                     ),
