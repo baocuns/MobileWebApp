@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import Geolocation from '@react-native-community/geolocation';
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+
 
 
 const Map = () => {
@@ -33,12 +36,6 @@ const Map = () => {
             <MapView
                 provider={PROVIDER_GOOGLE} // remove if not using Google Maps
                 style={styles.map}
-                // region={{
-                //     latitude: 37.78825,
-                //     longitude: -122.4324,
-                //     latitudeDelta: 0.015,
-                //     longitudeDelta: 0.0121,
-                // }}
                 initialRegion={position}
                 showsUserLocation={true}
                 showsMyLocationButton={true}
@@ -50,7 +47,6 @@ const Map = () => {
                 rotateEnabled={true}
             >
                 <Marker
-                    // image={require('../images/icons8-where-96.png')}
                     title='Yor are here'
                     description='This is a description'
                     coordinate={position2} />
@@ -62,8 +58,8 @@ const Map = () => {
 const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
-        height: 700,
-        width: 400,
+        height: screenHeight,
+        width: screenWidth,
         justifyContent: 'flex-end',
         alignItems: 'center',
     },
