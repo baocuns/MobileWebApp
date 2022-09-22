@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Home from './Home';
 
 function Feed() {
     return (
@@ -74,8 +75,8 @@ function Index() {
                 }}
             />
             <Tab.Screen
-                name="Feed2"
-                component={Feed2}
+                name="Home"
+                component={Home}
                 options={{
                     tabBarLabel: 'Home',
                     tabBarIcon: ({ color, size }) => (
