@@ -12,7 +12,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Index" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Home" component={Index} />
+        <Stack.Screen name="Index" component={Index} />
       </Stack.Navigator>
     </NavigationContainer>
   );

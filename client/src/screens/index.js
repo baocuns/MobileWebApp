@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 function Feed() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Feed</Text>
+            <Text>Feed 123456</Text>
         </View>
     );
 }
