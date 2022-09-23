@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Home from './Home';
 import Map from './Map';
+import Mail from './Mail';
 
 function Feed({ navigation }) {
     return (
@@ -61,8 +62,8 @@ function Index() {
             }}
         >
             <Tab.Screen
-                name="Feed"
-                component={Feed}
+                name="Mail"
+                component={Mail}
                 options={{
                     tabBarLabel: 'Mail',
                     tabBarIcon: ({ color, size }) => (

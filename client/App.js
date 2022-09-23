@@ -7,6 +7,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Index from './src/screens';
 import { enableLatestRenderer } from 'react-native-maps';
 import 'react-native-gesture-handler';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 enableLatestRenderer();
 
