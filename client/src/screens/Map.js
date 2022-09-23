@@ -84,7 +84,7 @@ const Map = () => {
 const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
-        height: screenHeight,
+        height: screenHeight - 40,
         width: screenWidth,
         justifyContent: 'flex-end',
         alignItems: 'center',
