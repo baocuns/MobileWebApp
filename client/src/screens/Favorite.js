@@ -26,7 +26,7 @@ const Favorite = () => {
         <TabBar
             {...props}
             indicatorStyle={{ backgroundColor: '#ff4500' }}
-            style={{ backgroundColor: 'transparent', color: '#000' }}
+            style={{ backgroundColor: '#F5F5F5', color: '#000' }}
             renderLabel={({ route, focused, color }) => (
                 <Text style={{ color: focused ? 'red' : '#000', margin: 8 }}>
                     {route.title}
@@ -36,7 +36,7 @@ const Favorite = () => {
         />
     );
     return (
-        <SafeAreaView style={{ flex: 1, margin: 10 }}>
+        <ImageBackground style={{ flex: 1, margin: 10, backgroundColor: '#F5F5F5' }}>
             <View style={{ height: '8%' }}>
                 <Text style={{ color: '#000', fontSize: 26, fontWeight: '600' }}>Yêu thích</Text>
             </View>
@@ -74,7 +74,7 @@ const Favorite = () => {
             {/* If Favorite List is exist */}
             {/* Xem gần đây */}
 
-        </SafeAreaView>
+        </ImageBackground>
     );
 }
 
