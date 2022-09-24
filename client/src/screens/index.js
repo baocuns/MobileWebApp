@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Home from './Home';
 import Map from './Map';
+import Blog from './Blog'
 
 function Feed({ navigation }) {
     return (
@@ -36,14 +37,6 @@ function Profile() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>Profile!</Text>
-        </View>
-    );
-}
-
-function Notifications() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Notifications!</Text>
         </View>
     );
 }
@@ -91,8 +84,8 @@ function Index() {
                 }}
             />
             <Tab.Screen
-                name="Notifications"
-                component={Notifications}
+                name="Blog"
+                component={Blog}
                 options={{
                     tabBarLabel: 'Blog',
                     tabBarIcon: ({ color, size }) => (
