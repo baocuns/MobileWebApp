@@ -127,7 +127,7 @@ const Home = ({ navigation }) => {
                         </ScrollView>
                     </View>
                     {/* 3 Miền */}
-                    {/* <Text style={styles.titlePlace}>Miền Bắc</Text> */}
+                    <Text style={styles.titlePlace}>Miền Bắc</Text>
                     <ScrollView
                         horizontal
                         contentContainerStyle={{ width: '200%', height: '100%' }}
