@@ -23,13 +23,18 @@ const User = {
     image: require('../assets/images/slider/2.jpg')
 }
 
+
 const Blog = () => {
     const [imagelist, setImagelist] = useState([])
     const [status, setStatus] = useState([])
     const [modalVisible, setModalVisible] = useState(false)
+    const [countLike, setCountLike] = useState(0)
+    const [countComment, setCountComment] = useState(0)
+    const [countShare, setCountShare] = useState(0)
 
+    // load start
     useEffect(() => {
-        // 1.Load data from server
+        // list data
         const data = [
             {
                 image: <View style={{ position: 'relative' }}><Image style={styles.imageSlideContainer} key={'1'} source={require('../assets/images/slider/1.jpg')} resizeMode='cover'></Image><Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff' }}>Cuns</Text></View>,
@@ -109,44 +114,69 @@ const Blog = () => {
                 time: '10/10/2022',
                 address: 'Đà Nẵng',
                 content: 'Đẹp trai nhất thế giới',
-                image: require('../assets/images/slider/1.jpg')
+                image: require('../assets/images/slider/1.jpg'),
+                like: 1345,
+                comment: 35,
+                comment_data: 'ID_Comment_Data',
+                share: 8
             }, {
                 id: 2,
                 user: User,
                 time: '10/10/2022',
                 address: 'Đà Nẵng',
-                content: 'VIẾT CHO ĐÀN ÔNG CHƯA "KHÁ" (Cảnh báo: bài viết hơi phũ, nhưng thực tế) Thử làm một bài toán chi tiêu mà ',
-                image: require('../assets/images/slider/2.jpg')
+                content: 'Đẹp trai nhất thế giới',
+                image: require('../assets/images/slider/1.jpg'),
+                like: 1345,
+                comment: 35,
+                comment_data: 'ID_Comment_Data',
+                share: 8
             }, {
                 id: 3,
                 user: User,
                 time: '10/10/2022',
                 address: 'Đà Nẵng',
-                content: 'VIẾT CHO ĐÀN ÔNG CHƯA "KHÁ" (Cảnh báo: bài viết hơi phũ, nhưng thực tế) Thử làm một bài toán chi tiêu mà hầu hết đàn ông đều phải trải qua mỗi ngày: 1: Ăn sáng (cà phê, thuốc lá): 30k/ngày * 30 ngày = 900k',
-                image: require('../assets/images/slider/3.jpg')
+                content: 'Đẹp trai nhất thế giới',
+                image: require('../assets/images/slider/1.jpg'),
+                like: 1345,
+                comment: 35,
+                comment_data: 'ID_Comment_Data',
+                share: 8
             }, {
                 id: 4,
                 user: User,
                 time: '10/10/2022',
                 address: 'Đà Nẵng',
-                content: 'VIẾT CHO ĐÀN ÔNG CHƯA "KHÁ" (Cảnh báo: bài viết hơi phũ, nhưng thực tế) Thử làm một bài toán chi tiêu mà hầu hết đàn ông đều phải trải qua mỗi ngày: 1: Ăn sáng (cà phê, thuốc lá): 30k/ngày * 30 ngày = 900k',
-                image: require('../assets/images/slider/4.jpg')
+                content: 'Đẹp trai nhất thế giới',
+                image: require('../assets/images/slider/1.jpg'),
+                like: 1345,
+                comment: 35,
+                comment_data: 'ID_Comment_Data',
+                share: 8
             }, {
                 id: 5,
                 user: User,
                 time: '10/10/2022',
                 address: 'Đà Nẵng',
                 content: 'Đẹp trai nhất thế giới',
-                image: require('../assets/images/slider/5.jpg')
+                image: require('../assets/images/slider/1.jpg'),
+                like: 1345,
+                comment: 35,
+                comment_data: 'ID_Comment_Data',
+                share: 8
             },
         ]
-        // 2.Cap nhat data
         setImagelist(data)
         setStatus(state)
     }, []);
+
+    const handleLike = (id) => {
+        // setStatus(status.find(item => item.id === id).like++)
+        console.log(id);
+    }
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ScrollView contentContainerStyle={{ width: '100%' }}>
+            <ScrollView>
                 {/* modal comment */}
                 <View>
                     <Modal
@@ -163,7 +193,7 @@ const Blog = () => {
                                 position: 'absolute',
                                 top: -50,
                                 left: 0,
-                                height: '40%',
+                                height: '30%',
                                 width: '100%'
                             }}
                                 onPress={() => setModalVisible(!modalVisible)}
@@ -171,32 +201,118 @@ const Blog = () => {
                             {/* List comment */}
                             <View style={styles.modalViewComment}>
                                 <View style={{
-                                    alignItems: 'center'
+                                    marginBottom: 20
                                 }}>
-                                    <Text>Comment</Text>
+                                    <Text>Bình luận</Text>
                                 </View>
-                                <View style={{
-                                    width: '100%',
-                                    flexDirection: 'row'
-                                }}>
-                                    <View style={{
-                                        height: 45,
-                                        width: 45,
-                                        backgroundColor: '#333',
-                                        borderRadius: 50
-                                    }}></View>
-                                    <View style={{
-                                        marginStart: 10
-                                    }}>
-                                        <Text>Nguyễn Văn Bảo</Text>
-                                        <Text>Đẹp trai nhất thế giới, hehe :)</Text>
-                                        <View style={{
-                                            flexDirection: 'row'
-                                        }}>
-                                            <Text>5 giờ trước</Text>
+                                <ScrollView>
+                                    {imagelist.map((item, index) => (
+                                        <View key={index}>
+                                            < View style={{
+                                                flexDirection: 'row',
+                                                marginBottom: 5
+                                            }}>
+                                                <View>
+                                                    <Image style={{
+                                                        height: 40,
+                                                        width: 40,
+                                                        borderRadius: 50
+                                                    }}
+                                                        source={require('../assets/images/avatar.jpg')}
+                                                        resizeMode='cover' />
+                                                </View>
+                                                <View style={{
+                                                    marginStart: 10
+                                                }}>
+                                                    <View>
+                                                        <Text style={{
+                                                            fontWeight: 'bold'
+                                                        }}>Nguyễn Văn Bảo</Text>
+                                                        <Text>5 giờ trước</Text>
+                                                    </View>
+                                                    <View style={{
+                                                        width: '90%',
+                                                        marginTop: 5
+                                                    }}>
+                                                        <Text style={{
+                                                            textAlign: 'justify'
+                                                        }}>Both And and iOS allow you to display formatted text by annot ran of a string with specific formatting like bold or colored text (NSAttributedString on iOS, Spannab leString on Android). In practice, this is very tedious. For React Native, we decided to use web paradigm for this where you can nest text to achieve the same effect.</Text>
+                                                    </View>
+                                                    <View style={{
+                                                        width: '90%',
+                                                        flexDirection: 'row',
+                                                        justifyContent: 'flex-end'
+                                                    }}>
+                                                        <AntDesign
+                                                            name='edit'
+                                                            size={18}
+                                                            color='red'
+                                                        />
+                                                        <Text> Phản hồi</Text>
+                                                    </View>
+                                                </View>
+                                            </View>
+                                            {/* Phản hồi */}
+                                            < View style={{
+                                                flexDirection: 'row',
+                                                marginStart: 50,
+                                                marginBottom: 15
+                                            }}>
+                                                <View>
+                                                    <Image style={{
+                                                        height: 40,
+                                                        width: 40,
+                                                        borderRadius: 50
+                                                    }}
+                                                        source={require('../assets/images/avatar.jpg')}
+                                                        resizeMode='cover' />
+                                                </View>
+                                                <View style={{
+                                                    marginStart: 10
+                                                }}>
+                                                    <View>
+                                                        <View style={{
+                                                            flexDirection: 'row'
+                                                        }}>
+                                                            <Text style={{
+                                                                fontWeight: 'bold'
+                                                            }}>Bùi Duy Khánh</Text>
+                                                            <AntDesign
+                                                                name='right'
+                                                                size={18}
+                                                                color='red'
+                                                            />
+                                                            <Text style={{
+                                                                fontWeight: 'bold'
+                                                            }}>Nguyễn Văn Bảo</Text>
+                                                        </View>
+                                                        <Text>2 giờ trước</Text>
+                                                    </View>
+                                                    <View style={{
+                                                        width: '90%',
+                                                        marginTop: 5
+                                                    }}>
+                                                        <Text style={{
+                                                            textAlign: 'justify'
+                                                        }}>Both And and iOS allow you to display formatted text by annot ran of a string with specific formatting like bold or colored text</Text>
+                                                    </View>
+                                                    <View style={{
+                                                        width: '90%',
+                                                        flexDirection: 'row',
+                                                        justifyContent: 'flex-end'
+                                                    }}>
+                                                        <AntDesign
+                                                            name='edit'
+                                                            size={18}
+                                                            color='red'
+                                                        />
+                                                        <Text> Phản hồi</Text>
+                                                    </View>
+                                                </View>
+                                            </View>
                                         </View>
-                                    </View>
-                                </View>
+                                    ))}
+                                </ScrollView>
                             </View>
                         </View>
                     </Modal>
@@ -243,7 +359,7 @@ const Blog = () => {
 
                 {/* List status */}
                 {status.map((item, index) => (
-                    <View style={{ position: 'relative' }}>
+                    <View style={{ position: 'relative' }} key={index}>
                         {/* phan cach */}
                         <View style={{
                             width: '100%',
@@ -298,7 +414,6 @@ const Blog = () => {
                         {/* status image */}
                         <View>
                             <Image
-                                key={index}
                                 style={{
                                     width: '100%',
                                     height: 300,
@@ -323,17 +438,17 @@ const Blog = () => {
                                     size={20}
                                     color='red'
                                 />
-                                <Text>123</Text>
+                                <Text>{item.like}</Text>
                             </View>
                             <View style={{
                                 flexDirection: 'row'
                             }}>
-                                <Text>50 Bình luận</Text>
+                                <Text>{item.comment} Bình luận</Text>
                             </View>
                             <View style={{
                                 flexDirection: 'row'
                             }}>
-                                <Text>123 Chia sẻ</Text>
+                                <Text>{item.share} Chia sẻ</Text>
                             </View>
                         </View>
 
@@ -349,15 +464,17 @@ const Blog = () => {
                             marginEnd: 15,
                             paddingTop: 15
                         }}>
-                            <View style={{
+                            <Pressable style={{
                                 flexDirection: 'row'
-                            }}>
+                            }}
+                                onPress={() => handleLike(item.id)}
+                            >
                                 <EvilIcons
                                     name="like"
                                     size={30}
                                     color='red' />
                                 <Text>Yêu thích</Text>
-                            </View>
+                            </Pressable>
                             <Pressable style={{
                                 flexDirection: 'row'
                             }}
@@ -423,8 +540,7 @@ const styles = StyleSheet.create({
     centeredViewComment: {
         flex: 1,
         justifyContent: "flex-end",
-        alignItems: "center",
-        marginTop: 22
+        alignItems: "center"
     },
     modalViewComment: {
         backgroundColor: "white",
@@ -433,7 +549,7 @@ const styles = StyleSheet.create({
         padding: 10,
         alignItems: "center",
         width: '100%',
-        height: '60%',
+        height: '70%',
         marginBottom: 50
     },
     button: {
