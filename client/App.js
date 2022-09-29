@@ -10,6 +10,7 @@ import 'react-native-gesture-handler';
 import { LogBox } from 'react-native';
 import Favorite from './src/screens/Favorite';
 import DetailPlace from './src/screens/DetailPlace';
+import Login from './src/screens/Login';
 LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
@@ -22,10 +23,11 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="DetailPlace" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="Index" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Index" component={Index} />
         <Stack.Screen name="Favorite" component={Favorite} />
         <Stack.Screen name="DetailPlace" component={DetailPlace} />
+        <Stack.Screen name="Login" component={Login} />
       </Stack.Navigator>
     </NavigationContainer>
   );
