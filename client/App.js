@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Index from './src/screens';
-import Text1 from './src/screens';
+// import Text1 from './src/screens';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

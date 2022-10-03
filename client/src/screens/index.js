@@ -3,14 +3,9 @@ import {Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Home from './Home';
-import User from './User';
-import UserInfo from './UserInfo';
-import FavoriteService from './FavoriteService';
-import Cart from './Cart';
-import testNA from './testNA';
-import text from './text';
-import BookNow from './BookNow';
-import BookNowX from './BookNowX';
+
+
+
 
 function Feed() {
   return (
