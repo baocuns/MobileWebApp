@@ -8,7 +8,7 @@ import Blog from './Blog'
 import Mail from './Mail';
 import Users from './Users';
 import User from './User';
-// import Cart form './Cart';
+import Cart from './Cart';
 // import FavoriteService form './FavoriteService';
 
 
@@ -110,8 +110,8 @@ function Index() {
                 }}
             />
             <Tab.Screen
-                name="User"
-                component={User}
+                name="Cart"
+                component={Cart}
                 options={{
                     tabBarLabel: 'User',
                     tabBarIcon: ({ color, size }) => (
