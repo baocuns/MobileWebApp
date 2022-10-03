@@ -6,6 +6,12 @@ import Home from './Home';
 import Map from './Map';
 import Blog from './Blog'
 import Mail from './Mail';
+// import Users form './Users';
+// import User form './User';
+// import Cart form './Cart';
+// import FavoriteService form './FavoriteService';
+
+
 
 function Feed({ navigation }) {
     return (
@@ -87,6 +93,7 @@ function Index() {
                 component={Home}
                 options={{
                     tabBarLabel: 'Home',
+                    
                     tabBarIcon: ({ color, size }) => (
                         <Icon name="home" size={30} color={color} />
                     ),
