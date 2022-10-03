@@ -10,6 +10,7 @@ import Users from './Users';
 import User from './User';
 import Cart from './Cart';
 import FavoriteService from './FavoriteService';
+import BookNow from './BookNow';
 
 
 
@@ -110,8 +111,8 @@ function Index() {
                 }}
             />
             <Tab.Screen
-                name="FavoriteService"
-                component={FavoriteService}
+                name="BookNow"
+                component={BookNow}
                 options={{
                     tabBarLabel: 'User',
                     tabBarIcon: ({ color, size }) => (
