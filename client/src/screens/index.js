@@ -1,9 +1,18 @@
 import * as React from 'react';
+<<<<<<< HEAD
 import {Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+=======
+import { Text, TouchableOpacity, View } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+>>>>>>> main
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Home from './Home';
+import Map from './Map';
+import Blog from './Blog'
+import Mail from './Mail';
 
+<<<<<<< HEAD
 
 
 
@@ -13,6 +22,19 @@ function Feed() {
       <Text>Feed 123456</Text>
     </View>
   );
+=======
+function Feed({ navigation }) {
+    return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text>Feed 123456</Text>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('Map')}
+                style={{ borderWidth: 1, padding: 20 }}>
+                <Text>Map</Text>
+            </TouchableOpacity>
+        </View>
+    );
+>>>>>>> main
 }
 function Feed1() {
   return (
@@ -48,6 +70,7 @@ function Notifications() {
 const Tab = createBottomTabNavigator();
 
 function Index() {
+<<<<<<< HEAD
   return (
     <Tab.Navigator
       initialRouteName="Feed"
@@ -111,6 +134,69 @@ function Index() {
      
     </Tab.Navigator>
   );
+=======
+    return (
+        <Tab.Navigator
+            initialRouteName="Home"
+            screenOptions={{
+                tabBarActiveTintColor: '#e91e63',
+                tabBarInactiveTintColor: 'blue',
+                headerShown: false
+            }}
+        >
+            <Tab.Screen
+                name="Mail"
+                component={Mail}
+                options={{
+                    tabBarLabel: 'Mail',
+                    tabBarIcon: ({ color, size }) => (
+                        <Icon name="envelope" size={30} color={color} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Map"
+                component={Map}
+                options={{
+                    tabBarLabel: 'Map',
+                    tabBarIcon: ({ color, size }) => (
+                        <Icon name="compass" size={30} color={color} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Home"
+                component={Home}
+                options={{
+                    tabBarLabel: 'Home',
+                    tabBarIcon: ({ color, size }) => (
+                        <Icon name="home" size={30} color={color} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Blog"
+                component={Blog}
+                options={{
+                    tabBarLabel: 'Blog',
+                    tabBarIcon: ({ color, size }) => (
+                        <Icon name="book" size={30} color={color} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Profile"
+                component={Profile}
+                options={{
+                    tabBarLabel: 'User',
+                    tabBarIcon: ({ color, size }) => (
+                        <Icon name="user" size={30} color={color} />
+                    ),
+                }}
+            />
+        </Tab.Navigator>
+    );
+>>>>>>> main
 }
 
 export default Index;
