@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image, ScrollView, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, Image, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const { width } = Dimensions.get("window");
 const height = width * 0.6;//60%
+//Load Data
+const imageList = [
+    "https://source.unsplash.com/1024x768/?nature",
+    "https://source.unsplash.com/1024x768/?water",
+    "https://source.unsplash.com/1024x768/?girl",
+    "https://source.unsplash.com/1024x768/?tree",
+]
 
-const SliderImage = ({ imageList }) => {
+const SliderImage = ({ navigation }) => {
 
     const [active, setActive] = useState(0);
     const change = ({ nativeEvent }) => {
@@ -43,7 +50,9 @@ const SliderImage = ({ imageList }) => {
                     ))}
                 </View>
                 <View style={{ flexDirection: 'row', width: width, position: 'absolute', top: 10, justifyContent: 'space-between' }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons name='md-chevron-back-outline' style={{ backgroundColor: '#f5f5f5', padding: 5, borderRadius: 50, aspectRatio: 1 }} size={30} color='#888' />
+                    </TouchableOpacity>
                     <View style={{ flexDirection: 'row', width: 90, justifyContent: 'space-between' }}>
                         <Ionicons name='md-heart-sharp' style={{ backgroundColor: '#f5f5f5', padding: 5, borderRadius: 50, aspectRatio: 1 }} size={30} color='#888' />
                         <Ionicons name='md-cart-outline' style={{ backgroundColor: '#f5f5f5', padding: 5, borderRadius: 50, aspectRatio: 1 }} size={30} color='#888' />

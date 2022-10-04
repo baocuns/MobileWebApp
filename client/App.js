@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Index from './src/screens';
@@ -13,6 +12,7 @@ import DetailPlace from './src/screens/DetailPlace';
 import Login from './src/screens/Login';
 import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
+import ProvinceDetail from './src/screens/ProvinceDetail';
 LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
@@ -31,6 +31,7 @@ const App = () => {
           <Stack.Screen name="Favorite" component={Favorite} />
           <Stack.Screen name="DetailPlace" component={DetailPlace} />
           <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="ProvinceDetail" component={ProvinceDetail} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

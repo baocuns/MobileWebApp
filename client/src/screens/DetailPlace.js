@@ -7,15 +7,7 @@ import Rating from '../components/Rating';
 
 const { width, height } = Dimensions.get("window");
 
-const DetailPlace = () => {
-
-    //Load Data
-    const imageList = [
-        "https://source.unsplash.com/1024x768/?nature",
-        "https://source.unsplash.com/1024x768/?water",
-        "https://source.unsplash.com/1024x768/?girl",
-        "https://source.unsplash.com/1024x768/?tree",
-    ]
+const DetailPlace = ({navigation}) => {
 
     return (
         <SafeAreaView>
@@ -25,7 +17,7 @@ const DetailPlace = () => {
                 showsVerticalScrollIndicator={false}
                 style={{ height: height * 0.85 }}>
                 {/* Slider Image */}
-                <SliderImage imageList={imageList} />
+                <SliderImage navigation={navigation} />
                 <View style={{ margin: 10 }}>
                     <Text style={{ fontWeight: '600', color: '#000', fontSize: 26 }}>Du Thuyền Sài Gòn Với Bữa Tối Trên Tàu Saigon Princess</Text>
 

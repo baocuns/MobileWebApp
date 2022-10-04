@@ -15,7 +15,7 @@ const Home = ({ navigation }) => {
         // 1.Load data from server
         const data = [
             {
-                image: <View key={'1'} style={{ position: 'relative' }}><Image style={styles.imageSlideContainer} key={'1'} source={require('../assets/images/slider/1.jpg')} resizeMode='cover'></Image><Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff' }}>TP Hồ Chí Minh</Text></View>,
+                image: <View onTouchStart={()=> navigation.navigate('ProvinceDetail')} key={'1'} style={{ position: 'relative' }}><Image style={styles.imageSlideContainer} key={'1'} source={require('../assets/images/slider/1.jpg')} resizeMode='cover'></Image><Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff' }}>TP Hồ Chí Minh</Text></View>,
                 type: "jpg",
                 camera: "Sony"
             },
