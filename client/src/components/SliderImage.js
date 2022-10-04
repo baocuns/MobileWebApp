@@ -55,7 +55,7 @@ const SliderImage = ({ navigation }) => {
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', width: 90, justifyContent: 'space-between' }}>
                         <Ionicons name='md-heart-sharp' style={{ backgroundColor: '#f5f5f5', padding: 5, borderRadius: 50, aspectRatio: 1 }} size={30} color='#888' />
-                        <Ionicons name='md-cart-outline' style={{ backgroundColor: '#f5f5f5', padding: 5, borderRadius: 50, aspectRatio: 1 }} size={30} color='#888' />
+                        <Ionicons onPress={()=>navigation.navigate('Cart')} name='md-cart-outline' style={{ backgroundColor: '#f5f5f5', padding: 5, borderRadius: 50, aspectRatio: 1 }} size={30} color='#888' />
                     </View>
                 </View>
             </View>

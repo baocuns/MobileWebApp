@@ -64,7 +64,7 @@ const onMarkerPress = (mapEventData) => {
     _scrollView.current.scrollTo({ x: x, y: 0, animated: true });
 }
     const getMarker = async () =>{
-        console.log(initState);
+        // console.log(initState);
         
         //Lấy vị trí default
         if (isCurrentPositon) {
@@ -78,7 +78,7 @@ const onMarkerPress = (mapEventData) => {
         }
         else{
             //Trường hợp lựa chọn tỉnh
-            console.log("TH2");
+            // console.log("TH2");
             // const { info: data } = await 
             try {
                 const { data : info } = await geoSeacrch.get(`?format=json&apiKey=${API_KEY}&text=${nameSearch}`);
@@ -86,7 +86,7 @@ const onMarkerPress = (mapEventData) => {
                 // console.log(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${info.results[0].lon},${info.results[0].latitude},50000&bias=proximity:${info.results[0].lon},${position.results[0].latitude}&limit=50&apiKey=${API_KEY}`);
                 const { data : itemMarker } = await axios.get(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${info.results[0].lon},${info.results[0].lat},50000&bias=proximity:${info.results[0].lon},${info.results[0].lat}&limit=100&apiKey=${API_KEY}`)
                 
-                console.warn("Markers ------ :", itemMarker);
+                // console.warn("Markers ------ :", itemMarker);
                 dispatch({
                     type: POSITION_DEFAULT,
                     position: {

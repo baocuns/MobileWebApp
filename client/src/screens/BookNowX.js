@@ -1,7 +1,7 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
-const BookNowX = () => {
+const BookNowX = ({navigation}) => {
   return (
     <View style={{}}>
       <View
@@ -14,12 +14,14 @@ const BookNowX = () => {
         }}>
         <View
           style={{
+            paddingHorizontal: 10,
             justifyContent: 'center',
             paddingRight: 20,
           }}>
          <TouchableOpacity>
 
           <Icon
+            onPress={()=>navigation.goBack()}
             style={{
               fontSize: 20,
               color: 'black',

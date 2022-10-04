@@ -2,7 +2,7 @@ import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const bookNow = () => {
+const BookNow = ({navigation}) => {
   return (
     <View
       style={{
@@ -22,7 +22,9 @@ const bookNow = () => {
             paddingRight: 20,
           }}>
           <Icon
+            onPress={()=>navigation.goBack()}
             style={{
+              paddingHorizontal:10,
               fontSize: 20,
               color: 'black',
             }}
@@ -500,6 +502,7 @@ const bookNow = () => {
                 justifyContent: 'flex-end',
               }}>
               <TouchableOpacity
+                onPress={()=> navigation.navigate('BookNowX')}
                 style={{
                   backgroundColor: 'orange',
                   width: '100%',
@@ -523,4 +526,4 @@ const bookNow = () => {
   );
 };
 
-export default bookNow;
+export default BookNow;

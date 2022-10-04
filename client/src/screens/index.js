@@ -7,57 +7,13 @@ import Map from './Map';
 import Blog from './Blog'
 import Mail from './Mail';
 import Users from './Users';
-import User from './User';
-import Cart from './Cart';
-import FavoriteService from './FavoriteService';
-import BookNow from './BookNow';
-import BookNowX from './BookNowX';
-import Friends from './Friends';
+// import User from './User';
+// import Cart from './Cart';
+// import FavoriteService from './FavoriteService';
+// import BookNow from './BookNow';
+// import BookNowX from './BookNowX';
+// import Friends from './Friends';
 
-
-
-function Feed({ navigation }) {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Feed 123456</Text>
-            <TouchableOpacity
-                onPress={() => navigation.navigate('Map')}
-                style={{ borderWidth: 1, padding: 20 }}>
-                <Text>Map</Text>
-            </TouchableOpacity>
-        </View>
-    );
-}
-function Feed1() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Feed1</Text>
-        </View>
-    );
-}
-function Feed2() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Feed2</Text>
-        </View>
-    );
-}
-
-function Profile() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Profile!</Text>
-        </View>
-    );
-}
-
-function Notifications() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Notifications!</Text>
-        </View>
-    );
-}
 
 const Tab = createBottomTabNavigator();
 

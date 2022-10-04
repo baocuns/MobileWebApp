@@ -12,7 +12,7 @@ const initialState = {
 }
 
 export default function actionForReducer(state = initialState, payload) {
-    console.log('check pl: ', payload);
+    // console.log('check pl: ', payload);
     switch (payload.type) {
         case POSITION_DEFAULT:
             return {
