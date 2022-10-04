@@ -17,6 +17,8 @@ const BookNowX = () => {
             justifyContent: 'center',
             paddingRight: 20,
           }}>
+         <TouchableOpacity>
+
           <Icon
             style={{
               fontSize: 20,
@@ -24,6 +26,7 @@ const BookNowX = () => {
             }}
             name="chevron-left"
           />
+         </TouchableOpacity>
         </View>
         <View>
           <Text
@@ -51,7 +54,9 @@ const BookNowX = () => {
               flexDirection: 'row',
               paddingBottom: 10,
             }}>
-            <View style={{}}>
+            <View style={{
+              marginRight: 'auto'
+            }}>
               <Text
                 style={{
                   color: 'black',
@@ -64,8 +69,7 @@ const BookNowX = () => {
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                // justifyContent: 'flex-end'
-                paddingLeft: '55%',
+                    
               }}>
               <View
                 style={
@@ -96,7 +100,9 @@ const BookNowX = () => {
               flexDirection: 'row',
               paddingBottom: 10,
             }}>
-            <View>
+            <View style={{
+                marginRight: 'auto'
+            }}>
               <Text
                 style={{
                   color: 'gray',
@@ -125,7 +131,9 @@ const BookNowX = () => {
               flexDirection: 'row',
               paddingBottom: 10,
             }}>
-            <View>
+            <View style={{
+                marginRight: 'auto'
+            }}>
               <Text
                 style={{
                   color: 'gray',
@@ -149,7 +157,9 @@ const BookNowX = () => {
               flexDirection: 'row',
               paddingBottom: 10,
             }}>
-            <View>
+            <View style={{
+                marginRight: 'auto'
+            }}>
               <Text
                 style={{
                   color: 'gray',
@@ -173,7 +183,9 @@ const BookNowX = () => {
               flexDirection: 'row',
               paddingBottom: 10,
             }}>
-            <View>
+            <View style={{
+                marginRight: 'auto'
+            }}>
               <Text
                 style={{
                   color: 'gray',
@@ -193,7 +205,9 @@ const BookNowX = () => {
             </View>
           </View>
 
-          <View>
+          <View style={{
+            marginLeft: 'auto'
+          }}>
             <View
               style={{
                 paddingBottom: 5,
@@ -250,7 +264,7 @@ const BookNowX = () => {
             </View>
           </View>
           <View style={{
-            paddingLeft: 195
+            marginLeft: 'auto'
           }}>
             <View
               style={{
