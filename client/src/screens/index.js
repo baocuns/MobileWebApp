@@ -6,6 +6,15 @@ import Home from './Home';
 import Map from './Map';
 import Blog from './Blog'
 import Mail from './Mail';
+import Users from './Users';
+import User from './User';
+import Cart from './Cart';
+import FavoriteService from './FavoriteService';
+import BookNow from './BookNow';
+import BookNowX from './BookNowX';
+import Friends from './Friends';
+
+
 
 function Feed({ navigation }) {
     return (
@@ -87,6 +96,7 @@ function Index() {
                 component={Home}
                 options={{
                     tabBarLabel: 'Home',
+                    
                     tabBarIcon: ({ color, size }) => (
                         <Icon name="home" size={30} color={color} />
                     ),
@@ -103,10 +113,10 @@ function Index() {
                 }}
             />
             <Tab.Screen
-                name="Profile"
-                component={Profile}
+                name="User"
+                component={Users}
                 options={{
-                    tabBarLabel: 'User',
+                    tabBarLabel: 'Users',
                     tabBarIcon: ({ color, size }) => (
                         <Icon name="user" size={30} color={color} />
                     ),
