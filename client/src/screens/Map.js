@@ -84,7 +84,7 @@ const onMarkerPress = (mapEventData) => {
                 const { data : info } = await geoSeacrch.get(`?format=json&apiKey=${API_KEY}&text=${nameSearch}`);
              
                 // console.log(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${info.results[0].lon},${info.results[0].latitude},50000&bias=proximity:${info.results[0].lon},${position.results[0].latitude}&limit=50&apiKey=${API_KEY}`);
-                const { data : itemMarker } = await axios.get(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${info.results[0].lon},${info.results[0].lat},50000&bias=proximity:${info.results[0].lon},${info.results[0].lat}&limit=50&apiKey=${API_KEY}`)
+                const { data : itemMarker } = await axios.get(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${info.results[0].lon},${info.results[0].lat},50000&bias=proximity:${info.results[0].lon},${info.results[0].lat}&limit=100&apiKey=${API_KEY}`)
                 
                 console.warn("Markers ------ :", itemMarker);
                 dispatch({
