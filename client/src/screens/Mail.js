@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconAnt from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const Mail = () => {
+const Mail = ({navigation}) => {
   return (
     <SafeAreaView style={{paddingLeft: 10, paddingRight: 10, flex: 1}}>
       {/* Title */}
@@ -41,7 +41,7 @@ const Mail = () => {
             height: '100%',
             aspectRatio: 1,
           }}>
-          <Icon name="thumbs-up" size={35} color="blue" brand />
+          <Icon onPress={()=> navigation.navigate('Favorite')} name="thumbs-up" size={35} color="blue" brand />
           <Text>Like</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -51,7 +51,7 @@ const Mail = () => {
             height: '100%',
             aspectRatio: 1,
           }}>
-          <Icon name="user-friends" size={35} color="blue" brand />
+          <Icon onPress={()=>navigation.navigate('Friends')} name="user-friends" size={35} color="blue" brand />
           <Text>Friends</Text>
         </TouchableOpacity>
         <TouchableOpacity

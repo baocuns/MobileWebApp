@@ -13,6 +13,12 @@ import Login from './src/screens/Login';
 import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
 import ProvinceDetail from './src/screens/ProvinceDetail';
+import UserInfo from './src/screens/UserInfo';
+import BookNow from './src/screens/BookNow';
+import BookNowX from './src/screens/BookNowX';
+import Cart from './src/screens/Cart'
+import Friends from './src/screens/Friends'
+import FavoriteService from './src/screens/FavoriteService'
 LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
@@ -32,6 +38,13 @@ const App = () => {
           <Stack.Screen name="DetailPlace" component={DetailPlace} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="ProvinceDetail" component={ProvinceDetail} />
+          {/* Khiêm */}
+          <Stack.Screen name="UserInfo" component={UserInfo} />
+          <Stack.Screen name="BookNow" component={BookNow} />
+          <Stack.Screen name="BookNowX" component={BookNowX} />
+          <Stack.Screen name="Cart" component={Cart} />
+          <Stack.Screen name="Friends" component={Friends} />
+          <Stack.Screen name="FavoriteService" component={FavoriteService} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

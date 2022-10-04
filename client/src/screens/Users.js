@@ -11,7 +11,7 @@ import {
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Users = () => {
+const Users = ({ navigation }) => {
   return (
     <ScrollView>
       <View
@@ -45,7 +45,9 @@ const Users = () => {
               }}>
               Thông tin người dùng
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity 
+              onPress={()=>navigation.navigate('UserInfo')}
+            >
               <Text
                 style={{
                   color: 'blue',
@@ -201,7 +203,9 @@ const Users = () => {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+        onPress={()=> navigation.navigate('UserInfo')}
+        >
           <View
             style={{
               flexDirection: 'row',

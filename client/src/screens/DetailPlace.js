@@ -128,7 +128,7 @@ const DetailPlace = ({navigation}) => {
                         <TouchableOpacity style={{ backgroundColor: '#ffa500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
                             <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Thêm vào giỏ hàng</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ backgroundColor: '#ff4500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
+                        <TouchableOpacity onPress={()=>navigation.navigate('BookNow')} style={{ backgroundColor: '#ff4500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
                             <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Đặt ngay</Text>
                         </TouchableOpacity>
                     </View>
