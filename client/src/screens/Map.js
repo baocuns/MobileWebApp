@@ -1,43 +1,41 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { View, StyleSheet, Dimensions, Animated, Text, } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import MapView, { Circle, Marker, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import Geolocation from '@react-native-community/geolocation';
-import { PermissionsAndroid } from 'react-native';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import ProvinceList from '../components/ProvinceList';
 import { geoSeacrch } from '../utils/http';
 import { getMapDefaultSuccess } from '../redux/mapSlice';
 import { URL, TOURISM, FILTER_CIRCLE, API_KEY } from "../utils/constant";
-
-// Lấy chiều ngang, chiều dọc màn hình
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-const { width, height } = Dimensions.get("window");
-const CARD_HEIGHT = 220;
-const CARD_WIDTH = width * 0.8;
-const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
-
+import { getEventAround50KmRoute } from '../routes/APIRoute';
 
 const Map = () => {
     const initState = useSelector((state) => state.map.map);
     const position = initState.position;
     const nameSearch = initState.status.nameSelected;
     const dispatch = useDispatch();
-
     const [isCurrentPositon, setIsCurrentPositon] = useState(true);
     const [markers, setMarkers] = useState([]);
+    const [markersEvent, setMarkersEvent] = useState([]);
 
     const getMarker = async () => {
         console.log(">>check: ", nameSearch);
         //Lấy vị trí default
         if (isCurrentPositon) {
-            axios.get(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${position.longitude},${position.latitude},50000&bias=proximity:${position.longitude},${position.latitude}&limit=100&apiKey=${API_KEY}`)
+            await axios.get(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${position.longitude},${position.latitude},50000&bias=proximity:${position.longitude},${position.latitude}&limit=100&apiKey=${API_KEY}`)
                 .then(res => {
                     const itemMarker = res.data;
                     setMarkers(itemMarker.features);
                     setIsCurrentPositon(false)
                 })
                 .catch(error => console.log(error));
+
+            await axios.get(`${getEventAround50KmRoute}&longitude=${position.longitude}&latitude=${position.latitude}`)
+                .then(res => {
+                    const itemMarker = res.data.data;
+                    setMarkersEvent(itemMarker);
+                })
         }
         else {
             //Trường hợp lựa chọn tỉnh
@@ -85,15 +83,9 @@ const Map = () => {
 
     return (
         <View style={{ flex: 1 }}>
-            {/* <View style={{ width: '100%', height: '100' }}>
-            </View> */}
-            <View style={{ height: '10%', width: '100%' }}>
+            <View style={{ height: 50, width: '100%' }}>
                 <ProvinceList />
             </View>
-            {/* <View style={{ position: 'absolute', top: 0, zIndex: 10 }}>
-                <Text>latitude: {position.latitude}</Text>
-                <Text>longitude: {position.longitude}</Text>
-            </View> */}
             <View style={{ flex: 1 }}>
                 <MapView
                     provider={PROVIDER_GOOGLE} // remove if not using Google Maps
@@ -119,9 +111,8 @@ const Map = () => {
                     pitchEnabled={true}
                     rotateEnabled={true}
                 >
-
+                    {/* Marker location */}
                     {markers.map((marker, index) => {
-                        // console.log('map index: ', marker.geometry.coordinates[0], '----', marker.geometry.coordinates[1]);
                         const ps = {
                             latitude: marker.properties.lat,
                             longitude: marker.properties.lon,
@@ -133,8 +124,28 @@ const Map = () => {
                         }
                         return (
                             <Marker key={index} coordinate={ps}
+                                // icon={require("../assets/map_marker.png")}
                                 title={marker.properties.name}
                                 description={marker.properties.formatted}
+                            >
+
+                            </Marker>
+                        );
+                    })}
+                    {/* Marker event */}
+                    {markersEvent.map((marker, index) => {
+                        console.log(marker.longitude, '---', marker.latitude);
+                        const ps = {
+                            latitude: marker.latitude,
+                            longitude: marker.longitude,
+                            latitudeDelta: 0.0421,
+                            longitudeDelta: 0.0421,
+                        };
+                        return (
+                            <Marker key={marker._id} coordinate={ps}
+                                icon={require("../assets/map_marker.png")}
+                                title={marker.title}
+                                description={marker.description}
                             >
 
                             </Marker>
