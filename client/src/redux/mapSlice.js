@@ -4,6 +4,12 @@ const mapSlice = createSlice({
     name: "map",
     initialState: {
         map: {
+            positionFault: {
+                latitude: 10.802040906830033,
+                longitude: 106.6969844401151,
+                latitudeDelta: 0.0421,
+                longitudeDelta: 0.0421
+            },
             position: {
                 latitude: 10.802040906830033,
                 longitude: 106.6969844401151,
@@ -13,12 +19,15 @@ const mapSlice = createSlice({
             status: {
                 isFetching: false,
                 error: false,
-                nameSelected: "",//Provine Selected
+                nameSelected: "default",//Provine Selected
                 msgErr: "",
             }
         }
     },
     reducers: {
+        setPositionDefault: (state, action) => {
+            state.map.positionFault = action.payload;
+        },
         getMapStart: (state) => {
             state.map.status.isFetching = true;
         },
@@ -41,6 +50,7 @@ const mapSlice = createSlice({
 })
 
 export const {
+    setPositionDefault,
     getMapStart,
     getMapFailed,
     getMapDefaultSuccess,

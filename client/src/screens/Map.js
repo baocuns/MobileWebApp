@@ -1,31 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import MapView, { Circle, Marker, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import ProvinceList from '../components/ProvinceList';
 import { geoSeacrch } from '../utils/http';
-import { getMapDefaultSuccess } from '../redux/mapSlice';
+import { getMapDefaultSuccess, setPositionDefault } from '../redux/mapSlice';
 import { URL, TOURISM, FILTER_CIRCLE, API_KEY } from "../utils/constant";
 import { getEventAround50KmRoute } from '../routes/APIRoute';
+import { openLink } from '../utils/function';
 
 const Map = () => {
     const initState = useSelector((state) => state.map.map);
-    const position = initState.position;
+    let position = initState.position;
+    const positionDefault = initState.positionFault;
     const nameSearch = initState.status.nameSelected;
     const dispatch = useDispatch();
     const [isCurrentPositon, setIsCurrentPositon] = useState(true);
     const [markers, setMarkers] = useState([]);
     const [markersEvent, setMarkersEvent] = useState([]);
 
+    const getCurrentPosition = () => {
+        Geolocation.getCurrentPosition((pos) => {
+            const crd = pos.coords;
+            if (isCurrentPositon) {
+                const crdFull = {
+                    ...crd,
+                    latitudeDelta: 0.0421,
+                    longitudeDelta: 0.0421
+                }
+                dispatch(getMapDefaultSuccess(crdFull));
+                dispatch(setPositionDefault(crdFull));
+                setIsCurrentPositon(true)
+            }
+        })
+    }
+
     const getMarker = async () => {
         console.log(">>check: ", nameSearch);
         //Lấy vị trí default
-        if (isCurrentPositon) {
+        if (nameSearch == 'default') {
+            position = positionDefault;
             await axios.get(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${position.longitude},${position.latitude},50000&bias=proximity:${position.longitude},${position.latitude}&limit=100&apiKey=${API_KEY}`)
                 .then(res => {
                     const itemMarker = res.data;
+                    dispatch(getMapDefaultSuccess(position));
                     setMarkers(itemMarker.features);
                     setIsCurrentPositon(false)
                 })
@@ -40,9 +60,9 @@ const Map = () => {
         else {
             //Trường hợp lựa chọn tỉnh
             try {
+                // get position lon, lat to search locaction
                 const { data: info } = await geoSeacrch.get(`?format=json&apiKey=${API_KEY}&text=${nameSearch}`);
-
-                // console.log(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${info.results[0].lon},${info.results[0].latitude},50000&bias=proximity:${info.results[0].lon},${position.results[0].latitude}&limit=50&apiKey=${API_KEY}`);
+                // search location around 50km
                 const { data: itemMarker } = await axios.get(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${info.results[0].lon},${info.results[0].lat},50000&bias=proximity:${info.results[0].lon},${info.results[0].lat}&limit=100&apiKey=${API_KEY}`)
                 const position = {
                     latitude: info.results[0].lat,
@@ -50,9 +70,16 @@ const Map = () => {
                     latitudeDelta: 0.0421,
                     longitudeDelta: 0.0421,
                 }
+                // Get position event
+                await axios.get(`${getEventAround50KmRoute}&longitude=${info.results[0].lon}&latitude=${info.results[0].lat}`)
+                    .then(res => {
+                        const itemMarker = res.data.data;
+                        setMarkersEvent(itemMarker);
+                    })
                 dispatch(getMapDefaultSuccess(position));
                 setMarkers(itemMarker.features);
                 setIsCurrentPositon(false)
+
             } catch (error) {
                 console.log(error);
             }
@@ -62,23 +89,11 @@ const Map = () => {
     }
     //get marker around 50km radius
     useEffect(() => {
-        // requestLocationPermission();
         getMarker();
     }, [nameSearch]);
     // Get current position
     useEffect(() => {
-        Geolocation.getCurrentPosition((pos) => {
-            const crd = pos.coords;
-            if (isCurrentPositon) {
-                const crdFull = {
-                    ...crd,
-                    latitudeDelta: 0.0421,
-                    longitudeDelta: 0.0421
-                }
-                dispatch(getMapDefaultSuccess(crdFull));
-                setIsCurrentPositon(true)
-            }
-        })
+        getCurrentPosition();
     }, []);
 
     return (
@@ -124,7 +139,8 @@ const Map = () => {
                         }
                         return (
                             <Marker key={index} coordinate={ps}
-                                // icon={require("../assets/map_marker.png")}
+                                showCallout
+                                onCalloutPress={() => openLink(marker.properties.name)}
                                 title={marker.properties.name}
                                 description={marker.properties.formatted}
                             >
@@ -134,7 +150,6 @@ const Map = () => {
                     })}
                     {/* Marker event */}
                     {markersEvent.map((marker, index) => {
-                        console.log(marker.longitude, '---', marker.latitude);
                         const ps = {
                             latitude: marker.latitude,
                             longitude: marker.longitude,
@@ -143,6 +158,7 @@ const Map = () => {
                         };
                         return (
                             <Marker key={marker._id} coordinate={ps}
+                                onCalloutPress={() => openLink(marker.title)}
                                 icon={require("../assets/map_marker.png")}
                                 title={marker.title}
                                 description={marker.description}
