@@ -119,8 +119,23 @@ const BlueComponent = () => {
 
 const GreenComponent = () => {
   const [isPasswordVisiable, setIsPasswordVisiable] = useState(false);
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  myloginxnxx = async () => {
+    await fetch('https://api.travels.games/api/v1/auth/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"username": username, "password": password})
+    }).then(res => res.json())
+    .then(resData => {
+     
+      console.log(resData);
+    });
+   
+  }
   return (
     <View
       style={{
@@ -151,7 +166,10 @@ const GreenComponent = () => {
         <TextInput
           autoCapitalize="none"
           style={{flex: 1, fontSize: 20}}
-          placeholder="E-mail"></TextInput>
+          placeholder="User Name"
+          value={username}
+          onChangeText={(value) => setUsername(value)}>
+          </TextInput>
       </View>
       {/* Password */}
       <View
@@ -173,7 +191,10 @@ const GreenComponent = () => {
           secureTextEntry={!isPasswordVisiable}
           autoCapitalize="none"
           style={{flex: 1, fontSize: 20, paddingRight: 50}}
-          placeholder="Password"></TextInput>
+          placeholder="Password"
+          value={password}
+          onChangeText={(value) => setPassword(value)}>
+          </TextInput>
         <TouchableOpacity
           onPress={() => setIsPasswordVisiable(!isPasswordVisiable)}
           style={{color: 'white', position: 'absolute', right: 10}}>
@@ -200,6 +221,8 @@ const GreenComponent = () => {
       </View>
       {/* Button Login */}
       <TouchableOpacity
+        
+        onPress={myloginxnxx}
         style={{
           borderRadius: 50,
           height: 45,
