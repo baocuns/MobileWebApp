@@ -7,7 +7,7 @@ import {
   Dimensions,
   TextInput,
   Image,
-} from 'react-native';
+} from 'react-native'; 
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
