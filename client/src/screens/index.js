@@ -72,7 +72,7 @@ function Index() {
             />
             <Tab.Screen
                 name="User"
-                component={Users}
+                component={Login}
                 options={{
                     tabBarLabel: 'Users',
                     tabBarIcon: ({ color, size }) => (

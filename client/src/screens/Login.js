@@ -270,7 +270,7 @@ const PinkComponent = () => {
       }}>
       {/* Login in your account */}
       <Text style={{fontSize: 24, color: '#000', fontWeight: '600'}}>
-        Login in your account
+         Sign up a account
       </Text>
       {/* Email */}
       <View
@@ -282,7 +282,7 @@ const PinkComponent = () => {
           marginTop: 20,
         }}>
         <Icon
-          name="envelope"
+          name="user"
           size={40}
           style={{width: 40, marginLeft: 10, marginRight: 10}}
         />
@@ -357,9 +357,7 @@ const PinkComponent = () => {
           width: windowWidth - 60,
           marginTop: 20,
         }}>
-        <TouchableOpacity>
-          <Text>Forgot password?</Text>
-        </TouchableOpacity>
+      
       </View>
       {/* Button Login */}
       <TouchableOpacity
@@ -372,7 +370,7 @@ const PinkComponent = () => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Text style={{color: '#fff', fontSize: 20}}>Login</Text>
+        <Text style={{color: '#fff', fontSize: 20}}>Register</Text>
       </TouchableOpacity>
     </View>
   );
