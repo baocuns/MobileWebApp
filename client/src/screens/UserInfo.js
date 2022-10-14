@@ -1,193 +1,222 @@
 import {
-    View,
-    Text,
-    TextInput,
-    StyleSheet,
-    ScrollView,
-    Pressable,
-    Button,
-    TouchableOpacity,
-  } from 'react-native';
-  import React, {useState} from 'react';
-  
-  import Icon from 'react-native-vector-icons/FontAwesome';
-  
-  const UserInfo = ({ navigation }) => {
-    return (
-      <ScrollView>
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useState} from 'react';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+const UserInfo = ({navigation}) => {
+  return (
+    <ScrollView>
+      <View
+        style={{
+          flex: 1,
+          padding: 10,
+          alignItems: 'center',
+        }}>
+        <Icon
+          style={{
+            color: 'gray',
+            fontSize: 80,
+          }}
+          name="user-circle-o"
+        />
+      </View>
+      <View
+        style={{
+          flex: 3,
+        }}>
         <View
           style={{
-            flex: 1,
-            padding: 10,
-            alignItems: 'center',
+            borderWidth: 4,
+            borderColor: 'gray',
+            borderRadius: 20,
+            marginLeft: 10,
+            marginRight: 10,
+            marginBottom: 10,
+            backgroundColor: 'white',
           }}>
-          <Icon
+          <TextInput
+            placeholder="Họ"
             style={{
-              color: 'gray',
-              fontSize: 80,
+              fontWeight: 'bold',
             }}
-            name="user-circle-o"
+          />
+        </View>
+
+        <View
+          style={{
+            borderWidth: 4,
+            borderColor: 'gray',
+            borderRadius: 20,
+            marginLeft: 10,
+            marginRight: 10,
+            marginBottom: 10,
+            backgroundColor: 'white',
+          }}>
+          <TextInput
+            placeholder="Tên"
+            style={{
+              fontWeight: 'bold',
+            }}
+          />
+        </View>
+
+        <View
+          style={{
+            borderWidth: 4,
+            borderColor: 'gray',
+            borderRadius: 20,
+            marginLeft: 10,
+            marginRight: 10,
+            marginBottom: 10,
+            backgroundColor: 'white',
+          }}>
+          <TextInput
+            placeholder="Họ (như trên các Giấy tờ Du Lịch Khác)"
+            style={{
+              fontWeight: 'bold',
+            }}
+          />
+        </View>
+
+        <View
+          style={{
+            borderWidth: 4,
+            borderColor: 'gray',
+            borderRadius: 20,
+            marginLeft: 10,
+            marginRight: 10,
+            marginBottom: 10,
+            backgroundColor: 'white',
+          }}>
+          <TextInput
+            placeholder="Tên (như trên các Giấy tờ Du Lịch Khác)"
+            style={{
+              fontWeight: 'bold',
+            }}
           />
         </View>
         <View
           style={{
-            flex: 3,
+            borderWidth: 4,
+            borderColor: 'gray',
+            borderRadius: 20,
+            marginLeft: 10,
+            marginRight: 10,
+            marginBottom: 10,
+            backgroundColor: 'white',
           }}>
           <TextInput
+            placeholder="Quốc gia"
             style={{
-              color: 'gray',
               fontWeight: 'bold',
-              backgroundColor: 'white',
-              borderRadius: 20,
-              paddingBottom: 10,
-              marginLeft: 10,
-              marginRight: 10,
-              fontSize: 15,
-              marginBottom: 10,
-            }}>
-            {''} Họ
-          </TextInput>
-          <TextInput
-            style={{
-              color: 'gray',
-              fontWeight: 'bold',
-              backgroundColor: 'white',
-              borderRadius: 20,
-              paddingBottom: 10,
-              marginLeft: 10,
-              marginRight: 10,
-              fontSize: 15,
-              marginBottom: 10,
-            }}>
-            {''} Tên
-          </TextInput>
-          <TextInput
-            style={{
-              color: 'gray',
-              fontWeight: 'bold',
-              backgroundColor: 'white',
-              borderRadius: 20,
-              paddingBottom: 10,
-              marginLeft: 10,
-              marginRight: 10,
-              fontSize: 15,
-              marginBottom: 10,
-            }}>
-            {''} Họ (như trên các Giấy tờ Du Lịch Khác)
-          </TextInput>
-          <TextInput
-            style={{
-              color: 'gray',
-              fontWeight: 'bold',
-              backgroundColor: 'white',
-              borderRadius: 20,
-              paddingBottom: 10,
-              marginLeft: 10,
-              marginRight: 10,
-              fontSize: 15,
-              marginBottom: 10,
-            }}>
-            {''} Tên (như trên các Giấy tờ Du Lịch Khác)
-          </TextInput>
-          <TextInput
-            style={{
-              color: 'gray',
-              fontWeight: 'bold',
-              backgroundColor: 'white',
-              borderRadius: 20,
-              paddingBottom: 10,
-              marginLeft: 10,
-              marginRight: 10,
-              fontSize: 15,
-              marginBottom: 10,
-            }}>
-            {''} Quốc gia
-          </TextInput>
-          <TextInput
-            style={{
-              color: 'gray',
-              fontWeight: 'bold',
-              backgroundColor: 'white',
-              borderRadius: 20,
-              paddingBottom: 10,
-              marginLeft: 10,
-              marginRight: 10,
-              fontSize: 15,
-              marginBottom: 10,
-            }}>
-            {''} Mã quốc gia
-          </TextInput>
-          <TextInput
-            style={{
-              color: 'gray',
-              fontWeight: 'bold',
-              backgroundColor: 'white',
-              borderRadius: 20,
-              paddingBottom: 10,
-              marginLeft: 10,
-              marginRight: 10,
-              fontSize: 15,
-              marginBottom: 10,
-            }}>
-            {''} Danh xưng
-          </TextInput>
-          <TextInput
-            style={{
-              color: 'gray',
-              fontWeight: 'bold',
-              backgroundColor: 'white',
-              borderRadius: 20,
-              paddingBottom: 10,
-              marginLeft: 10,
-              marginRight: 10,
-              fontSize: 15,
-              marginBottom: 10,
-            }}>
-            {''} Số điện thoại
-          </TextInput>
-          <TextInput
-            style={{
-              color: 'gray',
-              fontWeight: 'bold',
-              backgroundColor: 'white',
-              borderRadius: 20,
-              paddingBottom: 10,
-              marginLeft: 10,
-              marginRight: 10,
-              fontSize: 15,
-              marginBottom: 10,
-            }}>
-            {''} Email
-          </TextInput>
+            }}
+          />
         </View>
-        <TouchableOpacity>
-          <View
+        <View
+          style={{
+            borderWidth: 4,
+            borderColor: 'gray',
+            borderRadius: 20,
+            marginLeft: 10,
+            marginRight: 10,
+            marginBottom: 10,
+            backgroundColor: 'white',
+          }}>
+          <TextInput
+            placeholder="Mã quốc gia"
             style={{
-              flex: 1,
-              alignItems: 'center',
-              marginHorizontal: 10,
-              marginVertical: 10,
-              backgroundColor: 'gray',
-              borderRadius: 10,
-            }}>
-            <Pressable>
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  paddingHorizontal: 10,
-                  paddingVertical: 10,
-                }}>
-                Save
-              </Text>
-            </Pressable>
-          </View>
-        </TouchableOpacity>
-      </ScrollView>
-    );
-  };
-  
-  export default UserInfo;
-  // yarn react-native run-android --active-arch-only
-  
+              fontWeight: 'bold',
+            }}
+          />
+        </View>
+        <View
+          style={{
+            borderWidth: 4,
+            borderColor: 'gray',
+            borderRadius: 20,
+            marginLeft: 10,
+            marginRight: 10,
+            marginBottom: 10,
+            backgroundColor: 'white',
+          }}>
+          <TextInput
+            placeholder="Danh xưng"
+            style={{
+              fontWeight: 'bold',
+            }}
+          />
+        </View>
+        <View
+          style={{
+            borderWidth: 4,
+            borderColor: 'gray',
+            borderRadius: 20,
+            marginLeft: 10,
+            marginRight: 10,
+            marginBottom: 10,
+            backgroundColor: 'white',
+          }}>
+          <TextInput
+            placeholder="Số điện thoại"
+            style={{
+              fontWeight: 'bold',
+            }}
+          />
+        </View>
+        <View
+          style={{
+            borderWidth: 4,
+            borderColor: 'gray',
+            borderRadius: 20,
+            marginLeft: 10,
+            marginRight: 10,
+            marginBottom: 10,
+            backgroundColor: 'white',
+          }}>
+          <TextInput
+            placeholder="Email"
+            style={{
+              fontWeight: 'bold',
+            }}
+          />
+        </View>
+      </View>
+      <TouchableOpacity>
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            marginHorizontal: 10,
+            marginVertical: 10,
+            backgroundColor: 'gray',
+            borderRadius: 10,
+          }}>
+          <Pressable>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 20,
+                fontWeight: 'bold',
+                paddingHorizontal: 10,
+                paddingVertical: 10,
+              }}>
+              Save
+            </Text>
+          </Pressable>
+        </View>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+};
+
+export default UserInfo;
+// yarn react-native run-android --active-arch-only
