@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import MapView, { Circle, Marker, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import { View, StyleSheet, TouchableOpacity, Text, Dimensions, Modal, Pressable, Image, Alert, ScrollView, ActivityIndicator } from 'react-native';
+import MapView, { Circle, Marker, PROVIDER_GOOGLE, Callout } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,17 +10,25 @@ import { getMapDefaultSuccess, setPositionDefault } from '../redux/mapSlice';
 import { URL, TOURISM, FILTER_CIRCLE, API_KEY } from "../utils/constant";
 import { getEventAround50KmRoute } from '../routes/APIRoute';
 import { openLink } from '../utils/function';
+import { getImageDescriptionByNameSearch } from '../redux/apiRequest';
 
 const Map = () => {
+    const widthScreen = Dimensions.get('window').width;
+    const heightScreen = Dimensions.get('window').height;
     const initState = useSelector((state) => state.map.map);
     let position = initState.position;
     const positionDefault = initState.positionFault;
     const nameSearch = initState.status.nameSelected;
+    const infoMarker = useSelector((state) => state.map.map.infoMarker);
+    const info = infoMarker.info;
     const dispatch = useDispatch();
     const [isCurrentPositon, setIsCurrentPositon] = useState(true);
     const [markers, setMarkers] = useState([]);
     const [markersEvent, setMarkersEvent] = useState([]);
-
+    const makerRef = React.useRef([]);
+    const [currentName, setCurrentName] = useState("");
+    const [modalVisible, setModalVisible] = useState(false);
+    const [isFetching, setIsFetching] = useState(false);
     const getCurrentPosition = () => {
         Geolocation.getCurrentPosition((pos) => {
             const crd = pos.coords;
@@ -91,90 +99,197 @@ const Map = () => {
     useEffect(() => {
         getMarker();
     }, [nameSearch]);
+
+    // get Image and Description
+    useEffect(() => {
+        console.log("Reload");
+        console.log("currentName", currentName);
+        const currentMaker = makerRef.current.find(el => el.name === currentName);
+        setIsFetching(false);
+        // currentMaker && currentMaker.ref.showCallout();
+    }, [currentName]);
     // Get current position
     useEffect(() => {
         getCurrentPosition();
     }, []);
 
     return (
-        <View style={{ flex: 1 }}>
-            <View style={{ height: 50, width: '100%' }}>
-                <ProvinceList />
-            </View>
+        <>
+
             <View style={{ flex: 1 }}>
-                <MapView
-                    provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                    style={styles.map}
-                    initialRegion={position}
-                    region={position}
-                    camera={{
-                        center: {
-                            latitude: position.latitude,
-                            longitude: position.longitude,
-                        },
-                        pitch: 0,
-                        heading: 0,
-                        altitude: 1000,
-                        zoom: 9,
-                    }}
-                    showsUserLocation={true}
-                    showsMyLocationButton={true}
-                    followsUserLocation={true}
-                    showsCompass={true}
-                    scrollEnabled={true}
-                    zoomEnabled={true}
-                    pitchEnabled={true}
-                    rotateEnabled={true}
-                >
-                    {/* Marker location */}
-                    {markers.map((marker, index) => {
-                        const ps = {
-                            latitude: marker.properties.lat,
-                            longitude: marker.properties.lon,
-                            latitudeDelta: 0.0421,
-                            longitudeDelta: 0.0421,
-                        };
-                        if (!marker.properties.name) {
-                            return (<View key={index}></View>);
-                        }
-                        return (
-                            <Marker key={index} coordinate={ps}
-                                showCallout
-                                onCalloutPress={() => openLink(marker.properties.name)}
-                                title={marker.properties.name}
-                                description={marker.properties.formatted}
-                            >
+                <View style={{ position: 'relative' }}>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => {
+                            // Alert.alert("Modal has been closed.");
+                            setModalVisible(!modalVisible);
+                        }}
+                    >
 
-                            </Marker>
-                        );
-                    })}
-                    {/* Marker event */}
-                    {markersEvent.map((marker, index) => {
-                        const ps = {
-                            latitude: marker.latitude,
-                            longitude: marker.longitude,
-                            latitudeDelta: 0.0421,
-                            longitudeDelta: 0.0421,
-                        };
-                        return (
-                            <Marker key={marker._id} coordinate={ps}
-                                onCalloutPress={() => openLink(marker.title)}
-                                icon={require("../assets/map_marker.png")}
-                                title={marker.title}
-                                description={marker.description}
-                            >
+                        <View onTouchStart={() => setModalVisible(false)} style={{ height: 0.5 * heightScreen, zIndex: 1 }}>
+                        </View>
+                        <View style={{ backgroundColor: '#fff', padding: 20, position: 'absolute', bottom: 0, height: 0.5 * heightScreen, zIndex: 1 }}>
+                            <ScrollView style={{ flex: 1, width: widthScreen - 40 }}>
+                                {isFetching ?
+                                    <ActivityIndicator size="large" color="red" />
+                                    :
+                                    <>
+                                        <TouchableOpacity
+                                            onPress={() => openLink(currentName)}
+                                            style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'orange', marginBottom: 10, borderRadius: 3, paddingVertical: 10 }}>
+                                            <Text style={{ color: '#fff' }}>Xem chi tiết tại Google</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            onPress={() => openLink(currentName)}
+                                            style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'green', borderRadius: 3, paddingVertical: 10 }}>
+                                            <Text style={{ color: '#fff' }}>Tìm kiếm trong tour</Text>
+                                        </TouchableOpacity>
+                                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000', marginVertical: 5 }}>{currentName}</Text>
+                                        <Image
+                                            style={{ width: widthScreen - 40, height: 180 }}
+                                            source={{
+                                                uri: 'https://media.travel.com.vn/destination/dc_200914_BA NA HILL (1)_1.jpg',
+                                            }}
+                                        />
+                                        <View style={styles.modalView}>
+                                            {info?.descriptionArr.map((des, index) => {
+                                                return (
+                                                    <Text style={{ marginVertical: 10 }}>{des.description?.replace(/(<([^>]+)>)/ig, "")}</Text>
+                                                )
+                                            })}
+                                            <Image
+                                                // style={{ height: 50, width: 50 }}
+                                                style={{ width: widthScreen - 60, height: 200 }}
+                                                source={{
+                                                    uri: 'https://media.travel.com.vn/destination/dc_200914_BA NA HILL (1)_1.jpg',
+                                                }}
+                                            />
+                                            <Pressable
+                                                style={{ backgroundColor: '#F4A460', alignItems: 'center' }}
+                                                onPress={() => setModalVisible(!modalVisible)}
+                                            >
+                                                {/* <Text style={styles.textStyle}>Xem chi tiết</Text> */}
+                                            </Pressable>
+                                        </View>
+                                    </>
+                                }
+                            </ScrollView>
+                        </View>
+                    </Modal>
+                </View>
+                <View style={{ height: 50, width: '100%' }}>
+                    <ProvinceList />
+                </View>
+                <View style={{ flex: 1 }}>
+                    <MapView
+                        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                        style={styles.map}
+                        initialRegion={position}
+                        region={position}
+                        camera={{
+                            center: {
+                                latitude: position.latitude,
+                                longitude: position.longitude,
+                            },
+                            pitch: 0,
+                            heading: 0,
+                            altitude: 1000,
+                            zoom: 9,
+                        }}
+                        showsUserLocation={true}
+                        showsMyLocationButton={true}
+                        followsUserLocation={true}
+                        showsCompass={true}
+                        scrollEnabled={true}
+                        zoomEnabled={true}
+                        pitchEnabled={true}
+                        rotateEnabled={true}
+                    >
+                        {/* Marker location */}
+                        {markers.map((marker, index) => {
+                            const ps = {
+                                latitude: marker.properties.lat,
+                                longitude: marker.properties.lon,
+                                latitudeDelta: 0.0421,
+                                longitudeDelta: 0.0421,
+                            };
+                            if (!marker.properties.name) {
+                                return (<View key={index}></View>);
+                            }
+                            return (
+                                <Marker key={index} coordinate={ps}
+                                    // showCallout
+                                    ref={(ref) => makerRef.current.push({ ref, name: marker.properties.name })}
+                                    onPress={(e) => {
+                                        e.preventDefault();
+                                        setModalVisible(true)
+                                        if (currentName != marker.properties.name) {
+                                            setIsFetching(true);
+                                        }
+                                        getImageDescriptionByNameSearch(marker.properties.name, dispatch).then(() => setCurrentName(marker.properties.name))
+                                    }}
+                                    onCalloutPress={() => openLink(marker.properties.name)}
+                                    title={marker.properties.name}
+                                    description={marker.properties.formatted}
+                                >
+                                    <Callout tooltip >
+                                        <View style={{ width: widthScreen, height: 200, justifyContent: 'flex-end', alignItems: 'center', position: 'relative', top: -10 }}>
+                                            <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', borderRadius: 10, width: widthScreen - 60, padding: 20, position: 'relative' }}>
+                                                <Text style={{ zIndex: 10, color: '#000', fontWeight: 'bold' }}>{marker.properties.name}</Text>
+                                                <Text style={{ zIndex: 10 }}>{marker.properties.formatted}</Text>
+                                                {/* <Text style={{ zIndex: 10 }}>{info?.descriptionArr[2].description?.replace(/(<([^>]+)>)/ig, "")}</Text> */}
+                                                <View style={{ bottom: 0, backgroundColor: '#fff', width: 50, height: 50, position: 'absolute', transform: [{ rotate: "45deg" }] }}>
 
-                            </Marker>
-                        );
-                    })}
-                    <Circle
-                        center={position}
-                        radius={50000}
-                    />
-                </MapView>
-            </View>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    </Callout>
+                                </Marker>
+                            );
+                        })}
+                        {/* Marker event */}
+                        {markersEvent.map((marker, index) => {
+                            const ps = {
+                                latitude: marker.latitude,
+                                longitude: marker.longitude,
+                                latitudeDelta: 0.0421,
+                                longitudeDelta: 0.0421,
+                            };
+                            return (
+                                <Marker key={marker._id} coordinate={ps}
+                                    onCalloutPress={() => openLink(marker.title)}
+                                    icon={require("../assets/map_marker.png")}
+                                    title={marker.title}
+                                    description={marker.description}
+                                >
+                                    <Callout tooltip>
+                                        <View style={{ width: widthScreen, height: 200, justifyContent: 'flex-end', alignItems: 'center', position: 'relative', top: -10 }}>
+                                            <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', borderRadius: 10, width: widthScreen - 60, padding: 20, position: 'relative' }}>
+                                                <Text style={{ zIndex: 10, color: '#000', fontWeight: 'bold' }}>{marker.title}</Text>
+                                                <Text style={{ zIndex: 10 }}>{marker.description}</Text>
+                                                <View style={{ bottom: 0, backgroundColor: '#fff', width: 50, height: 50, position: 'absolute', transform: [{ rotate: "45deg" }] }}>
+                                                </View>
+                                            </View>
 
-        </View>
+                                        </View>
+                                    </Callout>
+                                </Marker>
+                            );
+                        })}
+                        <Circle
+                            center={position}
+                            radius={50000}
+                        />
+                    </MapView>
+                </View>
+
+            </View >
+
+
+        </>
+
     );
 }
 

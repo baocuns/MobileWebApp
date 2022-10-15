@@ -21,6 +21,11 @@ const mapSlice = createSlice({
                 error: false,
                 nameSelected: "default",//Provine Selected
                 msgErr: "",
+            },
+            infoMarker: {
+                isFetching: false,
+                msg: "",
+                info: null
             }
         }
     },
@@ -45,6 +50,18 @@ const mapSlice = createSlice({
             state.map.status.isFetching = false;
             state.map.status.error = false;
             state.map.status.nameSelected = action.payload
+        },
+        getInfoStart: (state) => {
+            state.map.isFetching = true
+        },
+        getInfoSuccess: (state, action) => {
+            state.map.infoMarker.isFetching = false;
+            state.map.infoMarker.info = action.payload;
+            state.map.infoMarker.msg = "";
+        },
+        getInfoFailed: (state, action) => {
+            state.map.infoMarker.isFetching = false;
+            state.map.infoMarker.msg = action.payload;
         }
     }
 })
@@ -54,7 +71,10 @@ export const {
     getMapStart,
     getMapFailed,
     getMapDefaultSuccess,
-    getMapSelectedSuccess
+    getMapSelectedSuccess,
+    getInfoStart,
+    getInfoSuccess,
+    getInfoFailed
 } = mapSlice.actions;
 
 export default mapSlice.reducer;
