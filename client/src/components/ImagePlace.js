@@ -4,16 +4,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const { width } = Dimensions.get("window");
 const height = width * 0.6;//60%
 //Load Data
-// const imageList = [
-//     "https://source.unsplash.com/1024x768/?nature",
-//     "https://source.unsplash.com/1024x768/?water",
-//     "https://source.unsplash.com/1024x768/?girl",
-//     "https://source.unsplash.com/1024x768/?tree",
-// ]
+const imageList = [
+    "https://source.unsplash.com/1024x768/?nature",
+    "https://source.unsplash.com/1024x768/?water",
+    "https://source.unsplash.com/1024x768/?girl",
+    "https://source.unsplash.com/1024x768/?tree",
+]
 
-const SliderImage = ({ navigation, image }) => {
-    const imageList = image;
-    console.log(">>check img: ", imageList);
+const ImagePlace = ({ navigation, image }) => {
+
     const [active, setActive] = useState(0);
     const change = ({ nativeEvent }) => {
         const slide = Math.floor(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width);
@@ -33,23 +32,23 @@ const SliderImage = ({ navigation, image }) => {
                     showsHorizontalScrollIndicator={false}
                     onScroll={(nativeEvent) => change(nativeEvent)}
                 >
-                    {
-                        imageList.map((image, index) => (
-                            <Image
-                                // key={index}
-                                source={{ uri: image }}
-                                style={styles.imgItem}
-                            />
-                        ))
-                    }
+                    {/* {
+                        imageList.map((image, index) => ( */}
+                    <Image
+                        // key={index}
+                        source={{ uri: image }}
+                        style={styles.imgItem}
+                    />
+                    {/* ))
+                    } */}
                 </ScrollView>
-                <View style={styles.pagination}>
+                {/* <View style={styles.pagination}>
                     {imageList.map((i, k) => (
                         <Text key={k} style={k === active ? styles.pagingActive : styles.pagingText}>
                             ⬤
                         </Text>
                     ))}
-                </View>
+                </View> */}
                 <View style={{ flexDirection: 'row', width: width, position: 'absolute', top: 10, justifyContent: 'space-between' }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Ionicons name='md-chevron-back-outline' style={{ backgroundColor: '#f5f5f5', padding: 5, borderRadius: 50, aspectRatio: 1 }} size={30} color='#888' />
@@ -96,4 +95,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default SliderImage;
+export default ImagePlace;

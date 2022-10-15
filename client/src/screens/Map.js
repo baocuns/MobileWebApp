@@ -12,7 +12,7 @@ import { getEventAround50KmRoute } from '../routes/APIRoute';
 import { openLink } from '../utils/function';
 import { getImageDescriptionByNameSearch } from '../redux/apiRequest';
 
-const Map = () => {
+const Map = ({ navigation }) => {
     const widthScreen = Dimensions.get('window').width;
     const heightScreen = Dimensions.get('window').height;
     const initState = useSelector((state) => state.map.map);
@@ -142,30 +142,30 @@ const Map = () => {
                                             <Text style={{ color: '#fff' }}>Xem chi tiết tại Google</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity
-                                            onPress={() => openLink(currentName)}
+                                            onPress={() => navigation.navigate('Home')}
                                             style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'green', borderRadius: 3, paddingVertical: 10 }}>
                                             <Text style={{ color: '#fff' }}>Tìm kiếm trong tour</Text>
                                         </TouchableOpacity>
                                         <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000', marginVertical: 5 }}>{currentName}</Text>
-                                        <Image
+                                        {/* <Image
                                             style={{ width: widthScreen - 40, height: 180 }}
                                             source={{
                                                 uri: 'https://media.travel.com.vn/destination/dc_200914_BA NA HILL (1)_1.jpg',
                                             }}
-                                        />
+                                        /> */}
                                         <View style={styles.modalView}>
                                             {info?.descriptionArr.map((des, index) => {
                                                 return (
                                                     <Text style={{ marginVertical: 10 }}>{des.description?.replace(/(<([^>]+)>)/ig, "")}</Text>
                                                 )
                                             })}
-                                            <Image
+                                            {/* <Image
                                                 // style={{ height: 50, width: 50 }}
                                                 style={{ width: widthScreen - 60, height: 200 }}
                                                 source={{
                                                     uri: 'https://media.travel.com.vn/destination/dc_200914_BA NA HILL (1)_1.jpg',
                                                 }}
-                                            />
+                                            /> */}
                                             <Pressable
                                                 style={{ backgroundColor: '#F4A460', alignItems: 'center' }}
                                                 onPress={() => setModalVisible(!modalVisible)}
