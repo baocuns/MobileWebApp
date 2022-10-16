@@ -7,6 +7,7 @@ import Map from './Map';
 import Blog from './Blog'
 import Mail from './Mail';
 import Users from './Users';
+<<<<<<< HEAD
 import Login from './Login';
 import RegisterXNXX from './RegisterXNXX';
 // import User from './User';
@@ -16,6 +17,8 @@ import RegisterXNXX from './RegisterXNXX';
 // import BookNowX from './BookNowX';
 // import Friends from './Friends';
 
+=======
+>>>>>>> main
 
 const Tab = createBottomTabNavigator();
 
@@ -54,7 +57,7 @@ function Index() {
                 component={Home}
                 options={{
                     tabBarLabel: 'Home',
-                    
+
                     tabBarIcon: ({ color, size }) => (
                         <Icon name="home" size={30} color={color} />
                     ),

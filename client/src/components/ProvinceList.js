@@ -9,12 +9,11 @@ const ProvinceList = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    { label: 'Apple', value: 'apple' },
-    { label: 'Banana', value: 'banana' }
+    { label: 'Vị trí của bạn', value: 'default' }
   ]);
 
   const setItemCategory = (data) => {
-    let categories = [];
+    let categories = items;
     data.forEach(element => {
       categories.push({
         label: element.name,
