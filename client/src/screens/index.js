@@ -7,18 +7,7 @@ import Map from './Map';
 import Blog from './Blog'
 import Mail from './Mail';
 import Users from './Users';
-<<<<<<< HEAD
 import Login from './Login';
-import RegisterXNXX from './RegisterXNXX';
-// import User from './User';
-// import Cart from './Cart';
-// import FavoriteService from './FavoriteService';
-// import BookNow from './BookNow';
-// import BookNowX from './BookNowX';
-// import Friends from './Friends';
-
-=======
->>>>>>> main
 
 const Tab = createBottomTabNavigator();
 
