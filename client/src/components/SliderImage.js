@@ -36,7 +36,6 @@ const SliderImage = ({ navigation, image }) => {
                     {
                         imageList.map((image, index) => (
                             <Image
-                                // key={index}
                                 source={{ uri: image }}
                                 style={styles.imgItem}
                             />

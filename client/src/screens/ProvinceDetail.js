@@ -68,7 +68,11 @@ const ProvinceDetail = ({ navigation, route }) => {
             showsVerticalScrollIndicator={false}
         >
             <View style={{ backgroundColor: '#D3D3D3', flex: 1 }}>
-                <ImagePlace navigation={navigation} image={image} />
+                {image ?
+                    <ImagePlace navigation={navigation} image={image} />
+                    :
+                    <ImagePlace navigation={navigation} image={itemPlaceList.length > 0 ? itemPlaceList[0].image : null} />
+                }
                 <View style={{ marginHorizontal: 10 }}>
                     <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 26 }}>{name}</Text>
                     <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 20, marginVertical: 10 }}>Hoạt động nên thử</Text>

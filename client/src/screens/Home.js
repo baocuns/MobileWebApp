@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { View, StyleSheet, Image, Dimensions, Text, StatusBar, ImageBackground, TextInput, ScrollView, TouchableOpacity, Pressable } from 'react-native';
+import { View, StyleSheet, Image, Dimensions, Text, StatusBar, ImageBackground, TextInput, ScrollView, TouchableOpacity, Pressable, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import homeScreen from '../assets/images/launch_screen.png';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -9,49 +9,21 @@ import IconAnt from 'react-native-vector-icons/AntDesign';
 
 
 const { width: screenWidth } = Dimensions.get('window');
-const dataProvince = [
-    {
-        "id": 1,
-        "image": "https://source.unsplash.com/1024x768/?nature",
-        "province": 'TP Hồ Chí Minh',
-        "title": 'Du Thuyền Sài gòn với bữa tối trên tàu Saigon Princess',
-        "price": 1500000,
-        "numberStarAvarage": 4.6,
-        "numberComment": 273
-    },
-    {
-        "id": 2,
-        "image": "https://source.unsplash.com/1024x768/?water",
-        "province": 'TP Hồ Chí Minh',
-        "price": 1500000,
-        "title": 'Vé Xe Buýt Hop On Off ở Thành Phố HCM',
-        "numberStarAvarage": 4.1,
-        "numberComment": 161
-    },
-    {
-        "id": 3,
-        "image": "https://source.unsplash.com/1024x768/?girl",
-        "price": 1500000,
-        "province": 'TP Hồ Chí Minh',
-        "title": 'SIM 3G/4G Sử dụng tại VN',
-        "numberStarAvarage": 4.1,
-        "numberComment": 161
-    },
-    {
-        "id": 4,
-        "image": "https://source.unsplash.com/1024x768/?tree",
-        "price": 1500000,
-        "province": 'TP Hồ Chí Minh',
-        "title": 'Tour Ngày Khu di tích địa đạo củ chi',
-        "numberStarAvarage": 4.7,
-        "numberComment": 392
-    },
-]
+
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
 const Home = ({ navigation }) => {
     // const [imagelist, setImagelist] = useState([]);
+    const [refreshing, setRefreshing] = React.useState(false);
     const [placeList, setPlaceList] = useState([]);
     const [lastTours, setLastTours] = useState([]);
     const [search, setSearch] = useState("");
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
     const fetchData = async () => {
         try {
             const res = await axios.get(getSliderRoute);
@@ -70,7 +42,14 @@ const Home = ({ navigation }) => {
         <ImageBackground source={homeScreen} style={{ flex: 1 }}>
             <StatusBar hidden />
             <SafeAreaView style={{ flex: 1 }}>
-                <ScrollView>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
+                >
                     <View style={{ alignItems: 'center', justifyContent: 'center', height: 80, width: '100%' }}>
                         <Text style={{ color: '#fff', fontSize: 25, fontWeight: '600' }}>Tìm kiếm niềm vui của bạn</Text>
                     </View>
