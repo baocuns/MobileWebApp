@@ -1,222 +1,126 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet, Image, Dimensions, Text, StatusBar, ImageBackground, TextInput, ScrollView } from 'react-native';
+import axios from 'axios';
+import { View, StyleSheet, Image, Dimensions, Text, StatusBar, ImageBackground, TextInput, ScrollView, TouchableOpacity, Pressable, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import homeScreen from '../assets/images/home.jpg';
+import homeScreen from '../assets/images/launch_screen.png';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { getSliderRoute, getToursLastHourRoute, HOST_CRAWL } from '../routes/APIRoute';
+import IconAnt from 'react-native-vector-icons/AntDesign';
 
 
 const { width: screenWidth } = Dimensions.get('window');
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
 const Home = ({ navigation }) => {
-    const [imagelist, setImagelist] = useState([]);
-    const [currentIndexImg, setCurrentIndexImg] = useState(0);
-    const stepCarousel = useRef(null);
-    useEffect(() => {
-        // 1.Load data from server
-        const data = [
-            {
-                image: <View onTouchStart={()=> navigation.navigate('ProvinceDetail')} key={'1'} style={{ position: 'relative' }}><Image style={styles.imageSlideContainer} key={'1'} source={require('../assets/images/slider/1.jpg')} resizeMode='cover'></Image><Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff' }}>TP Hồ Chí Minh</Text></View>,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <View key={'2'} style={{ position: 'relative' }}><Image style={styles.imageSlideContainer} key={'2'} source={require('../assets/images/slider/2.jpg')} resizeMode='cover'></Image><Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff' }}>Hà Nội</Text></View>,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'3'} source={require('../assets/images/slider/3.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'4'} source={require('../assets/images/slider/4.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'5'} source={require('../assets/images/slider/5.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'6'} source={require('../assets/images/slider/6.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'7'} source={require('../assets/images/slider/7.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'8'} source={require('../assets/images/slider/8.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'9'} source={require('../assets/images/slider/9.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'10'} source={require('../assets/images/slider/10.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'11'} source={require('../assets/images/slider/11.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'12'} source={require('../assets/images/slider/12.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'13'} source={require('../assets/images/slider/13.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'14'} source={require('../assets/images/slider/14.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-        ]
-        // 2.Cap nhat data
-        setImagelist(data);
-    }, []);
+    // const [imagelist, setImagelist] = useState([]);
+    const [refreshing, setRefreshing] = React.useState(false);
+    const [placeList, setPlaceList] = useState([]);
+    const [lastTours, setLastTours] = useState([]);
+    const [search, setSearch] = useState("");
 
-    const handleScroll = (e) => {
-        if (!e) {
-            return;
-        }
-        const { nativeEvent } = e;
-        if (nativeEvent && nativeEvent.contentOffset) {
-            const currentOffset = nativeEvent.contentOffset.x;
-            let imageIndex = 0;
-            if (nativeEvent.contentOffset.x > 0) {
-                imageIndex = Math.floor((nativeEvent.contentOffset.x + screenWidth / 2) / screenWidth);
-            }
-            console.log(imageIndex);
-            setCurrentIndexImg(imageIndex);
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
+    const fetchData = async () => {
+        try {
+            const res = await axios.get(getSliderRoute);
+            setPlaceList(res.data);
+            const res2 = await axios.get(getToursLastHourRoute);
+            setLastTours(res2.data);
+        } catch (error) {
+            console.log(error);
         }
     }
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <ImageBackground source={homeScreen} style={{ flex: 1 }}>
             <StatusBar hidden />
             <SafeAreaView style={{ flex: 1 }}>
-                <ScrollView contentContainerStyle={{ width: '100%', height: '130%' }}>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
+                >
                     <View style={{ alignItems: 'center', justifyContent: 'center', height: 80, width: '100%' }}>
                         <Text style={{ color: '#fff', fontSize: 25, fontWeight: '600' }}>Tìm kiếm niềm vui của bạn</Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 80, width: '100%' }}>
                         <Icon style={{ position: 'absolute', left: 55, zIndex: 1 }} name="search" size={20} color='#000' />
-                        <TextInput style={{ paddingLeft: 40, borderRadius: 50, width: '80%', height: 40, backgroundColor: '#fff', fontWeight: '600' }} placeholder='Tìm địa điểm' />
+                        <TextInput
+                            onSubmitEditing={() => navigation.navigate('ProvinceDetail', {
+                                url: `https://travel.com.vn/tim-tour/${search}/ket-qua-tim-kiem.aspx`,
+                                name: search,
+                                // image: HOST_CRAWL + place.image
+                            })}
+                            value={search}
+                            onChangeText={setSearch}
+                            style={{ paddingLeft: 40, borderRadius: 50, width: '80%', height: 40, backgroundColor: '#fff', fontWeight: '600' }} placeholder='Tìm địa điểm' />
                     </View>
                     {/* ScrollView */}
                     <View style={{ width: screenWidth, height: 220 }} >
-                        <ScrollView
-                            horizontal
-                            contentContainerStyle={{ width: (screenWidth / 3 + 20) * imagelist.length, height: '100%' }}
-                        >
-                            {imagelist.map(image => image.image)}
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                            {placeList.map((place, index) => {
+                                return (
+                                    place.name === "Xem tất cả" ?
+                                        <></>
+                                        :
+                                        <Pressable
+                                            onPress={() => navigation.navigate('ProvinceDetail', {
+                                                url: place.link,
+                                                name: place.name,
+                                                image: HOST_CRAWL + place.image
+                                            })}
+                                            key={index}
+                                            style={{ position: 'relative' }}
+                                        >
+                                            <Image
+                                                style={styles.imageSlideContainer}
+                                                source={{ uri: `${HOST_CRAWL}` + place.image }}
+                                                resizeMode='cover'>
+                                            </Image>
+                                            <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff' }}>
+                                                {place.name}
+                                            </Text>
+                                        </Pressable>
+                                )
+                            })}
                         </ScrollView>
                     </View>
-                    {/* 3 Miền */}
-                    <Text style={styles.titlePlace}>Miền Bắc</Text>
-                    <ScrollView
-                        horizontal
-                        contentContainerStyle={{ width: '200%', height: '100%' }}
-                    >
-                        <View>
-                            <View style={styles.imgListPlace}>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/8.jpg')} />
+                    {/* Tour giờ chót */}
+                    <Text style={{ color: '#000', fontSize: 25, fontWeight: '600', margin: 10, shadowColor: 'grey' }}>
+                        Tour giờ chót
+                    </Text>
+                    {lastTours.map((data, index) => (
+                        <View key={index} style={{ marginHorizontal: 10 }}>
+                            <Pressable key={data.code} onPress={() => navigation.navigate('DetailPlace', {
+                                url: data.detailURL
+                            })} style={{ width: '100%', marginVertical: 10, borderRadius: 10, backgroundColor: '#F5F5F5' }}>
+                                <Image source={{ uri: data.image }} style={{ width: '100%', height: 200, borderTopLeftRadius: 10, borderTopRightRadius: 10 }} />
+                                <View style={{ margin: 10, flex: 1, justifyContent: 'space-between' }}>
+                                    <View>
+                                        <Text style={{ fontSize: 10 }}>{data.start}</Text>
+                                        <Text style={{ fontWeight: 'bold', color: '#000' }}>{data.name}</Text>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            <Text>({data.time})</Text>
+                                        </View>
+                                    </View>
+                                    <View>
+                                        <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 10, textDecorationLine: 'line-through' }}>Giá gốc: {data.newPrice}</Text>
+                                        <Text style={{ color: '#000', fontWeight: 'bold', justifyContent: 'flex-end' }}>Chỉ từ: {data.newPrice}</Text>
+                                    </View>
                                 </View>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/9.jpg')} />
-                                </View>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/10.jpg')} />
-                                </View>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/11.jpg')} />
-                                </View>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/12.jpg')} />
-                                </View>
-                            </View>
+                            </Pressable>
                         </View>
-                    </ScrollView>
-                    <Text style={styles.titlePlace}>Miền Trung</Text>
-                    <ScrollView
-                        horizontal
-                        contentContainerStyle={{ width: '200%', height: '100%' }}
-                    >
-                        <View>
-                            <View style={styles.imgListPlace}>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/8.jpg')} />
-                                </View>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/9.jpg')} />
-                                </View>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/10.jpg')} />
-                                </View>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/11.jpg')} />
-                                </View>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/12.jpg')} />
-                                </View>
-                            </View>
-                        </View>
-                    </ScrollView>
-                    <Text style={styles.titlePlace}>Miền Nam</Text>
-                    <ScrollView
-                        horizontal
-                        contentContainerStyle={{ width: '200%', height: '100%' }}
-                    >
-                        <View>
-                            <View style={styles.imgListPlace}>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/8.jpg')} />
-                                </View>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/9.jpg')} />
-                                </View>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/10.jpg')} />
-                                </View>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/11.jpg')} />
-                                </View>
-                                <View style={{ position: 'relative' }}>
-                                    <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff', zIndex: 1 }}>Hà Nội</Text>
-                                    <Image style={styles.imgPlace} source={require('../assets/images/slider/12.jpg')} />
-                                </View>
-                            </View>
-                        </View>
-                    </ScrollView>
+                    ))}
                 </ScrollView>
             </SafeAreaView>
         </ImageBackground>
@@ -225,7 +129,7 @@ const Home = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     imageSlideContainer: {
-        width: screenWidth / 3, height: '100%', borderRadius: 20, marginLeft: 10, marginRight: 10
+        width: screenWidth / 3, height: '100%', borderRadius: 10, marginLeft: 10, marginRight: 10
     },
     imgListPlace: {
         flexDirection: 'row'
@@ -242,7 +146,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
         width: 120,
         height: 80,
-        borderRadius: 20
+        borderRadius: 10
     }
 })
 

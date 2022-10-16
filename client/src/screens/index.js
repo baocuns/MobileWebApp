@@ -7,13 +7,6 @@ import Map from './Map';
 import Blog from './Blog'
 import Mail from './Mail';
 import Users from './Users';
-// import User from './User';
-// import Cart from './Cart';
-// import FavoriteService from './FavoriteService';
-// import BookNow from './BookNow';
-// import BookNowX from './BookNowX';
-// import Friends from './Friends';
-
 
 const Tab = createBottomTabNavigator();
 
@@ -52,7 +45,7 @@ function Index() {
                 component={Home}
                 options={{
                     tabBarLabel: 'Home',
-                    
+
                     tabBarIcon: ({ color, size }) => (
                         <Icon name="home" size={30} color={color} />
                     ),

@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, SafeAreaView, StatusBar, ScrollView, Dimensions, TouchableOpacity, Image } from 'react-native';
 import SliderImage from '../components/SliderImage';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import BoxRating from '../components/BoxRating';
 import Rating from '../components/Rating';
+import { getDetailRoute } from '../routes/APIRoute';
+import axios from 'axios';
 
 const { width, height } = Dimensions.get("window");
 
-const DetailPlace = ({navigation}) => {
+const DetailPlace = ({ navigation, route }) => {
+    const { url } = route.params;
+    const [item, setItem] = useState([]);
+    const fetchData = async (url) => {
+        try {
+            const res = await axios.post(getDetailRoute, {
+                url: url
+            })
+            setItem(res.data[0]);
+            console.log(res.data[0]);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        fetchData(url);
+    }, []);
 
     return (
         <SafeAreaView>
@@ -17,27 +35,35 @@ const DetailPlace = ({navigation}) => {
                 showsVerticalScrollIndicator={false}
                 style={{ height: height * 0.85 }}>
                 {/* Slider Image */}
-                <SliderImage navigation={navigation} />
+                {item && item.image ?
+                    <SliderImage navigation={navigation} image={item.image} /> : <></>
+                }
                 <View style={{ margin: 10 }}>
-                    <Text style={{ fontWeight: '600', color: '#000', fontSize: 26 }}>Du Thuyền Sài Gòn Với Bữa Tối Trên Tàu Saigon Princess</Text>
-
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ fontWeight: '600', color: '#000', fontSize: 26 }}>{item && item.name}</Text>
+                    {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <AntDesign name='star' size={14} color='#FFD700' />
                         <Text>4.6</Text>
                         <Text>(243)</Text>
                         <Text> . </Text>
                         <Text>3K Đã đặt</Text>
-                    </View>
+                    </View> */}
                     {/* Content */}
                     <View>
                         <Text style={{ marginVertical: 10, borderLeftWidth: 5, borderRadius: 5, borderLeftColor: '#ff4500', fontSize: 20, fontWeight: 'bold', color: '#000', paddingLeft: 20 }}>Về dịch vụ này</Text>
                         <Text>
-                            Bạn đang tìm kiếm một trải nghiệm độc đáo để cùng tận hưởng với gia đình hay người yêu vào dịp cuối tuần ngay tại Sài Gòn? Vậy hãy trải nghiệm một chuyến du thuyền Sài Gòn thật độc đáo và khác lạ vào cuối tuần này.
-
-                            Chuyến du ngoạn sông Sài Gòn với tàu Saigon Princess bao gồm cả bữa ăn tối trên du thuyền. Bạn sẽ có cơ hội vừa thưởng thức ẩm thực vừa thư thái ngắm nhìn thành phố về đêm bên bờ sông. Trên du thuyền còn có nhạc sống, phục vụ chuyến du ngoạn của bạn thêm phần hấp dẫn và lãng mạn. Hành trình du ngoạn trên tàu Sài Gòn bao gồm nhiều thực đơn ăn tối khác nhau dành cho mọi lứa tuổi và mọi nhu cầu từ các món chay đến các món cho trẻ em. Sau bữa ăn tối, bạn có thể cùng người thân lên tầng trên của du thuyền và ngắm nhìn toàn cảnh Sài Gòn lung linh dưới ánh đèn đêm lấp lánh.
-
-                            Ngoài ra, bạn còn có thể đi du thuyền Sài Gòn nếu bạn chỉ cần ngắm cảnh và du ngoạn trên sông Sài Gòn. Hoặc, chỉ đơn giản, bạn muốn ngắm nhìn Sài Gòn thân thuộc dưới một góc nhìn khác lạ vào một ngày cuối tuần thật đẹp.
+                            {item && item.description}
                         </Text>
+                    </View>
+                    <View>
+                        {item && item.dayListDetail && item.dayListDetail.map((data, index) => {
+                            return (
+                                <View>
+                                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>{data.daytitle}</Text>
+                                    <Text style={{ fontSize: 14 }}>{data.excerpt}</Text>
+                                </View>
+                            )
+                        })}
+
                     </View>
                     {/* Rating */}
                     <View>
@@ -121,14 +147,14 @@ const DetailPlace = ({navigation}) => {
             <View style={{ height: height * 0.15, borderTopColor: 'gray', borderTopWidth: 0.3 }}>
                 <View style={{ margin: 10 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#000' }}>₫ 690,000</Text>
-                        <Text style={{ fontWeight: 'normal', fontSize: 12, textDecorationLine: 'line-through' }}>₫ 700,000</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#000' }}>{item.newPrice}</Text>
+                        <Text style={{ fontWeight: 'normal', fontSize: 12, textDecorationLine: 'line-through' }}>{item.oldPrice}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <TouchableOpacity style={{ backgroundColor: '#ffa500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
                             <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Thêm vào giỏ hàng</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>navigation.navigate('BookNow')} style={{ backgroundColor: '#ff4500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('BookNow')} style={{ backgroundColor: '#ff4500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
                             <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Đặt ngay</Text>
                         </TouchableOpacity>
                     </View>
