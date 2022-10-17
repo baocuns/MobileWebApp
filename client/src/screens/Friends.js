@@ -36,7 +36,7 @@ const Friends = () => {
           </View>
           <View>
             <Text
-              style={{
+              style={{ 
                 color: 'black',
                 fontSize: 15,
                 fontWeight: 'bold',

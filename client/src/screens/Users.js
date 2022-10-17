@@ -11,7 +11,7 @@ import {
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Users = ({ navigation }) => {
+const Users = ({navigation}) => {
   return (
     <ScrollView>
       <View
@@ -19,6 +19,7 @@ const Users = ({ navigation }) => {
           marginTop: 10,
           marginLeft: 10,
           marginRight: 10,
+          
         }}>
         <View style={{}}>
           <View>
@@ -45,9 +46,7 @@ const Users = ({ navigation }) => {
               }}>
               Thông tin người dùng
             </Text>
-            <TouchableOpacity 
-              onPress={()=>navigation.navigate('UserInfo')}
-            >
+            <TouchableOpacity onPress={() => navigation.navigate('UserInfo')}>
               <Text
                 style={{
                   color: 'blue',
@@ -167,7 +166,9 @@ const Users = ({ navigation }) => {
           padding: 10,
           backgroundColor: 'white',
           margin: 15,
-          borderRadius: 10,
+          borderRadius: 5,
+          borderWidth: 1,
+          borderColor: 'gray',
         }}>
         <TouchableOpacity>
           <View
@@ -182,6 +183,14 @@ const Users = ({ navigation }) => {
             <View
               style={{
                 padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
               }}>
               <Icon
                 style={{
@@ -191,7 +200,9 @@ const Users = ({ navigation }) => {
                 name="list-alt"
               />
             </View>
-            <View style={{}}>
+            <View style={{
+              paddingLeft: 10
+            }}>
               <Text
                 style={{
                   color: 'black',
@@ -203,9 +214,7 @@ const Users = ({ navigation }) => {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
-        onPress={()=> navigation.navigate('UserInfo')}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate('UserInfo')}>
           <View
             style={{
               flexDirection: 'row',
@@ -218,6 +227,14 @@ const Users = ({ navigation }) => {
             <View
               style={{
                 padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
               }}>
               <Icon
                 style={{
@@ -227,7 +244,9 @@ const Users = ({ navigation }) => {
                 name="user"
               />
             </View>
-            <View style={{}}>
+            <View style={{
+               paddingLeft: 10
+            }}>
               <Text
                 style={{
                   color: 'black',
@@ -252,6 +271,14 @@ const Users = ({ navigation }) => {
             <View
               style={{
                 padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
               }}>
               <Icon
                 style={{
@@ -261,7 +288,9 @@ const Users = ({ navigation }) => {
                 name="comment"
               />
             </View>
-            <View style={{}}>
+            <View style={{
+               paddingLeft: 10
+            }}>
               <Text
                 style={{
                   color: 'black',
@@ -287,6 +316,14 @@ const Users = ({ navigation }) => {
             <View
               style={{
                 padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
               }}>
               <Icon
                 style={{
@@ -296,7 +333,9 @@ const Users = ({ navigation }) => {
                 name="vk"
               />
             </View>
-            <View style={{}}>
+            <View style={{
+               paddingLeft: 10
+            }}>
               <Text
                 style={{
                   color: 'black',
@@ -322,16 +361,27 @@ const Users = ({ navigation }) => {
             <View
               style={{
                 padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
               }}>
               <Icon
                 style={{
                   fontSize: 20,
                   color: 'black',
+                  
                 }}
                 name="question"
               />
             </View>
-            <View style={{}}>
+            <View style={{
+               paddingLeft: 10
+            }}>
               <Text
                 style={{
                   color: 'black',
@@ -356,16 +406,27 @@ const Users = ({ navigation }) => {
             <View
               style={{
                 padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
               }}>
               <Icon
                 style={{
                   fontSize: 20,
                   color: 'black',
+                  alignItems: 'center',
                 }}
                 name="thumbs-o-up"
               />
             </View>
-            <View style={{}}>
+            <View style={{
+               paddingLeft: 10
+            }}>
               <Text
                 style={{
                   color: 'black',
@@ -391,6 +452,14 @@ const Users = ({ navigation }) => {
             <View
               style={{
                 padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
               }}>
               <Icon
                 style={{
@@ -400,7 +469,9 @@ const Users = ({ navigation }) => {
                 name="gear"
               />
             </View>
-            <View style={{}}>
+            <View style={{
+               paddingLeft: 10
+            }}>
               <Text
                 style={{
                   color: 'black',
