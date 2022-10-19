@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Home from './Home';
 import {
   StatusBar,
   Text,
@@ -9,7 +10,13 @@ import {
   Image,
 } from 'react-native';
 
+import {useDispatch, useSelector} from 'react-redux';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios';
+import {loginRoute} from '../routes/APIRoute';
+import {myloginxnxx} from '../utils/function';
+import {loginUser} from '../redux/apiRequest';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -22,23 +29,25 @@ function Login({navigation}) {
     <>
       <View style={{flex: 1}}>
         <View style={{height: '25%', width: '100%'}}>
-          <RedComponent page={page} setPage={setPage} />
+          <RedComponent navigation={navigation} page={page} setPage={setPage} />
         </View>
 
         <View style={{height: '40%', width: '100%'}}>
-          {page === SIGN_IN ? <GreenComponent /> : null}
-          {page === GET_STARTED ? <PinkComponent /> : null}
+          {page === SIGN_IN ? <GreenComponent navigation={navigation} /> : null}
+          {page === GET_STARTED ? (
+            <PinkComponent navigation={navigation} />
+          ) : null}
         </View>
 
         <View style={{flex: 1}}>
-          <BlueComponent />
+          <BlueComponent navigation={navigation} />
         </View>
       </View>
     </>
   );
 }
 
-const BlueComponent = () => {
+const BlueComponent = ({navigation}) => {
   return (
     <View
       style={{
@@ -120,24 +129,13 @@ const BlueComponent = () => {
   );
 };
 
-const GreenComponent = () => {
+const GreenComponent = ({navigation}) => {
   const [isPasswordVisiable, setIsPasswordVisiable] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  myloginxnxx = async () => {
-    await fetch('https://api.travels.games/api/v1/auth/login', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({username: username, password: password}),
-    })
-      .then(res => res.json())
-      .then(resData => {
-        console.log(resData);
-      });
-  };
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
   return (
     <View
       style={{
@@ -221,7 +219,7 @@ const GreenComponent = () => {
       </View>
       {/* Button Login */}
       <TouchableOpacity
-        onPress={myloginxnxx}
+        onPress={() => loginUser(username, password, dispatch, navigation)}
         style={{
           borderRadius: 50,
           height: 45,
@@ -270,7 +268,7 @@ const PinkComponent = () => {
       }}>
       {/* Login in your account */}
       <Text style={{fontSize: 24, color: '#000', fontWeight: '600'}}>
-         Sign up a account
+        Sign up a account
       </Text>
       {/* Email */}
       <View
@@ -356,9 +354,7 @@ const PinkComponent = () => {
           flexDirection: 'row',
           width: windowWidth - 60,
           marginTop: 20,
-        }}>
-      
-      </View>
+        }}></View>
       {/* Button Login */}
       <TouchableOpacity
         onPress={mySignUp}

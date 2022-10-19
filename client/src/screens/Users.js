@@ -10,8 +10,13 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Users = ({navigation}) => {
+  const user = useSelector(state => state.auth.login.currentUser);
+  if (user) {
+    console.log('>>> check user: ' + user.username);
+  }
   return (
     <ScrollView>
       <View
@@ -19,7 +24,6 @@ const Users = ({navigation}) => {
           marginTop: 10,
           marginLeft: 10,
           marginRight: 10,
-          
         }}>
         <View style={{}}>
           <View>
@@ -44,7 +48,7 @@ const Users = ({navigation}) => {
                 fontSize: 20,
                 fontWeight: 'bold',
               }}>
-              Thông tin người dùng
+              {user ? user.username : 'thong tin nguoi dung'}
             </Text>
             <TouchableOpacity onPress={() => navigation.navigate('UserInfo')}>
               <Text
@@ -53,7 +57,7 @@ const Users = ({navigation}) => {
                   fontSize: 12,
                   fontWeight: 'bold',
                 }}>
-                Thông tin người dùng
+                {user ? user.username : 'thong tin nguoi dung'}
                 {''}{' '}
                 <Icon
                   name="chevron-right"
@@ -200,9 +204,10 @@ const Users = ({navigation}) => {
                 name="list-alt"
               />
             </View>
-            <View style={{
-              paddingLeft: 10
-            }}>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
               <Text
                 style={{
                   color: 'black',
@@ -244,16 +249,17 @@ const Users = ({navigation}) => {
                 name="user"
               />
             </View>
-            <View style={{
-               paddingLeft: 10
-            }}>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
               <Text
                 style={{
                   color: 'black',
                   backgroundColor: 'white',
                   fontSize: 15,
                 }}>
-                Thông tin người dùng
+                {user ? user.username : 'thong tin nguoi dung'}
               </Text>
             </View>
           </View>
@@ -288,9 +294,10 @@ const Users = ({navigation}) => {
                 name="comment"
               />
             </View>
-            <View style={{
-               paddingLeft: 10
-            }}>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
               <Text
                 style={{
                   color: 'black',
@@ -333,9 +340,10 @@ const Users = ({navigation}) => {
                 name="vk"
               />
             </View>
-            <View style={{
-               paddingLeft: 10
-            }}>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
               <Text
                 style={{
                   color: 'black',
@@ -374,14 +382,14 @@ const Users = ({navigation}) => {
                 style={{
                   fontSize: 20,
                   color: 'black',
-                  
                 }}
                 name="question"
               />
             </View>
-            <View style={{
-               paddingLeft: 10
-            }}>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
               <Text
                 style={{
                   color: 'black',
@@ -424,9 +432,10 @@ const Users = ({navigation}) => {
                 name="thumbs-o-up"
               />
             </View>
-            <View style={{
-               paddingLeft: 10
-            }}>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
               <Text
                 style={{
                   color: 'black',
@@ -469,9 +478,10 @@ const Users = ({navigation}) => {
                 name="gear"
               />
             </View>
-            <View style={{
-               paddingLeft: 10
-            }}>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
               <Text
                 style={{
                   color: 'black',
