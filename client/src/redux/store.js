@@ -22,6 +22,7 @@ import thunk from 'redux-thunk';
 
 // khiemtv1412 đánh dấu chứ không là không nhớ làm chỗ nào luôn
 import authSlice from './authSlice';
+import userSlice from './userSilce';
 
 const persistConfig = {
   key: 'root',
@@ -31,6 +32,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   map: mapReducer,
   auth: authSlice,
+  user: userSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

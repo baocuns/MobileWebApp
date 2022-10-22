@@ -15,7 +15,8 @@ import {
   registerSuccess,
   registerFailed,
 } from './authSlice';
-import {Alert} from 'react-native';
+
+import {getUsersStart, getUsersFail, getUsersSuccess} from './userSilce';
 
 export const getImageDescriptionByNameSearch = async (name, dispatch) => {
   dispatch(getInfoStart());
@@ -57,14 +58,14 @@ export const registerUser = async (
   navigation,
 ) => {
   dispatch(registerStart());
-  // console.log('>>>check nav: ', navigation);
+  console.log('>>>check nav: ', navigation);
   try {
     const res = await axios.post(registerRoute, {
       username: username,
       password: password,
       email: email,
     });
-    // console.log('>>>check register: ', res.data);
+    console.log('>>>check register: ', res.data);
     alert('bạn đã đăng kí thành công');
     dispatch(registerSuccess(res.data));
     navigation.navigate('Login');
@@ -73,3 +74,16 @@ export const registerUser = async (
     dispatch(registerFailed());
   }
 };
+
+// export const getAllUsers = async (accessToken, dispatch) => {
+//   dispatch(getUsersStart());
+//   try {
+//     const res = await axios.get('/v1/auth/user/show/details', {
+//       headers: {token: `Bearer ${accessToken}`},
+//     });
+
+//     dispatch(getUsersSuccess(res.data));
+//   } catch (error) {
+//     dispatch(getUsersFail());
+//   }
+// };

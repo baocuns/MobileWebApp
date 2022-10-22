@@ -23,6 +23,8 @@ import {
   HOST_CRAWL,
 } from '../routes/APIRoute';
 import IconAnt from 'react-native-vector-icons/AntDesign';
+import userSlice from '../redux/userSilce';
+import {getAllUsers} from '../redux/apiRequest';
 
 const {width: screenWidth} = Dimensions.get('window');
 
@@ -30,6 +32,7 @@ const wait = timeout => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 };
 const Home = ({navigation}) => {
+  // const user = userSelector(state => state.auth.login.currentUser);
   // const [imagelist, setImagelist] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
   const [placeList, setPlaceList] = useState([]);
@@ -54,6 +57,11 @@ const Home = ({navigation}) => {
     fetchData();
   }, []);
 
+  // tí nữa coi lại
+
+  // useEffect(() => {
+  //   getAllUsers(user.accessToken);
+  // }, []);
   return (
     <ImageBackground source={homeScreen} style={{flex: 1}}>
       <StatusBar hidden />

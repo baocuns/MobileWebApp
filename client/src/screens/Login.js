@@ -238,12 +238,11 @@ const GreenComponent = ({navigation}) => {
   );
 };
 
-const PinkComponent = Login => {
+const PinkComponent = ({navigation}) => {
   const [isPasswordVisiable, setIsPasswordVisiable] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-
   const dispatch = useDispatch();
   return (
     <View
@@ -345,7 +344,9 @@ const PinkComponent = Login => {
         }}></View>
       {/* Button Login */}
       <TouchableOpacity
-        onPress={() => registerUser(username, password, email, dispatch, Login)}
+        onPress={() =>
+          registerUser(username, password, email, dispatch, navigation)
+        }
         style={{
           borderRadius: 50,
           height: 45,

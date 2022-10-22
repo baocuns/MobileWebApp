@@ -66,7 +66,7 @@ function Index() {
       />
       <Tab.Screen
         name="User"
-        component={BookNowX}
+        component={Users}
         options={{
           tabBarLabel: 'Users',
           tabBarIcon: ({color, size}) => (
