@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Home from './Home';
+
 import {
   StatusBar,
   Text,
@@ -10,13 +11,16 @@ import {
   Image,
 } from 'react-native';
 
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector, useNavigate} from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
 import {loginRoute} from '../routes/APIRoute';
 import {myloginxnxx} from '../utils/function';
 import {loginUser} from '../redux/apiRequest';
+import {registerUser} from '../redux/apiRequest';
+import {useNavigation} from '@react-navigation/native';
+import {loginFailed, registerFailed} from '../redux/AuthSlice';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -234,29 +238,13 @@ const GreenComponent = ({navigation}) => {
   );
 };
 
-const PinkComponent = () => {
+const PinkComponent = Login => {
   const [isPasswordVisiable, setIsPasswordVisiable] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  mySignUp = async () => {
-    await fetch('https://api.travels.games/api/v1/auth/register', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-        email: email,
-      }),
-    })
-      .then(res => res.json())
-      .then(resData => {
-        console.log(resData);
-      });
-  };
+
+  const dispatch = useDispatch();
   return (
     <View
       style={{
@@ -357,7 +345,7 @@ const PinkComponent = () => {
         }}></View>
       {/* Button Login */}
       <TouchableOpacity
-        onPress={mySignUp}
+        onPress={() => registerUser(username, password, email, dispatch, Login)}
         style={{
           borderRadius: 50,
           height: 45,

@@ -1,10 +1,21 @@
+// import { deleteUserRoute, getAllUsersRoute, loginRoute, registerRoute } from '../utils/APIRoutes';
 import axios from 'axios';
-import {getImageAndDescriptionRoute, loginRoute} from '../routes/APIRoute';
-import {loginFailed, loginStart, loginSuccess} from './authSlice';
+import {
+  getImageAndDescriptionRoute,
+  loginRoute,
+  registerRoute,
+} from '../routes/APIRoute';
 import {getInfoFailed, getInfoStart, getInfoSuccess} from './mapSlice';
 
-// import {registerStart, registerFailed, registerSuccess} from './registerSlice';
-// import { deleteUserRoute, getAllUsersRoute, loginRoute, registerRoute } from '../utils/APIRoutes';
+import {
+  loginFailed,
+  loginStart,
+  loginSuccess,
+  registerStart,
+  registerSuccess,
+  registerFailed,
+} from './authSlice';
+import {Alert} from 'react-native';
 
 export const getImageDescriptionByNameSearch = async (name, dispatch) => {
   dispatch(getInfoStart());
@@ -21,7 +32,7 @@ export const getImageDescriptionByNameSearch = async (name, dispatch) => {
 
 export const loginUser = async (username, password, dispatch, navigation) => {
   dispatch(loginStart());
-  console.log('>>>check nav: ', navigation);
+  // console.log('>>>check nav: ', navigation);
 
   try {
     const res = await axios.post(loginRoute, {
@@ -29,9 +40,36 @@ export const loginUser = async (username, password, dispatch, navigation) => {
       password: password,
     });
     // console.log('>>>check login: ', res.data);
+    alert('bạn đã đăng nhập thành công');
     dispatch(loginSuccess(res.data));
     navigation.navigate('Home');
   } catch (error) {
+    alert('sai username hay password rồi kìa');
     dispatch(loginFailed());
+  }
+};
+
+export const registerUser = async (
+  username,
+  password,
+  email,
+  dispatch,
+  navigation,
+) => {
+  dispatch(registerStart());
+  // console.log('>>>check nav: ', navigation);
+  try {
+    const res = await axios.post(registerRoute, {
+      username: username,
+      password: password,
+      email: email,
+    });
+    // console.log('>>>check register: ', res.data);
+    alert('bạn đã đăng kí thành công');
+    dispatch(registerSuccess(res.data));
+    navigation.navigate('Login');
+  } catch (error) {
+    alert('đã có tài khoản như vậy rồi nha');
+    dispatch(registerFailed());
   }
 };

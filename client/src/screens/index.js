@@ -9,6 +9,9 @@ import Mail from './Mail';
 import Users from './Users';
 import Login from './Login';
 
+import Cart from './Cart';
+import BookNow from './BookNow';
+import BookNowX from './BookNowX';
 const Tab = createBottomTabNavigator();
 
 function Index() {
@@ -63,7 +66,7 @@ function Index() {
       />
       <Tab.Screen
         name="User"
-        component={Users}
+        component={BookNowX}
         options={{
           tabBarLabel: 'Users',
           tabBarIcon: ({color, size}) => (

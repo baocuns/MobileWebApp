@@ -19,8 +19,10 @@ import mapReducer from './mapSlice';
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 
 import thunk from 'redux-thunk';
+
+// khiemtv1412 đánh dấu chứ không là không nhớ làm chỗ nào luôn
 import authSlice from './authSlice';
-// import registerSlice from './registerSlice';
+
 const persistConfig = {
   key: 'root',
   storage,
@@ -29,7 +31,6 @@ const persistConfig = {
 const rootReducer = combineReducers({
   map: mapReducer,
   auth: authSlice,
-  // regis: registerSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
