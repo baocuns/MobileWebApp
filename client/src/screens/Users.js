@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -48,7 +49,7 @@ const Users = ({navigation}) => {
                 fontSize: 20,
                 fontWeight: 'bold',
               }}>
-              {user ? user.username : 'thong tin nguoi dung'}
+              {user ? user.username : 'Thông tin người dùng'}
             </Text>
             <TouchableOpacity onPress={() => navigation.navigate('UserInfo')}>
               <Text
@@ -57,7 +58,7 @@ const Users = ({navigation}) => {
                   fontSize: 12,
                   fontWeight: 'bold',
                 }}>
-                {user ? user.username : 'thong tin nguoi dung'}
+                {user ? user.username : 'Thông tin người dùng'}
                 {''}{' '}
                 <Icon
                   name="chevron-right"
@@ -213,6 +214,7 @@ const Users = ({navigation}) => {
                   color: 'black',
                   backgroundColor: 'white',
                   fontSize: 15,
+                  fontWeight: 'bold',
                 }}>
                 Đơn hàng của tôi
               </Text>
@@ -258,8 +260,9 @@ const Users = ({navigation}) => {
                   color: 'black',
                   backgroundColor: 'white',
                   fontSize: 15,
+                  fontWeight: 'bold',
                 }}>
-                {user ? user.username : 'thong tin nguoi dung'}
+                {user ? user.username : 'Thông tin người dùng'}
               </Text>
             </View>
           </View>
@@ -303,54 +306,9 @@ const Users = ({navigation}) => {
                   color: 'black',
                   backgroundColor: 'white',
                   fontSize: 15,
+                  fontWeight: 'bold',
                 }}>
                 Đánh giá
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              borderWidth: 1,
-              borderColor: 'gray',
-              borderRadius: 10,
-              marginBottom: 10,
-            }}>
-            <View
-              style={{
-                padding: 10,
-                height: 40,
-                width: 50,
-                backgroundColor: '#cfbda1',
-                alignItems: 'center',
-                borderBottomLeftRadius: 10,
-                borderTopLeftRadius: 10,
-                borderRightWidth: 1,
-                borderRightColor: 'gray',
-              }}>
-              <Icon
-                style={{
-                  fontSize: 20,
-                  color: 'black',
-                }}
-                name="vk"
-              />
-            </View>
-            <View
-              style={{
-                paddingLeft: 10,
-              }}>
-              <Text
-                style={{
-                  color: 'black',
-                  backgroundColor: 'white',
-                  fontSize: 15,
-                }}>
-                Thông báo
               </Text>
             </View>
           </View>
@@ -395,6 +353,7 @@ const Users = ({navigation}) => {
                   color: 'black',
                   backgroundColor: 'white',
                   fontSize: 15,
+                  fontWeight: 'bold',
                 }}>
                 Trợ giúp
               </Text>
@@ -441,6 +400,7 @@ const Users = ({navigation}) => {
                   color: 'black',
                   backgroundColor: 'white',
                   fontSize: 15,
+                  fontWeight: 'bold',
                 }}>
                 Đánh giá ứng dụng
               </Text>
@@ -487,8 +447,55 @@ const Users = ({navigation}) => {
                   color: 'black',
                   backgroundColor: 'white',
                   fontSize: 15,
+                  fontWeight: 'bold',
                 }}>
                 Cài đặt
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: 'gray',
+              borderRadius: 10,
+              marginBottom: 10,
+            }}>
+            <View
+              style={{
+                padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#ef921b',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
+              }}>
+              <Icon
+                style={{
+                  fontSize: 20,
+                  color: 'black',
+                }}
+                name="user-times"
+              />
+            </View>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                  backgroundColor: 'white',
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                }}>
+                Logout
               </Text>
             </View>
           </View>
