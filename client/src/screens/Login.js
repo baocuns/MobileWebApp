@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import Home from './Home';
+
 import {
   StatusBar,
   Text,
@@ -9,7 +11,16 @@ import {
   Image,
 } from 'react-native';
 
+import {useDispatch, useSelector, useNavigate} from 'react-redux';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios';
+import {loginRoute} from '../routes/APIRoute';
+import {myloginxnxx} from '../utils/function';
+import {loginUser} from '../redux/apiRequest';
+import {registerUser} from '../redux/apiRequest';
+import {useNavigation} from '@react-navigation/native';
+import {loginFailed, registerFailed} from '../redux/AuthSlice';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -22,20 +33,25 @@ function Login({navigation}) {
     <>
       <View style={{flex: 1}}>
         <View style={{height: '25%', width: '100%'}}>
-          <RedComponent page={page} setPage={setPage} />
+          <RedComponent navigation={navigation} page={page} setPage={setPage} />
         </View>
+
         <View style={{height: '40%', width: '100%'}}>
-          {page === SIGN_IN ? <GreenComponent /> : null}
+          {page === SIGN_IN ? <GreenComponent navigation={navigation} /> : null}
+          {page === GET_STARTED ? (
+            <PinkComponent navigation={navigation} />
+          ) : null}
         </View>
+
         <View style={{flex: 1}}>
-          <BlueComponent />
+          <BlueComponent navigation={navigation} />
         </View>
       </View>
     </>
   );
 }
 
-const BlueComponent = () => {
+const BlueComponent = ({navigation}) => {
   return (
     <View
       style={{
@@ -117,10 +133,13 @@ const BlueComponent = () => {
   );
 };
 
-const GreenComponent = () => {
+const GreenComponent = ({navigation}) => {
   const [isPasswordVisiable, setIsPasswordVisiable] = useState(false);
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
   return (
     <View
       style={{
@@ -151,7 +170,9 @@ const GreenComponent = () => {
         <TextInput
           autoCapitalize="none"
           style={{flex: 1, fontSize: 20}}
-          placeholder="E-mail"></TextInput>
+          placeholder="User Name"
+          value={username}
+          onChangeText={value => setUsername(value)}></TextInput>
       </View>
       {/* Password */}
       <View
@@ -173,7 +194,9 @@ const GreenComponent = () => {
           secureTextEntry={!isPasswordVisiable}
           autoCapitalize="none"
           style={{flex: 1, fontSize: 20, paddingRight: 50}}
-          placeholder="Password"></TextInput>
+          placeholder="Password"
+          value={password}
+          onChangeText={value => setPassword(value)}></TextInput>
         <TouchableOpacity
           onPress={() => setIsPasswordVisiable(!isPasswordVisiable)}
           style={{color: 'white', position: 'absolute', right: 10}}>
@@ -200,6 +223,7 @@ const GreenComponent = () => {
       </View>
       {/* Button Login */}
       <TouchableOpacity
+        onPress={() => loginUser(username, password, dispatch, navigation)}
         style={{
           borderRadius: 50,
           height: 45,
@@ -209,6 +233,129 @@ const GreenComponent = () => {
           alignItems: 'center',
         }}>
         <Text style={{color: '#fff', fontSize: 20}}>Login</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const PinkComponent = ({navigation}) => {
+  const [isPasswordVisiable, setIsPasswordVisiable] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const dispatch = useDispatch();
+  return (
+    <View
+      style={{
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        backgroundColor: '#F5F5F5',
+        height: '100%',
+        width: '100%',
+      }}>
+      {/* Login in your account */}
+      <Text style={{fontSize: 24, color: '#000', fontWeight: '600'}}>
+        Sign up a account
+      </Text>
+      {/* Email */}
+      <View
+        style={{
+          flexDirection: 'row',
+          backgroundColor: '#fff',
+          width: windowWidth - 60,
+          height: 45,
+          marginTop: 20,
+        }}>
+        <Icon
+          name="user"
+          size={40}
+          style={{width: 40, marginLeft: 10, marginRight: 10}}
+        />
+        <TextInput
+          autoCapitalize="none"
+          style={{flex: 1, fontSize: 20}}
+          placeholder="User Name"
+          value={username}
+          onChangeText={value => setUsername(value)}></TextInput>
+      </View>
+      {/* Password */}
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'row',
+          backgroundColor: '#fff',
+          width: windowWidth - 60,
+          height: 45,
+          marginTop: 20,
+        }}>
+        <Icon
+          name="key"
+          size={40}
+          style={{width: 40, marginLeft: 10, marginRight: 10}}
+        />
+        <TextInput
+          secureTextEntry={!isPasswordVisiable}
+          autoCapitalize="none"
+          style={{flex: 1, fontSize: 20, paddingRight: 50}}
+          placeholder="Password"
+          value={password}
+          onChangeText={value => setPassword(value)}></TextInput>
+        <TouchableOpacity
+          onPress={() => setIsPasswordVisiable(!isPasswordVisiable)}
+          style={{color: 'white', position: 'absolute', right: 10}}>
+          {isPasswordVisiable ? (
+            <Icon name="eye" size={30} style={{color: '#000'}} />
+          ) : (
+            <Icon name="eye-slash" size={30} style={{color: '#000'}} />
+          )}
+        </TouchableOpacity>
+      </View>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          backgroundColor: '#fff',
+          width: windowWidth - 60,
+          height: 45,
+          marginTop: 20,
+        }}>
+        <Icon
+          name="envelope"
+          size={40}
+          style={{width: 40, marginLeft: 10, marginRight: 10}}
+        />
+        <TextInput
+          autoCapitalize="none"
+          style={{flex: 1, fontSize: 20}}
+          placeholder="Email"
+          value={email}
+          onChangeText={value => setEmail(value)}></TextInput>
+      </View>
+      {/* Forgot password */}
+      <View
+        style={{
+          paddingRight: 20,
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          flexDirection: 'row',
+          width: windowWidth - 60,
+          marginTop: 20,
+        }}></View>
+      {/* Button Login */}
+      <TouchableOpacity
+        onPress={() =>
+          registerUser(username, password, email, dispatch, navigation)
+        }
+        style={{
+          borderRadius: 50,
+          height: 45,
+          width: windowWidth - 60,
+          backgroundColor: COLOR_THEME,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text style={{color: '#fff', fontSize: 20}}>Register</Text>
       </TouchableOpacity>
     </View>
   );
@@ -264,6 +411,7 @@ const RedComponent = ({page, setPage}) => {
             width: '50%',
             height: '100%',
           }}>
+          {/* chuyển trang */}
           <Text style={{fontSize: 20, color: COLOR_THEME}}>Get Started</Text>
           {page === GET_STARTED ? (
             <View

@@ -36,7 +36,7 @@ const Friends = () => {
           </View>
           <View>
             <Text
-              style={{
+              style={{ 
                 color: 'black',
                 fontSize: 15,
                 fontWeight: 'bold',
@@ -222,11 +222,11 @@ const Friends = () => {
                   }}>
                   <Image
                     style={{
-                      width: 90,
-                      height: 90,
+                      width: 80,
+                      height: 80,
                       borderRadius: 50,
                     }}
-                    source={require('../assets/images/levi.jpg')}
+                    source={require('../assets/images/cotham.jpg')}
                   />
                 </View>
               </View>
@@ -242,7 +242,7 @@ const Friends = () => {
                         fontWeight: 'bold',
                         fontSize: 15,
                       }}>
-                      Tên
+                      Cô thắm
                     </Text>
                   </View>
 
@@ -261,7 +261,7 @@ const Friends = () => {
                           height: 40,
                           borderRadius: 50,
                         }}
-                        source={require('../assets/images/levi.jpg')}
+                        source={require('../assets/images/cotham.jpg')}
                       />
                     </View>
 
@@ -323,7 +323,7 @@ const Friends = () => {
 
           <View
             style={{
-              borderWidth: 1,
+              borderBottomWidth: 1,
               borderColor: 'gray',
             }}></View>
         </View>
@@ -445,6 +445,7 @@ const Friends = () => {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
+              marginBottom: 10
             }}>
             <View
               style={{
@@ -460,11 +461,11 @@ const Friends = () => {
                 <TouchableOpacity>
                   <Image
                     style={{
-                      width: 90,
-                      height: 90,
+                      width: 80,
+                      height: 80,
                       borderRadius: 50,
                     }}
-                    source={require('../assets/images/levi.jpg')}
+                    source={require('../assets/images/cotham.jpg')}
                   />
                 </TouchableOpacity>
               </View>
@@ -520,6 +521,7 @@ const Friends = () => {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
+              marginBottom: 10
             }}>
             <View
               style={{
@@ -535,11 +537,11 @@ const Friends = () => {
                 <TouchableOpacity>
                   <Image
                     style={{
-                      width: 90,
-                      height: 90,
+                      width: 80,
+                      height: 80,
                       borderRadius: 50,
                     }}
-                    source={require('../assets/images/levi.jpg')}
+                    source={require('../assets/images/cotham.jpg')}
                   />
                 </TouchableOpacity>
               </View>
@@ -595,6 +597,7 @@ const Friends = () => {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
+              marginBottom: 10
             }}>
             <View
               style={{
@@ -610,11 +613,11 @@ const Friends = () => {
                 <TouchableOpacity>
                   <Image
                     style={{
-                      width: 90,
-                      height: 90,
+                      width: 80,
+                      height: 80,
                       borderRadius: 50,
                     }}
-                    source={require('../assets/images/levi.jpg')}
+                    source={require('../assets/images/cotham.jpg')}
                   />
                 </TouchableOpacity>
               </View>
@@ -666,231 +669,9 @@ const Friends = () => {
               </View>
             </View>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginRight: 'auto',
-              }}>
-              {/* image */}
-              <View
-                style={{
-                  marginRight: 10,
-                }}>
-                <TouchableOpacity>
-                  <Image
-                    style={{
-                      width: 90,
-                      height: 90,
-                      borderRadius: 50,
-                    }}
-                    source={require('../assets/images/levi.jpg')}
-                  />
-                </TouchableOpacity>
-              </View>
-
-              <View>
-                <View>
-                  <TouchableOpacity>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                      }}>
-                      Cô thắm
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-
-            <View
-              style={{
-                flexDirection: 'row',
-              }}>
-              <View
-                style={{
-                  paddingRight: 10,
-                }}>
-                <TouchableOpacity>
-                  <Icon
-                    style={{
-                      color: 'blue',
-                      fontSize: 30,
-                    }}
-                    name="phone"
-                  />
-                </TouchableOpacity>
-              </View>
-              <View>
-                <TouchableOpacity>
-                  <Icon
-                    style={{
-                      color: 'blue',
-                      fontSize: 30,
-                    }}
-                    name="comment"
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginRight: 'auto',
-              }}>
-              {/* image */}
-              <View
-                style={{
-                  marginRight: 10,
-                }}>
-                <TouchableOpacity>
-                  <Image
-                    style={{
-                      width: 90,
-                      height: 90,
-                      borderRadius: 50,
-                    }}
-                    source={require('../assets/images/levi.jpg')}
-                  />
-                </TouchableOpacity>
-              </View>
-
-              <View>
-                <View>
-                  <TouchableOpacity>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                      }}>
-                      Cô thắm
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-
-            <View
-              style={{
-                flexDirection: 'row',
-              }}>
-              <View
-                style={{
-                  paddingRight: 10,
-                }}>
-                <TouchableOpacity>
-                  <Icon
-                    style={{
-                      color: 'blue',
-                      fontSize: 30,
-                    }}
-                    name="phone"
-                  />
-                </TouchableOpacity>
-              </View>
-              <View>
-                <TouchableOpacity>
-                  <Icon
-                    style={{
-                      color: 'blue',
-                      fontSize: 30,
-                    }}
-                    name="comment"
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginRight: 'auto',
-              }}>
-              {/* image */}
-              <View
-                style={{
-                  marginRight: 10,
-                }}>
-                <TouchableOpacity>
-                  <Image
-                    style={{
-                      width: 90,
-                      height: 90,
-                      borderRadius: 50,
-                    }}
-                    source={require('../assets/images/levi.jpg')}
-                  />
-                </TouchableOpacity>
-              </View>
-
-              <View>
-                <View>
-                  <TouchableOpacity>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontSize: 20,
-                        fontWeight: 'bold',
-                      }}>
-                      Cô thắm
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-
-            <View
-              style={{
-                flexDirection: 'row',
-              }}>
-              <View
-                style={{
-                  paddingRight: 10,
-                }}>
-                <TouchableOpacity>
-                  <Icon
-                    style={{
-                      color: 'blue',
-                      fontSize: 30,
-                    }}
-                    name="phone"
-                  />
-                </TouchableOpacity>
-              </View>
-              <View>
-                <TouchableOpacity>
-                  <Icon
-                    style={{
-                      color: 'blue',
-                      fontSize: 30,
-                    }}
-                    name="comment"
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
+       
+       
+       
         </View>
       </View>
     </ScrollView>
