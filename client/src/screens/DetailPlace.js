@@ -10,13 +10,11 @@ import axios from 'axios';
 const { width, height } = Dimensions.get("window");
 
 const DetailPlace = ({ navigation, route }) => {
-    const { url } = route.params;
+    const { slug } = route.params;
     const [item, setItem] = useState([]);
-    const fetchData = async (url) => {
+    const fetchData = async () => {
         try {
-            const res = await axios.post(getDetailRoute, {
-                url: url
-            })
+            const res = await axios.get(getDetailRoute + "/" + slug)
             setItem(res.data[0]);
             console.log(res.data[0]);
         } catch (error) {
@@ -24,7 +22,7 @@ const DetailPlace = ({ navigation, route }) => {
         }
     }
     useEffect(() => {
-        fetchData(url);
+        fetchData();
     }, []);
 
     return (
