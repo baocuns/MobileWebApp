@@ -59,7 +59,6 @@ const Users = ({navigation}) => {
                   fontWeight: 'bold',
                 }}>
                 {user ? user.username : 'Thông tin người dùng'}
-                {''}{' '}
                 <Icon
                   name="chevron-right"
                   style={{
