@@ -43,9 +43,9 @@ export const loginUser = async (username, password, dispatch, navigation) => {
       username: username,
       password: password,
     });
-    console.log('>>>check login: ', res.data);
+    console.log('>>>check login: ', res.data.data);
     alert('bạn đã đăng nhập thành công');
-    dispatch(loginSuccess(res.data));
+    dispatch(loginSuccess(res.data.data));
     navigation.navigate('Home');
   } catch (error) {
     alert('sai username hay password rồi kìa');
