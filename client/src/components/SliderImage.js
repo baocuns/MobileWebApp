@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Image, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import FastImage from 'react-native-fast-image';
+
 const { width } = Dimensions.get("window");
 const height = width * 0.6;//60%
 //Load Data
@@ -35,7 +37,7 @@ const SliderImage = ({ navigation, image }) => {
                 >
                     {
                         imageList.map((image, index) => (
-                            <Image
+                            <FastImage
                                 source={{ uri: image }}
                                 style={styles.imgItem}
                             />
