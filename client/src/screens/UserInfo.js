@@ -44,61 +44,7 @@ const UserInfo = ({navigation}) => {
             backgroundColor: 'white',
           }}>
           <TextInput
-            placeholder="Họ"
-            style={{
-              fontWeight: 'bold',
-            }}
-          />
-        </View>
-
-        <View
-          style={{
-            borderWidth: 4,
-            borderColor: 'gray',
-            borderRadius: 20,
-            marginLeft: 10,
-            marginRight: 10,
-            marginBottom: 10,
-            backgroundColor: 'white',
-          }}>
-          <TextInput
-            placeholder="Tên"
-            style={{
-              fontWeight: 'bold',
-            }}
-          />
-        </View>
-
-        <View
-          style={{
-            borderWidth: 4,
-            borderColor: 'gray',
-            borderRadius: 20,
-            marginLeft: 10,
-            marginRight: 10,
-            marginBottom: 10,
-            backgroundColor: 'white',
-          }}>
-          <TextInput
-            placeholder="Họ (như trên các Giấy tờ Du Lịch Khác)"
-            style={{
-              fontWeight: 'bold',
-            }}
-          />
-        </View>
-
-        <View
-          style={{
-            borderWidth: 4,
-            borderColor: 'gray',
-            borderRadius: 20,
-            marginLeft: 10,
-            marginRight: 10,
-            marginBottom: 10,
-            backgroundColor: 'white',
-          }}>
-          <TextInput
-            placeholder="Tên (như trên các Giấy tờ Du Lịch Khác)"
+            placeholder="fullname"
             style={{
               fontWeight: 'bold',
             }}
@@ -115,7 +61,7 @@ const UserInfo = ({navigation}) => {
             backgroundColor: 'white',
           }}>
           <TextInput
-            placeholder="Quốc gia"
+            placeholder="email"
             style={{
               fontWeight: 'bold',
             }}
@@ -132,7 +78,7 @@ const UserInfo = ({navigation}) => {
             backgroundColor: 'white',
           }}>
           <TextInput
-            placeholder="Mã quốc gia"
+            placeholder="phone"
             style={{
               fontWeight: 'bold',
             }}
@@ -149,7 +95,7 @@ const UserInfo = ({navigation}) => {
             backgroundColor: 'white',
           }}>
           <TextInput
-            placeholder="Danh xưng"
+            placeholder="birthday"
             style={{
               fontWeight: 'bold',
             }}
@@ -166,7 +112,7 @@ const UserInfo = ({navigation}) => {
             backgroundColor: 'white',
           }}>
           <TextInput
-            placeholder="Số điện thoại"
+            placeholder="sex"
             style={{
               fontWeight: 'bold',
             }}
@@ -183,7 +129,41 @@ const UserInfo = ({navigation}) => {
             backgroundColor: 'white',
           }}>
           <TextInput
-            placeholder="Email"
+            placeholder="country"
+            style={{
+              fontWeight: 'bold',
+            }}
+          />
+        </View>
+        <View
+          style={{
+            borderWidth: 4,
+            borderColor: 'gray',
+            borderRadius: 20,
+            marginLeft: 10,
+            marginRight: 10,
+            marginBottom: 10,
+            backgroundColor: 'white',
+          }}>
+          <TextInput
+            placeholder="address"
+            style={{
+              fontWeight: 'bold',
+            }}
+          />
+        </View>
+        <View
+          style={{
+            borderWidth: 4,
+            borderColor: 'gray',
+            borderRadius: 20,
+            marginLeft: 10,
+            marginRight: 10,
+            marginBottom: 10,
+            backgroundColor: 'white',
+          }}>
+          <TextInput
+            placeholder="photos"
             style={{
               fontWeight: 'bold',
             }}

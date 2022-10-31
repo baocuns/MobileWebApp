@@ -1,14 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { View, StyleSheet, Image, Dimensions, Text, StatusBar, ImageBackground, TextInput, ScrollView, TouchableOpacity, Pressable, RefreshControl, ActivityIndicator } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    Image,
+    Dimensions,
+    Text,
+    StatusBar,
+    ImageBackground,
+    TextInput,
+    ScrollView,
+    TouchableOpacity,
+    Pressable,
+    RefreshControl,
+    ActivityIndicator,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import homeScreen from '../assets/images/launch_screen.png';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getSliderRoute, getToursLastHourRoute, HOST_CRAWL } from '../routes/APIRoute';
+import {
+    getSliderRoute,
+    getToursLastHourRoute,
+    HOST_CRAWL,
+} from '../routes/APIRoute';
 import IconAnt from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
-
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -26,7 +43,6 @@ const Home = ({ navigation }) => {
     useEffect(() => {
         fetchData();
     }, []);
-
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
@@ -148,25 +164,28 @@ const Home = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     imageSlideContainer: {
-        width: screenWidth / 3, height: '100%', borderRadius: 10, marginLeft: 10, marginRight: 10
+        width: screenWidth / 3,
+        height: '100%',
+        borderRadius: 10,
+        marginLeft: 10,
+        marginRight: 10,
     },
     imgListPlace: {
-        flexDirection: 'row'
-    }
-    ,
+        flexDirection: 'row',
+    },
     titlePlace: {
         margin: 10,
         color: '#fff',
         fontWeight: '600',
-        fontSize: 30
+        fontSize: 30,
     },
     imgPlace: {
         marginLeft: 10,
         marginRight: 10,
         width: 120,
         height: 80,
-        borderRadius: 10
-    }
-})
+        borderRadius: 10,
+    },
+});
 
 export default Home;
