@@ -14,6 +14,9 @@ import {
   registerStart,
   registerSuccess,
   registerFailed,
+  logoutUserStart,
+  logoutUserSuccess,
+  logoutUserFail,
 } from './authSlice';
 
 import {getUsersStart, getUsersFail, getUsersSuccess} from './userSilce';
@@ -40,7 +43,7 @@ export const loginUser = async (username, password, dispatch, navigation) => {
       username: username,
       password: password,
     });
-    // console.log('>>>check login: ', res.data);
+    console.log('>>>check login: ', res.data);
     alert('bạn đã đăng nhập thành công');
     dispatch(loginSuccess(res.data));
     navigation.navigate('Home');
@@ -58,20 +61,32 @@ export const registerUser = async (
   navigation,
 ) => {
   dispatch(registerStart());
-  console.log('>>>check nav: ', navigation);
+  // console.log('>>>check nav: ', navigation);
   try {
     const res = await axios.post(registerRoute, {
       username: username,
       password: password,
       email: email,
     });
-    console.log('>>>check register: ', res.data);
+    // console.log('>>>check register: ', res.data);
     alert('bạn đã đăng kí thành công');
     dispatch(registerSuccess(res.data));
     navigation.navigate('Login');
   } catch (error) {
     alert('đã có tài khoản như vậy rồi nha');
     dispatch(registerFailed());
+  }
+};
+
+export const LogoutUser = async (accessToken, dispatch, id) => {
+  dispatch(logoutUserStart());
+  try {
+    const res = await axios.post('v1/auth/logout' + id, {
+      Headers: {token: `Bearer ${accessToken}`},
+    });
+    dispatch(logoutUserSuccess(res.data));
+  } catch (err) {
+    dispatch(logoutUserFail(err.reponse.data));
   }
 };
 
