@@ -9,9 +9,15 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Users = ({ navigation }) => {
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {useDispatch, useSelector} from 'react-redux';
+
+const Users = ({navigation}) => {
+  const user = useSelector(state => state.auth.login.currentUser);
+  if (user) {
+    console.log('>>> check user: ' + user.username);
+  }
   return (
     <ScrollView>
       <View
@@ -43,18 +49,16 @@ const Users = ({ navigation }) => {
                 fontSize: 20,
                 fontWeight: 'bold',
               }}>
-              Thông tin người dùng
+              {user ? user.username : 'Thông tin người dùng'}
             </Text>
-            <TouchableOpacity 
-              onPress={()=>navigation.navigate('UserInfo')}
-            >
+            <TouchableOpacity onPress={() => navigation.navigate('UserInfo')}>
               <Text
                 style={{
                   color: 'blue',
                   fontSize: 12,
                   fontWeight: 'bold',
                 }}>
-                Thông tin người dùng
+                {user ? user.username : 'Thông tin người dùng'}
                 {''}{' '}
                 <Icon
                   name="chevron-right"
@@ -167,7 +171,9 @@ const Users = ({ navigation }) => {
           padding: 10,
           backgroundColor: 'white',
           margin: 15,
-          borderRadius: 10,
+          borderRadius: 5,
+          borderWidth: 1,
+          borderColor: 'gray',
         }}>
         <TouchableOpacity>
           <View
@@ -182,6 +188,14 @@ const Users = ({ navigation }) => {
             <View
               style={{
                 padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
               }}>
               <Icon
                 style={{
@@ -191,21 +205,23 @@ const Users = ({ navigation }) => {
                 name="list-alt"
               />
             </View>
-            <View style={{}}>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
               <Text
                 style={{
                   color: 'black',
                   backgroundColor: 'white',
                   fontSize: 15,
+                  fontWeight: 'bold',
                 }}>
                 Đơn hàng của tôi
               </Text>
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
-        onPress={()=> navigation.navigate('UserInfo')}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate('UserInfo')}>
           <View
             style={{
               flexDirection: 'row',
@@ -218,6 +234,14 @@ const Users = ({ navigation }) => {
             <View
               style={{
                 padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
               }}>
               <Icon
                 style={{
@@ -227,14 +251,18 @@ const Users = ({ navigation }) => {
                 name="user"
               />
             </View>
-            <View style={{}}>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
               <Text
                 style={{
                   color: 'black',
                   backgroundColor: 'white',
                   fontSize: 15,
+                  fontWeight: 'bold',
                 }}>
-                Thông tin người dùng
+                {user ? user.username : 'Thông tin người dùng'}
               </Text>
             </View>
           </View>
@@ -252,6 +280,14 @@ const Users = ({ navigation }) => {
             <View
               style={{
                 padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
               }}>
               <Icon
                 style={{
@@ -261,12 +297,16 @@ const Users = ({ navigation }) => {
                 name="comment"
               />
             </View>
-            <View style={{}}>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
               <Text
                 style={{
                   color: 'black',
                   backgroundColor: 'white',
                   fontSize: 15,
+                  fontWeight: 'bold',
                 }}>
                 Đánh giá
               </Text>
@@ -287,41 +327,14 @@ const Users = ({ navigation }) => {
             <View
               style={{
                 padding: 10,
-              }}>
-              <Icon
-                style={{
-                  fontSize: 20,
-                  color: 'black',
-                }}
-                name="vk"
-              />
-            </View>
-            <View style={{}}>
-              <Text
-                style={{
-                  color: 'black',
-                  backgroundColor: 'white',
-                  fontSize: 15,
-                }}>
-                Thông báo
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              borderWidth: 1,
-              borderColor: 'gray',
-              borderRadius: 10,
-              marginBottom: 10,
-            }}>
-            <View
-              style={{
-                padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
               }}>
               <Icon
                 style={{
@@ -331,12 +344,16 @@ const Users = ({ navigation }) => {
                 name="question"
               />
             </View>
-            <View style={{}}>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
               <Text
                 style={{
                   color: 'black',
                   backgroundColor: 'white',
                   fontSize: 15,
+                  fontWeight: 'bold',
                 }}>
                 Trợ giúp
               </Text>
@@ -356,21 +373,34 @@ const Users = ({ navigation }) => {
             <View
               style={{
                 padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
               }}>
               <Icon
                 style={{
                   fontSize: 20,
                   color: 'black',
+                  alignItems: 'center',
                 }}
                 name="thumbs-o-up"
               />
             </View>
-            <View style={{}}>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
               <Text
                 style={{
                   color: 'black',
                   backgroundColor: 'white',
                   fontSize: 15,
+                  fontWeight: 'bold',
                 }}>
                 Đánh giá ứng dụng
               </Text>
@@ -391,6 +421,14 @@ const Users = ({ navigation }) => {
             <View
               style={{
                 padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
               }}>
               <Icon
                 style={{
@@ -400,14 +438,64 @@ const Users = ({ navigation }) => {
                 name="gear"
               />
             </View>
-            <View style={{}}>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
               <Text
                 style={{
                   color: 'black',
                   backgroundColor: 'white',
                   fontSize: 15,
+                  fontWeight: 'bold',
                 }}>
                 Cài đặt
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: 'gray',
+              borderRadius: 10,
+              marginBottom: 10,
+            }}>
+            <View
+              style={{
+                padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#ef921b',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
+              }}>
+              <Icon
+                style={{
+                  fontSize: 20,
+                  color: 'black',
+                }}
+                name="user-times"
+              />
+            </View>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                  backgroundColor: 'white',
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                }}>
+                Logout
               </Text>
             </View>
           </View>

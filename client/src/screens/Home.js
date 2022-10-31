@@ -22,6 +22,25 @@ const Home = ({ navigation }) => {
     const [placeList, setPlaceList] = useState([]);
     const [lastTours, setLastTours] = useState([]);
     const [search, setSearch] = useState("");
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(getSliderRoute);
+      setPlaceList(res.data);
+      const res2 = await axios.get(getToursLastHourRoute);
+      setLastTours(res2.data);
+    } catch (error) {
+      console.log(error);
+>>>>>>> Khiemtv1412
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
