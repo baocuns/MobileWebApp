@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { getSliderRoute, getToursLastHourRoute, HOST_CRAWL } from '../routes/APIRoute';
 import IconAnt from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
+import moment from 'moment';
 
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -45,13 +46,20 @@ const Home = ({ navigation }) => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
     }, []);
+
     const fetchData = async () => {
         try {
-            const res = await axios.get(getSliderRoute);
-            setPlaceList(res.data.data);
-            const res2 = await axios.get(getToursLastHourRoute);
-            setLastTours(res2.data);
-            setIsFetching(true)
+            axios.get(getSliderRoute)
+                .then(result => {
+                    setPlaceList(result.data.data);
+                    setIsFetching(true)
+                })
+            axios.get(getToursLastHourRoute)
+                .then(result => {
+                    setLastTours(result.data.data);
+                    setIsFetching(true)
+                })
+
         } catch (error) {
             console.log(error);
         }
@@ -84,8 +92,9 @@ const Home = ({ navigation }) => {
                             <Icon style={{ position: 'absolute', left: 55, zIndex: 1 }} name="search" size={20} color='#000' />
                             <TextInput
                                 onSubmitEditing={() => navigation.navigate('ProvinceDetail', {
-                                    url: `https://travel.com.vn/tim-tour/${search}/ket-qua-tim-kiem.aspx`,
-                                    name: search,
+                                    area_slug: search,
+                                    status: 'search',
+                                    name: search
                                 })}
                                 value={search}
                                 onChangeText={setSearch}
@@ -124,21 +133,22 @@ const Home = ({ navigation }) => {
                         </Text>
                         {lastTours.map((data, index) => (
                             <View key={index} style={{ marginHorizontal: 10 }}>
-                                <Pressable key={data.code} onPress={() => navigation.navigate('DetailPlace', {
-                                    url: data.detailURL
+                                <Pressable key={index} onPress={() => navigation.navigate('DetailPlace', {
+                                    slug: data.slug
                                 })} style={{ width: '100%', marginVertical: 10, borderRadius: 10, backgroundColor: '#F5F5F5' }}>
-                                    <FastImage source={{ uri: data.image }} style={{ width: '100%', height: 200, borderTopLeftRadius: 10, borderTopRightRadius: 10 }} />
+                                    <FastImage source={{ uri: data.thumb }} style={{ width: '100%', height: 200, borderTopLeftRadius: 10, borderTopRightRadius: 10 }} />
                                     <View style={{ margin: 10, flex: 1, justifyContent: 'space-between' }}>
                                         <View>
-                                            <Text style={{ fontSize: 10 }}>{data.start}</Text>
-                                            <Text style={{ fontWeight: 'bold', color: '#000' }}>{data.name}</Text>
+                                            <Text style={{ fontSize: 10 }}>Ngày bắt đầu: {moment.utc(data.time_start).format('MM/DD/YYYY')}</Text>
+                                            <Text style={{ fontSize: 10 }}>Ngày kết thúc: {moment.utc(data.time_end).format('MM/DD/YYYY')}</Text>
+                                            <Text style={{ fontWeight: 'bold', color: '#000' }}>{data.title}</Text>
                                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                <Text>({data.time})</Text>
+                                                <Text>Khởi hành: ({moment.utc(data.time_start).format('MM/DD/YYYY')})</Text>
                                             </View>
                                         </View>
                                         <View>
-                                            <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 10, textDecorationLine: 'line-through' }}>Giá gốc: {data.newPrice}</Text>
-                                            <Text style={{ color: '#000', fontWeight: 'bold', justifyContent: 'flex-end' }}>Chỉ từ: {data.newPrice}</Text>
+                                            <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 10, textDecorationLine: 'line-through' }}>Giá gốc: {data.price}đ</Text>
+                                            <Text style={{ color: '#000', fontWeight: 'bold', justifyContent: 'flex-end' }}>Chỉ từ: {data.sale}đ</Text>
                                         </View>
                                     </View>
                                 </Pressable>

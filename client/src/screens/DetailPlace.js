@@ -6,6 +6,8 @@ import BoxRating from '../components/BoxRating';
 import Rating from '../components/Rating';
 import { getDetailRoute } from '../routes/APIRoute';
 import axios from 'axios';
+import moment from 'moment';
+
 
 const { width, height } = Dimensions.get("window");
 
@@ -15,8 +17,9 @@ const DetailPlace = ({ navigation, route }) => {
     const fetchData = async () => {
         try {
             const res = await axios.get(getDetailRoute + "/" + slug)
-            setItem(res.data[0]);
-            console.log(res.data[0]);
+            setItem(res.data.data[0]);
+            // console.log(res.data.data[0]);
+            // console.log('check image:  ');
         } catch (error) {
             console.log(error);
         }
@@ -33,18 +36,18 @@ const DetailPlace = ({ navigation, route }) => {
                 showsVerticalScrollIndicator={false}
                 style={{ height: height * 0.85 }}>
                 {/* Slider Image */}
-                {item && item.image ?
-                    <SliderImage navigation={navigation} image={item.image} /> : <></>
+                {item && item.images ?
+                    <SliderImage navigation={navigation} image={item.images} /> : <></>
                 }
                 <View style={{ margin: 10 }}>
-                    <Text style={{ fontWeight: '600', color: '#000', fontSize: 26 }}>{item && item.name}</Text>
-                    {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ fontWeight: '600', color: '#000', fontSize: 26 }}>{item && item.title}</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <AntDesign name='star' size={14} color='#FFD700' />
                         <Text>4.6</Text>
                         <Text>(243)</Text>
                         <Text> . </Text>
                         <Text>3K Đã đặt</Text>
-                    </View> */}
+                    </View>
                     {/* Content */}
                     <View>
                         <Text style={{ marginVertical: 10, borderLeftWidth: 5, borderRadius: 5, borderLeftColor: '#ff4500', fontSize: 20, fontWeight: 'bold', color: '#000', paddingLeft: 20 }}>Về dịch vụ này</Text>
@@ -53,11 +56,12 @@ const DetailPlace = ({ navigation, route }) => {
                         </Text>
                     </View>
                     <View>
-                        {item && item.dayListDetail && item.dayListDetail.map((data, index) => {
+                        {item && item.schedule && item.schedule.map((data, index) => {
                             return (
-                                <View>
-                                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>{data.daytitle}</Text>
-                                    <Text style={{ fontSize: 14 }}>{data.excerpt}</Text>
+                                <View key={data._id}>
+                                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Ngày {index + 1}: {data.title}</Text>
+                                    <Text style={{ fontSize: 14, color: 'green' }}>Ngày: {moment.utc(data.date).format('DD/MM/YYYY')}</Text>
+                                    <Text style={{ fontSize: 14 }}>{data.details}</Text>
                                 </View>
                             )
                         })}
@@ -145,8 +149,8 @@ const DetailPlace = ({ navigation, route }) => {
             <View style={{ height: height * 0.15, borderTopColor: 'gray', borderTopWidth: 0.3 }}>
                 <View style={{ margin: 10 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#000' }}>{item.newPrice}</Text>
-                        <Text style={{ fontWeight: 'normal', fontSize: 12, textDecorationLine: 'line-through' }}>{item.oldPrice}</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#000' }}>{item.sale}đ</Text>
+                        <Text style={{ fontWeight: 'normal', fontSize: 12, textDecorationLine: 'line-through' }}>{item.price}đ</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <TouchableOpacity style={{ backgroundColor: '#ffa500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>

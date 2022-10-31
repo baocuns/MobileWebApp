@@ -11,9 +11,8 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// import AsyncStorage from '@react-native-community/async-storage';
+
+import storage from 'redux-persist/lib/storage'
 import mapReducer from './mapSlice';
 
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
