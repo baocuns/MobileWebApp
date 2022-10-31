@@ -40,10 +40,6 @@ const Home = ({ navigation }) => {
     const [lastTours, setLastTours] = useState([]);
     const [search, setSearch] = useState("");
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
