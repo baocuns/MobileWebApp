@@ -16,7 +16,7 @@ import {useDispatch, useSelector, useNavigate} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
 import {loginRoute} from '../routes/APIRoute';
-import {myloginxnxx} from '../utils/function';
+
 import {loginUser} from '../redux/apiRequest';
 import {registerUser} from '../redux/apiRequest';
 import {useNavigation} from '@react-navigation/native';

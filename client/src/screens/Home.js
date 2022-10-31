@@ -1,27 +1,44 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
-import { View, StyleSheet, Image, Dimensions, Text, StatusBar, ImageBackground, TextInput, ScrollView, TouchableOpacity, Pressable, RefreshControl, ActivityIndicator } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  View,
+  StyleSheet,
+  Image,
+  Dimensions,
+  Text,
+  StatusBar,
+  ImageBackground,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+  Pressable,
+  RefreshControl,
+  ActivityIndicator,
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import homeScreen from '../assets/images/launch_screen.png';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getSliderRoute, getToursLastHourRoute, HOST_CRAWL } from '../routes/APIRoute';
+import {
+  getSliderRoute,
+  getToursLastHourRoute,
+  HOST_CRAWL,
+} from '../routes/APIRoute';
 import IconAnt from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 
+const {width: screenWidth} = Dimensions.get('window');
 
-const { width: screenWidth } = Dimensions.get('window');
-
-const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-}
-const Home = ({ navigation }) => {
-    // const [imagelist, setImagelist] = useState([]);
-    const [isFetching, setIsFetching] = useState(false);
-    const [refreshing, setRefreshing] = React.useState(false);
-    const [placeList, setPlaceList] = useState([]);
-    const [lastTours, setLastTours] = useState([]);
-    const [search, setSearch] = useState("");
+const wait = timeout => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+};
+const Home = ({navigation}) => {
+  // const [imagelist, setImagelist] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [placeList, setPlaceList] = useState([]);
+  const [lastTours, setLastTours] = useState([]);
+  const [search, setSearch] = useState('');
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
@@ -34,12 +51,12 @@ const Home = ({ navigation }) => {
       setLastTours(res2.data);
     } catch (error) {
       console.log(error);
->>>>>>> Khiemtv1412
     }
   };
   useEffect(() => {
     fetchData();
   }, []);
+
 
 
     const onRefresh = React.useCallback(() => {
@@ -161,26 +178,29 @@ const Home = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-    imageSlideContainer: {
-        width: screenWidth / 3, height: '100%', borderRadius: 10, marginLeft: 10, marginRight: 10
-    },
-    imgListPlace: {
-        flexDirection: 'row'
-    }
-    ,
-    titlePlace: {
-        margin: 10,
-        color: '#fff',
-        fontWeight: '600',
-        fontSize: 30
-    },
-    imgPlace: {
-        marginLeft: 10,
-        marginRight: 10,
-        width: 120,
-        height: 80,
-        borderRadius: 10
-    }
-})
+  imageSlideContainer: {
+    width: screenWidth / 3,
+    height: '100%',
+    borderRadius: 10,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  imgListPlace: {
+    flexDirection: 'row',
+  },
+  titlePlace: {
+    margin: 10,
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 30,
+  },
+  imgPlace: {
+    marginLeft: 10,
+    marginRight: 10,
+    width: 120,
+    height: 80,
+    borderRadius: 10,
+  },
+});
 
 export default Home;

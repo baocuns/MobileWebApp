@@ -13,7 +13,11 @@ import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 
+import {LogoutUser} from '../redux/apiRequest';
+
 const Users = ({navigation}) => {
+  const dispatch = useDispatch();
+
   const user = useSelector(state => state.auth.login.currentUser);
   if (user) {
     console.log('>>> check user: ' + user.username);
@@ -59,7 +63,6 @@ const Users = ({navigation}) => {
                   fontWeight: 'bold',
                 }}>
                 {user ? user.username : 'Thông tin người dùng'}
-                {''}{' '}
                 <Icon
                   name="chevron-right"
                   style={{
@@ -267,99 +270,7 @@ const Users = ({navigation}) => {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              borderWidth: 1,
-              borderColor: 'gray',
-              borderRadius: 10,
-              marginBottom: 10,
-            }}>
-            <View
-              style={{
-                padding: 10,
-                height: 40,
-                width: 50,
-                backgroundColor: '#cfbda1',
-                alignItems: 'center',
-                borderBottomLeftRadius: 10,
-                borderTopLeftRadius: 10,
-                borderRightWidth: 1,
-                borderRightColor: 'gray',
-              }}>
-              <Icon
-                style={{
-                  fontSize: 20,
-                  color: 'black',
-                }}
-                name="comment"
-              />
-            </View>
-            <View
-              style={{
-                paddingLeft: 10,
-              }}>
-              <Text
-                style={{
-                  color: 'black',
-                  backgroundColor: 'white',
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                }}>
-                Đánh giá
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
 
-        <TouchableOpacity>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              borderWidth: 1,
-              borderColor: 'gray',
-              borderRadius: 10,
-              marginBottom: 10,
-            }}>
-            <View
-              style={{
-                padding: 10,
-                height: 40,
-                width: 50,
-                backgroundColor: '#cfbda1',
-                alignItems: 'center',
-                borderBottomLeftRadius: 10,
-                borderTopLeftRadius: 10,
-                borderRightWidth: 1,
-                borderRightColor: 'gray',
-              }}>
-              <Icon
-                style={{
-                  fontSize: 20,
-                  color: 'black',
-                }}
-                name="question"
-              />
-            </View>
-            <View
-              style={{
-                paddingLeft: 10,
-              }}>
-              <Text
-                style={{
-                  color: 'black',
-                  backgroundColor: 'white',
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                }}>
-                Trợ giúp
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
         <TouchableOpacity>
           <View
             style={{
@@ -496,6 +407,7 @@ const Users = ({navigation}) => {
                   fontWeight: 'bold',
                 }}>
                 Logout
+                {/* function logout */}
               </Text>
             </View>
           </View>
