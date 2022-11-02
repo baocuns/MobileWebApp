@@ -115,7 +115,7 @@ const Map = ({ navigation }) => {
 
     return (
         <>
-
+            {/* <StatusBar hidden /> */}
             <View style={{ flex: 1 }}>
                 <View style={{ position: 'relative' }}>
                     <Modal

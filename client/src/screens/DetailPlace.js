@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, SafeAreaView, StatusBar, ScrollView, Dimensions, TouchableOpacity, Image } from 'react-native';
-import SliderImage from '../components/SliderImage';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import BoxRating from '../components/BoxRating';
 import Rating from '../components/Rating';
+import { useDispatch } from 'react-redux';
 import { getDetailRoute } from '../routes/APIRoute';
 import axios from 'axios';
 import moment from 'moment';
+import SliderImage from '../components/SliderImage';
+import { saveNearSawTour } from '../redux/tourSlice';
 
 
 const { width, height } = Dimensions.get("window");
 
 const DetailPlace = ({ navigation, route }) => {
+    const dispatch = useDispatch();
     const { slug } = route.params;
     const [item, setItem] = useState([]);
     const fetchData = async () => {
         try {
             const res = await axios.get(getDetailRoute + "/" + slug)
             setItem(res.data.data[0]);
-            // console.log(res.data.data[0]);
-            // console.log('check image:  ');
+            dispatch(saveNearSawTour(res.data.data[0]));
         } catch (error) {
             console.log(error);
         }
@@ -36,9 +38,8 @@ const DetailPlace = ({ navigation, route }) => {
                 showsVerticalScrollIndicator={false}
                 style={{ height: height * 0.85 }}>
                 {/* Slider Image */}
-                {item && item.images ?
-                    <SliderImage navigation={navigation} image={item.images} /> : <></>
-                }
+                {item && item.images &&
+                    <SliderImage navigation={navigation} image={item.images} item={item} />}
                 <View style={{ margin: 10 }}>
                     <Text style={{ fontWeight: '600', color: '#000', fontSize: 26 }}>{item && item.title}</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>

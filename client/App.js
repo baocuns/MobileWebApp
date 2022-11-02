@@ -21,6 +21,8 @@ import BookNowX from './src/screens/BookNowX';
 import Cart from './src/screens/Cart'
 import Friends from './src/screens/Friends'
 import FavoriteService from './src/screens/FavoriteService'
+import FavariteList from './src/components/FavoriteList';
+import FavouriteItem from './src/components/FavouriteItem';
 LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
@@ -44,6 +46,8 @@ const App = () => {
             <Stack.Screen name="DetailPlace" component={DetailPlace} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="ProvinceDetail" component={ProvinceDetail} />
+            <Stack.Screen name="FavariteList" component={FavariteList} />
+            <Stack.Screen name="FavouriteItem" component={FavouriteItem} />
             {/* Khiêm */}
             <Stack.Screen name="UserInfo" component={UserInfo} />
             <Stack.Screen name="BookNow" component={BookNow} />
