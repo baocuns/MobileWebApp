@@ -1,49 +1,28 @@
-import {combineReducers, configureStore} from '@reduxjs/toolkit';
-import {applyMiddleware} from 'redux';
-
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
-
-import storage from 'redux-persist/lib/storage'
-import mapReducer from './mapSlice';
-
-import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
-
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persistStore, persistReducer } from 'redux-persist';
+import mapReducer from './mapSlice';
+import tourSlice from './tourSlice';
 
-// khiemtv1412 đánh dấu chứ không là không nhớ làm chỗ nào luôn
+// // khiemtv1412 đánh dấu chứ không là không nhớ làm chỗ nào luôn
 import authSlice from './authSlice';
 import userSlice from './userSilce';
 
 const persistConfig = {
   key: 'root',
-  storage,
+  storage: AsyncStorage,
+  whitelist: ['map', 'user', 'allUsers', 'tour']
 };
+
 // REDUCER
 const rootReducer = combineReducers({
   map: mapReducer,
   auth: authSlice,
   user: userSlice,
+  tour: tourSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
-});
-
-export let persistor = persistStore(store);
+export const store = createStore(persistedReducer, applyMiddleware(thunk));
+export const persistor = persistStore(store);

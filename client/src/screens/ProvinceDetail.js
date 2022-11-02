@@ -5,7 +5,7 @@ import IconAnt from 'react-native-vector-icons/AntDesign';
 import axios from 'axios';
 import { getAllPlaceForNameRoute, searchByNameRoute } from '../routes/APIRoute';
 import FastImage from 'react-native-fast-image'
-
+import { saveNearSawTour } from '../redux/tourSlice';
 
 const ProvinceDetail = ({ navigation, route }) => {
     const { area_slug, image, name, status } = route.params;
@@ -16,7 +16,6 @@ const ProvinceDetail = ({ navigation, route }) => {
             if (status === 'search') {
                 const res = await axios.get(`${searchByNameRoute}/${area_slug}`)
                 setItemPlaceList(res.data.data);
-                console.log('>>>check area: ', area_slug);
             } else {
                 const res = await axios.get(`${getAllPlaceForNameRoute}/${area_slug}`)
                 setItemPlaceList(res.data.data);
@@ -24,7 +23,6 @@ const ProvinceDetail = ({ navigation, route }) => {
             if (itemPlaceList.length == 0) {
                 setIsFound(false);
             }
-            console.log(itemPlaceList.length);
         } catch (error) {
             console.log(error);
         }

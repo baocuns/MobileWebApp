@@ -12,17 +12,21 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconAnt from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { reset } from '../redux/tourSlice';
 
-const Mail = ({navigation}) => {
+const Mail = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   return (
-    <SafeAreaView style={{paddingLeft: 10, paddingRight: 10, flex: 1}}>
+    <SafeAreaView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
       {/* Title */}
       <View
-        style={{justifyContent: 'center', alignItems: 'center', height: '10%'}}>
-        <Text style={{fontSize: 20, fontWeight: '600', color: '#000'}}>
+        style={{ justifyContent: 'center', alignItems: 'center', height: '10%' }}>
+        <Text style={{ fontSize: 20, fontWeight: '600', color: '#000' }}>
           Hộp Thư
         </Text>
       </View>
@@ -41,7 +45,7 @@ const Mail = ({navigation}) => {
             height: '100%',
             aspectRatio: 1,
           }}>
-          <Icon onPress={()=> navigation.navigate('Favorite')} name="thumbs-up" size={35} color="blue" brand />
+          <Icon onPress={() => navigation.navigate('Favorite')} name="thumbs-up" size={35} color="blue" brand />
           <Text>Like</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -51,7 +55,7 @@ const Mail = ({navigation}) => {
             height: '100%',
             aspectRatio: 1,
           }}>
-          <Icon onPress={()=>navigation.navigate('Friends')} name="user-friends" size={35} color="blue" brand />
+          <Icon onPress={() => navigation.navigate('Friends')} name="user-friends" size={35} color="blue" brand />
           <Text>Friends</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -65,6 +69,7 @@ const Mail = ({navigation}) => {
           <Text>Address</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => dispatch(reset())}
           style={{
             justifyContent: 'center',
             alignItems: 'center',
@@ -76,7 +81,7 @@ const Mail = ({navigation}) => {
         </TouchableOpacity>
       </View>
       {/* Bình Luận, Thông báo, sự kiện */}
-      <View style={{justifyContent: 'space-evenly', height: '35%'}}>
+      <View style={{ justifyContent: 'space-evenly', height: '35%' }}>
         <TouchableOpacity
           style={{
             alignItems: 'center',
@@ -99,7 +104,7 @@ const Mail = ({navigation}) => {
             }}>
             <Icon name="comment-dots" size={26} />
           </View>
-          <Text style={{fontSize: 18, color: '#000'}}>Bình Luận</Text>
+          <Text style={{ fontSize: 18, color: '#000' }}>Bình Luận</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -123,7 +128,7 @@ const Mail = ({navigation}) => {
             }}>
             <IconAnt name="notification" size={26} />
           </View>
-          <Text style={{fontSize: 18, color: '#000'}}>Thông Báo</Text>
+          <Text style={{ fontSize: 18, color: '#000' }}>Thông Báo</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -147,11 +152,11 @@ const Mail = ({navigation}) => {
             }}>
             <MaterialIcons name="event-available" size={26} />
           </View>
-          <Text style={{fontSize: 18, color: '#000'}}>Sự Kiện</Text>
+          <Text style={{ fontSize: 18, color: '#000' }}>Sự Kiện</Text>
         </TouchableOpacity>
       </View>
       {/* Hoạt Động Mới */}
-      <View style={{flex: 1, justifyContent: 'center'}}>
+      <View style={{ flex: 1, justifyContent: 'center' }}>
         <Text
           style={{
             fontSize: 26,
@@ -163,7 +168,7 @@ const Mail = ({navigation}) => {
         </Text>
       </View>
 
-      <View style={{justifyContent: 'space-evenly', height: '35%'}}>
+      <View style={{ justifyContent: 'space-evenly', height: '35%' }}>
         <TouchableOpacity
           style={{
             alignItems: 'center',
@@ -186,7 +191,7 @@ const Mail = ({navigation}) => {
             }}>
             <MaterialIcons name="person-outline" size={26} />
           </View>
-          <Text style={{fontSize: 18, color: '#000'}}>
+          <Text style={{ fontSize: 18, color: '#000' }}>
             Người follow đăng bài blog
           </Text>
         </TouchableOpacity>
@@ -212,7 +217,7 @@ const Mail = ({navigation}) => {
             }}>
             <IconAnt name="customerservice" size={26} />
           </View>
-          <Text style={{fontSize: 18, color: '#000'}}>Trung Tâm Thông Báo</Text>
+          <Text style={{ fontSize: 18, color: '#000' }}>Trung Tâm Thông Báo</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -236,7 +241,7 @@ const Mail = ({navigation}) => {
             }}>
             <IconAnt name="customerservice" size={26} />
           </View>
-          <Text style={{fontSize: 18, color: '#000'}}>Trung Tâm Thông Báo</Text>
+          <Text style={{ fontSize: 18, color: '#000' }}>Trung Tâm Thông Báo</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

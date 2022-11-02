@@ -31,14 +31,10 @@ const ImagePlace = ({ navigation, image }) => {
                         style={styles.imgItem}
                     />
                 </ScrollView>
-                <View style={{ flexDirection: 'row', width: width, position: 'absolute', top: 10, justifyContent: 'space-between' }}>
+                <View style={{ flexDirection: 'row', width: width, position: 'absolute', top: 10, left: 10, justifyContent: 'space-between' }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name='md-chevron-back-outline' style={{ backgroundColor: '#f5f5f5', padding: 5, borderRadius: 50, aspectRatio: 1 }} size={30} color='#888' />
+                        <Ionicons name='md-chevron-back-outline' style={{ backgroundColor: '#f5f5f5', padding: 10, borderRadius: 50, aspectRatio: 1 }} size={30} color='#888' />
                     </TouchableOpacity>
-                    <View style={{ flexDirection: 'row', width: 90, justifyContent: 'space-between' }}>
-                        <Ionicons name='md-heart-sharp' style={{ backgroundColor: '#f5f5f5', padding: 5, borderRadius: 50, aspectRatio: 1 }} size={30} color='#888' />
-                        <Ionicons onPress={() => navigation.navigate('Cart')} name='md-cart-outline' style={{ backgroundColor: '#f5f5f5', padding: 5, borderRadius: 50, aspectRatio: 1 }} size={30} color='#888' />
-                    </View>
                 </View>
             </View>
         </>
