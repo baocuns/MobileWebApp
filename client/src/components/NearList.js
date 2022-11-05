@@ -28,6 +28,9 @@ const NearList = ({ navigation }) => {
                     )
                 })
                 }
+                {tours.length == 0 &&
+                    <BlankFavorite />
+                }
 
             </ScrollView>
         </>
