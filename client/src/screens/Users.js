@@ -8,14 +8,15 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {LogoutUser} from '../redux/apiRequest';
+import { LogoutUser } from '../redux/apiRequest';
+import { reset } from '../redux/tourSlice';
 
-const Users = ({navigation}) => {
+const Users = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const user = useSelector(state => state.auth.login.currentUser);
@@ -365,7 +366,9 @@ const Users = ({navigation}) => {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => dispatch(reset())}
+        >
           <View
             style={{
               flexDirection: 'row',

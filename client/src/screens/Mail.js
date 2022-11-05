@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconAnt from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { reset } from '../redux/tourSlice';
+import Lottie from 'lottie-react-native';
 
 const Mail = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const Mail = ({ navigation }) => {
   return (
     <SafeAreaView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
       {/* Title */}
+      <Lottie source={require('../assets/lotties/travel.json')} autoPlay loop />
       <View
         style={{ justifyContent: 'center', alignItems: 'center', height: '10%' }}>
         <Text style={{ fontSize: 20, fontWeight: '600', color: '#000' }}>
@@ -59,6 +61,7 @@ const Mail = ({ navigation }) => {
           <Text>Friends</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => navigation.navigate('Favorite')}
           style={{
             justifyContent: 'center',
             alignItems: 'center',
