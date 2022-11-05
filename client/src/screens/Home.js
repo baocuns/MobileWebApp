@@ -159,7 +159,8 @@ const Home = ({ navigation }) => {
                         </View>
                         {/* Tour giờ chót */}
                         <View>
-                            <Lottie style={{ position: 'absolute', zIndex: 1 }} source={require('../assets/lotties/96262-detective-search.json')} autoPlay loop />
+                            <Lottie style={{ position: 'absolute', zIndex: 1, left: 50 }} source={require('../assets/lotties/96262-detective-search.json')} autoPlay loop />
+                            <Lottie style={{ position: 'absolute', zIndex: 1 }} source={require('../assets/lotties/65902-hott.json')} autoPlay loop />
                             <Text style={{ color: '#fff', backgroundColor: 'rgba(52, 52, 52, 0.8)', padding: 3, fontSize: 25, fontWeight: '600', margin: 10, shadowColor: 'grey' }}>
                                 Tour giờ chót
                             </Text>
