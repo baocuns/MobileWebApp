@@ -42,6 +42,29 @@ const Home = ({ navigation }) => {
     const [lastTours, setLastTours] = useState([]);
     const [search, setSearch] = useState("");
 
+    const actions = [
+        {
+            text: "Favourite",
+            icon: <Lottie source={require("../assets/lotties/99703-heart-lottie-animation.json")} autoPlay loop />,
+            name: "favourite",
+            position: 1,
+            color: '#fff'
+        },
+        {
+            text: "Cart",
+            icon: <Lottie source={require('../assets/lotties/8325-mercuri-cart.json')} autoPlay loop />,
+            name: "cart",
+            position: 2,
+            color: '#fff'
+        },
+        {
+            text: "Scroll up",
+            icon: <Lottie source={require("../assets/lotties/9594-grow-up.json")} autoPlay loop />,
+            name: "up",
+            position: 3,
+            color: '#fff'
+        }
+    ];
     const onPressTouch = () => {
         scrollRef.current?.scrollTo({
             y: 0,
@@ -168,11 +191,24 @@ const Home = ({ navigation }) => {
                 }
             </SafeAreaView>
             <FloatingAction
+                color='#228B22'
+                actions={actions}
+                onPressItem={name => {
+                    switch (name) {
+                        case "up":
+                            onPressTouch();
+                            break;
+                        case "cart":
+                            navigation.navigate('Cart');
+                            break;
+                        case "favourite":
+                            navigation.navigate('Favorite');
+                            break;
+                        default:
+                            break;
+                    }
 
-            // actions={actions}
-            // onPressItem={name => {
-            //   console.log(`selected button: ${name}`);
-            // }}
+                }}
             />
         </ImageBackground>
     );

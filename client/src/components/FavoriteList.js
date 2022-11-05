@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import { useSelector } from 'react-redux';
+import BlankFavorite from './BlankFavorite';
 
 import FavouriteItem from './FavouriteItem';
 
@@ -33,6 +34,9 @@ const FavariteList = ({ navigation }) => {
             )
           }
         })
+        }
+        {tours.length == 0 &&
+          <BlankFavorite />
         }
 
       </ScrollView>
