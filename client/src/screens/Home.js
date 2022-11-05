@@ -16,6 +16,7 @@ import {
     ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { FloatingAction } from "react-native-floating-action";
 import homeScreen from '../assets/images/launch_screen.png';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
@@ -26,6 +27,7 @@ import {
 import IconAnt from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
+import Lottie from 'lottie-react-native';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -33,13 +35,19 @@ const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
 const Home = ({ navigation }) => {
-    // const [imagelist, setImagelist] = useState([]);
+    const scrollRef = useRef();
     const [isFetching, setIsFetching] = useState(false);
     const [refreshing, setRefreshing] = React.useState(false);
     const [placeList, setPlaceList] = useState([]);
     const [lastTours, setLastTours] = useState([]);
     const [search, setSearch] = useState("");
 
+    const onPressTouch = () => {
+        scrollRef.current?.scrollTo({
+            y: 0,
+            animated: true,
+        });
+    }
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
@@ -71,11 +79,10 @@ const Home = ({ navigation }) => {
             <StatusBar hidden />
             <SafeAreaView style={{ flex: 1 }}>
                 {!isFetching ?
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <ActivityIndicator size="large" color="red" />
-                    </View>
+                    <Lottie source={require('../assets/lotties/travel.json')} autoPlay loop />
                     :
                     <ScrollView
+                        ref={scrollRef}
                         refreshControl={
                             <RefreshControl
                                 refreshing={refreshing}
@@ -84,10 +91,12 @@ const Home = ({ navigation }) => {
                         }
                     >
                         <View style={{ alignItems: 'center', justifyContent: 'center', height: 80, width: '100%' }}>
+                            <Lottie style={{ zIndex: 10 }} source={require('../assets/lotties/75949-wind-turbine-fan-rotation.json')} autoPlay loop />
                             <Text style={{ color: '#fff', fontSize: 25, fontWeight: '600' }}>Tìm kiếm niềm vui của bạn</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 80, width: '100%' }}>
-                            <Icon style={{ position: 'absolute', left: 55, zIndex: 1 }} name="search" size={20} color='#000' />
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 80, width: '100%', position: 'relative' }}>
+                            <Lottie style={{ position: 'absolute', left: 7, width: 100, zIndex: 1 }} source={require('../assets/lotties/94375-search-new.json')} autoPlay loop />
+
                             <TextInput
                                 onSubmitEditing={() => navigation.navigate('ProvinceDetail', {
                                     area_slug: search,
@@ -126,9 +135,12 @@ const Home = ({ navigation }) => {
                             </ScrollView>
                         </View>
                         {/* Tour giờ chót */}
-                        <Text style={{ color: '#000', fontSize: 25, fontWeight: '600', margin: 10, shadowColor: 'grey' }}>
-                            Tour giờ chót
-                        </Text>
+                        <View>
+                            <Lottie style={{ position: 'absolute', zIndex: 1 }} source={require('../assets/lotties/96262-detective-search.json')} autoPlay loop />
+                            <Text style={{ color: '#fff', backgroundColor: 'rgba(52, 52, 52, 0.8)', padding: 3, fontSize: 25, fontWeight: '600', margin: 10, shadowColor: 'grey' }}>
+                                Tour giờ chót
+                            </Text>
+                        </View>
                         {lastTours.map((data, index) => (
                             <View key={index} style={{ marginHorizontal: 10 }}>
                                 <Pressable key={index} onPress={() => navigation.navigate('DetailPlace', {
@@ -152,8 +164,16 @@ const Home = ({ navigation }) => {
                                 </Pressable>
                             </View>
                         ))}
-                    </ScrollView>}
+                    </ScrollView>
+                }
             </SafeAreaView>
+            <FloatingAction
+
+            // actions={actions}
+            // onPressItem={name => {
+            //   console.log(`selected button: ${name}`);
+            // }}
+            />
         </ImageBackground>
     );
 }

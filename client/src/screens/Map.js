@@ -11,6 +11,8 @@ import { URL, TOURISM, FILTER_CIRCLE, API_KEY } from "../utils/constant";
 import { getEventAround50KmRoute } from '../routes/APIRoute';
 import { openLink } from '../utils/function';
 import { getImageDescriptionByNameSearch } from '../redux/apiRequest';
+import Lottie from 'lottie-react-native';
+
 
 const Map = ({ navigation }) => {
     const widthScreen = Dimensions.get('window').width;
@@ -47,8 +49,11 @@ const Map = ({ navigation }) => {
 
     const getMarker = async () => {
         console.log(">>check: ", nameSearch);
+
+
         //Lấy vị trí default
         if (nameSearch == 'default') {
+            setIsFetching(true);
             position = positionDefault;
             await axios.get(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${position.longitude},${position.latitude},50000&bias=proximity:${position.longitude},${position.latitude}&limit=100&apiKey=${API_KEY}`)
                 .then(res => {
@@ -64,8 +69,10 @@ const Map = ({ navigation }) => {
                     const itemMarker = res.data.data;
                     setMarkersEvent(itemMarker);
                 })
+            setIsFetching(false);
         }
         else {
+            setIsFetching(true);
             //Trường hợp lựa chọn tỉnh
             try {
                 // get position lon, lat to search locaction
@@ -87,11 +94,11 @@ const Map = ({ navigation }) => {
                 dispatch(getMapDefaultSuccess(position));
                 setMarkers(itemMarker.features);
                 setIsCurrentPositon(false)
+                setIsFetching(false);
 
             } catch (error) {
                 console.log(error);
             }
-
         }
 
     }
@@ -105,8 +112,9 @@ const Map = ({ navigation }) => {
         console.log("Reload");
         console.log("currentName", currentName);
         const currentMaker = makerRef.current.find(el => el.name === currentName);
-        setIsFetching(false);
-        // currentMaker && currentMaker.ref.showCallout();
+        if (currentName !== "" || currentName === null) {
+            setIsFetching(false);
+        }
     }, [currentName]);
     // Get current position
     useEffect(() => {
@@ -115,6 +123,10 @@ const Map = ({ navigation }) => {
 
     return (
         <>
+            {isFetching &&
+                <Lottie style={{ position: 'absolute', top: 0, zIndex: 100 }} source={require('../assets/lotties/travel.json')} autoPlay loop />
+            }
+
             {/* <StatusBar hidden /> */}
             <View style={{ flex: 1 }}>
                 <View style={{ position: 'relative' }}>
@@ -133,7 +145,7 @@ const Map = ({ navigation }) => {
                         <View style={{ backgroundColor: '#fff', padding: 20, position: 'absolute', bottom: 0, height: 0.5 * heightScreen, zIndex: 1 }}>
                             <ScrollView style={{ flex: 1, width: widthScreen - 40 }}>
                                 {isFetching ?
-                                    <ActivityIndicator size="large" color="red" />
+                                    <Lottie style={{ position: 'absolute', top: 0, zIndex: 100 }} source={require('../assets/lotties/travel.json')} autoPlay loop />
                                     :
                                     <>
                                         <TouchableOpacity
@@ -218,11 +230,13 @@ const Map = ({ navigation }) => {
                                     ref={(ref) => makerRef.current.push({ ref, name: marker.properties.name })}
                                     onPress={(e) => {
                                         e.preventDefault();
-                                        setModalVisible(true)
                                         if (currentName != marker.properties.name) {
                                             setIsFetching(true);
                                         }
-                                        getImageDescriptionByNameSearch(marker.properties.name, dispatch).then(() => setCurrentName(marker.properties.name))
+                                        getImageDescriptionByNameSearch(marker.properties.name, dispatch).then(() => {
+                                            setCurrentName(marker.properties.name)
+                                            setModalVisible(true)
+                                        })
                                     }}
                                     onCalloutPress={() => openLink(marker.properties.name)}
                                     title={marker.properties.name}
