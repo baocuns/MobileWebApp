@@ -8,11 +8,47 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
-
+import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useDispatch, useSelector} from 'react-redux';
+import axios from 'axios';
 
 const UserInfo = ({navigation}) => {
+  const [profile, setProfile] = useState(null);
+  const user = useSelector(state => state.auth.login.currentUser);
+
+  useEffect(() => {
+    // fetch(
+    //   `https://api.travels.games/api/v1/profile/show/details/${user.username}`,
+    //   {
+    //     method: 'post',
+    //     headers: {
+    //       token: `Travel ${user.accessToken}`,
+    //     },
+    //   },
+    // )
+    //   .then(result => {
+    //     result.data && setProfile(result.data[0]);
+    //     console.log(result.json());
+    //   })
+    //   .catch(err => {
+    //     console.log('null');
+    //     setProfile(null);
+    //   });
+  }, []);
+  const p = async () => {
+    const res = await fetch(
+      `https://api.travels.games/api/v1/profile/show/details/${user.username}`,
+      {
+        headers: {
+          token: `Travel ${user.accessToken}`,
+        },
+      },
+    );
+    console.log(res.json());
+  };
+  p();
+
   return (
     <ScrollView>
       <View

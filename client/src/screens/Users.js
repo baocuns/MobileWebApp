@@ -8,21 +8,37 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { LogoutUser } from '../redux/apiRequest';
-import { reset } from '../redux/tourSlice';
+import {loginUser} from '../redux/apiRequest';
+import {logoutUser} from '../redux/apiRequest';
+import {useNavigation} from '@react-navigation/native';
+import {useEffect} from 'react';
+import {logoutRoute} from '../routes/APIRoute';
 
-const Users = ({ navigation }) => {
+const Users = ({navigation}) => {
   const dispatch = useDispatch();
-
+  // const navigate = useNavigate();
+  const [accessToken, setAccessToken] = useState('');
   const user = useSelector(state => state.auth.login.currentUser);
-  if (user) {
-    console.log('>>> check user: ' + user.username);
-  }
+
+  // useEffect(() => {
+  //   user && setAccessToken(user.accessToken);
+  // }, []);
+
+  // const id = user?._id;
+  // setAccessToken(
+  //   useSelector(state => state.auth.login.currentUser).accessToken,
+  // );
+  // const accessToken = accessToken();
+
+  // if (user) {
+  //   console.log('>>> check user: ' + user.username);
+
+  // }
   return (
     <ScrollView>
       <View
@@ -56,22 +72,6 @@ const Users = ({ navigation }) => {
               }}>
               {user ? user.username : 'Thông tin người dùng'}
             </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('UserInfo')}>
-              <Text
-                style={{
-                  color: 'blue',
-                  fontSize: 12,
-                  fontWeight: 'bold',
-                }}>
-                {user ? user.username : 'Thông tin người dùng'}
-                <Icon
-                  name="chevron-right"
-                  style={{
-                    fontSize: 10,
-                  }}
-                />
-              </Text>
-            </TouchableOpacity>
           </View>
         </View>
 
@@ -179,52 +179,6 @@ const Users = ({ navigation }) => {
           borderWidth: 1,
           borderColor: 'gray',
         }}>
-        <TouchableOpacity>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              borderWidth: 1,
-              borderColor: 'gray',
-              borderRadius: 10,
-              marginBottom: 10,
-            }}>
-            <View
-              style={{
-                padding: 10,
-                height: 40,
-                width: 50,
-                backgroundColor: '#cfbda1',
-                alignItems: 'center',
-                borderBottomLeftRadius: 10,
-                borderTopLeftRadius: 10,
-                borderRightWidth: 1,
-                borderRightColor: 'gray',
-              }}>
-              <Icon
-                style={{
-                  fontSize: 20,
-                  color: 'black',
-                }}
-                name="list-alt"
-              />
-            </View>
-            <View
-              style={{
-                paddingLeft: 10,
-              }}>
-              <Text
-                style={{
-                  color: 'black',
-                  backgroundColor: 'white',
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                }}>
-                Đơn hàng của tôi
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('UserInfo')}>
           <View
             style={{
@@ -267,6 +221,52 @@ const Users = ({ navigation }) => {
                   fontWeight: 'bold',
                 }}>
                 {user ? user.username : 'Thông tin người dùng'}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: 'gray',
+              borderRadius: 10,
+              marginBottom: 10,
+            }}>
+            <View
+              style={{
+                padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
+              }}>
+              <Icon
+                style={{
+                  fontSize: 20,
+                  color: 'black',
+                }}
+                name="list-alt"
+              />
+            </View>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                  backgroundColor: 'white',
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                }}>
+                Đơn hàng của tôi
               </Text>
             </View>
           </View>
@@ -366,9 +366,11 @@ const Users = ({ navigation }) => {
             </View>
           </View>
         </TouchableOpacity>
+
         <TouchableOpacity
-          onPress={() => dispatch(reset())}
-        >
+          onPress={() => {
+            logoutUser(user?.accessToken, dispatch);
+          }}>
           <View
             style={{
               flexDirection: 'row',
@@ -409,8 +411,7 @@ const Users = ({ navigation }) => {
                   fontSize: 15,
                   fontWeight: 'bold',
                 }}>
-                Logout
-                {/* function logout */}
+                logout
               </Text>
             </View>
           </View>
@@ -421,5 +422,3 @@ const Users = ({ navigation }) => {
 };
 
 export default Users;
-
-// yarn react-native run-android --active-arch-only
