@@ -39,10 +39,12 @@ const ProvinceDetail = ({navigation, route}) => {
       console.log(error);
       setIsFetching(false);
     }
+
   };
   useEffect(() => {
     fetchData();
   }, []);
+
 
   return (
     <>
@@ -172,40 +174,32 @@ const ProvinceDetail = ({navigation, route}) => {
                         {/* <Text>{data.numberStarAvarage}</Text>
                                     <IconAnt name='star' color='#FFD700' />
                                     <Text>({data.numberComment})</Text> */}
-                      </View>
-                    </View>
-                    <View>
-                      <Text style={{color: '#000', fontWeight: 'bold'}}>
-                        Chỉ từ: {data.price}đ
-                      </Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              ))}
-            </View>
-          )}
-          {!isFound && itemPlaceList.length == 0 && (
-            <View>
-              <Text
-                style={{
-                  marginHorizontal: 20,
-                  fontSize: 24,
-                  fontWeight: '600',
-                  color: '#000',
-                }}>
-                {name}
-              </Text>
-              <Text
-                style={{marginHorizontal: 20, fontSize: 18, fontWeight: '600'}}>
-                Không tìm thấy địa điểm phù hợp
-              </Text>
-            </View>
-          )}
-        </View>
-      </ScrollView>
-    </>
-  );
-};
+                                            </View>
+                                        </View>
+                                        <View>
+                                            <Text style={{ color: '#000', fontWeight: 'bold' }}>Chỉ từ: {data.price}đ</Text>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                    }
+                    {!isFound && itemPlaceList.length == 0
+                        &&
+                        <View>
+                            <Text style={{ marginHorizontal: 20, fontSize: 24, fontWeight: '600', color: '#000' }}>{name}</Text>
+                            <Text style={{ marginHorizontal: 20, fontSize: 18, fontWeight: '600' }}>Không tìm thấy địa điểm phù hợp</Text>
+                        </View>
+                    }
+                </View>
+            </ScrollView>
+            {!isFound && itemPlaceList.length == 0 &&
+                <Lottie source={require('../assets/lotties/64076-404-not-found-page.json')} autoPlay loop />
+            }
+        </>
+    );
+}
+
 
 const styles = StyleSheet.create({});
 

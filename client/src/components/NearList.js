@@ -12,6 +12,7 @@ import imgPlace from '../assets/images/slider/1.jpg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useSelector } from 'react-redux';
 import FavouriteItem from './FavouriteItem';
+import BlankFavorite from './BlankFavorite';
 
 const NearList = ({ navigation }) => {
     const tourState = useSelector((state) => state.tour);
