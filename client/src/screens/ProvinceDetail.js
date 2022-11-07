@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -11,13 +11,13 @@ import {
 import ImagePlace from '../components/ImagePlace';
 import IconAnt from 'react-native-vector-icons/AntDesign';
 import axios from 'axios';
-import {getAllPlaceForNameRoute, searchByNameRoute} from '../routes/APIRoute';
+import { getAllPlaceForNameRoute, searchByNameRoute } from '../routes/APIRoute';
 import FastImage from 'react-native-fast-image';
-import {saveNearSawTour} from '../redux/tourSlice';
+import { saveNearSawTour } from '../redux/tourSlice';
 import Lottie from 'lottie-react-native';
 
-const ProvinceDetail = ({navigation, route}) => {
-  const {area_slug, image, name, status} = route.params;
+const ProvinceDetail = ({ navigation, route }) => {
+  const { area_slug, image, name, status } = route.params;
   const [itemPlaceList, setItemPlaceList] = useState([]);
   const [isFound, setIsFound] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
@@ -39,25 +39,23 @@ const ProvinceDetail = ({navigation, route}) => {
       console.log(error);
       setIsFetching(false);
     }
-
   };
   useEffect(() => {
     fetchData();
   }, []);
 
-
   return (
     <>
       {isFetching && (
         <Lottie
-          style={{zIndex: 10}}
+          style={{ zIndex: 10 }}
           source={require('../assets/lotties/travel.json')}
           autoPlay
           loop
         />
       )}
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{backgroundColor: '#D3D3D3', flex: 1}}>
+        <View style={{ backgroundColor: '#D3D3D3', flex: 1 }}>
           {!image ? (
             <ImagePlace
               navigation={navigation}
@@ -67,8 +65,8 @@ const ProvinceDetail = ({navigation, route}) => {
             <ImagePlace navigation={navigation} image={image} />
           )}
           {itemPlaceList.length > 0 && (
-            <View style={{marginHorizontal: 10}}>
-              <Text style={{color: '#000', fontWeight: 'bold', fontSize: 26}}>
+            <View style={{ marginHorizontal: 10 }}>
+              <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 26 }}>
                 {status === 'search' && 'Tìm kiếm với: '}
                 {name}
               </Text>
@@ -97,7 +95,7 @@ const ProvinceDetail = ({navigation, route}) => {
                     }}>
                     <FastImage
                       key={data.id}
-                      source={{uri: data.thumb}}
+                      source={{ uri: data.thumb }}
                       style={{
                         width: 150,
                         height: 100,
@@ -112,13 +110,13 @@ const ProvinceDetail = ({navigation, route}) => {
                         justifyContent: 'space-between',
                       }}>
                       <View>
-                        <Text style={{fontSize: 10}}>{data.tourdate}</Text>
-                        <Text style={{fontWeight: 'bold', color: '#000'}}>
+                        <Text style={{ fontSize: 10 }}>{data.tourdate}</Text>
+                        <Text style={{ fontWeight: 'bold', color: '#000' }}>
                           {data.title}
                         </Text>
                       </View>
                       <View>
-                        <Text style={{color: '#000', fontWeight: 'bold'}}>
+                        <Text style={{ color: '#000', fontWeight: 'bold' }}>
                           Chỉ từ: {data.price}đ
                         </Text>
                       </View>
@@ -150,7 +148,7 @@ const ProvinceDetail = ({navigation, route}) => {
                   }}>
                   <FastImage
                     key={data.id}
-                    source={{uri: data.thumb}}
+                    source={{ uri: data.thumb }}
                     style={{
                       width: '100%',
                       height: 200,
@@ -165,41 +163,49 @@ const ProvinceDetail = ({navigation, route}) => {
                       justifyContent: 'space-between',
                     }}>
                     <View>
-                      <Text style={{fontSize: 10}}>{data.tourdate}</Text>
-                      <Text style={{fontWeight: 'bold', color: '#000'}}>
+                      <Text style={{ fontSize: 10 }}>{data.tourdate}</Text>
+                      <Text style={{ fontWeight: 'bold', color: '#000' }}>
                         {data.title}
                       </Text>
                       <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        style={{ flexDirection: 'row', alignItems: 'center' }}>
                         {/* <Text>{data.numberStarAvarage}</Text>
                                     <IconAnt name='star' color='#FFD700' />
                                     <Text>({data.numberComment})</Text> */}
-                                            </View>
-                                        </View>
-                                        <View>
-                                            <Text style={{ color: '#000', fontWeight: 'bold' }}>Chỉ từ: {data.price}đ</Text>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
-                    }
-                    {!isFound && itemPlaceList.length == 0
-                        &&
-                        <View>
-                            <Text style={{ marginHorizontal: 20, fontSize: 24, fontWeight: '600', color: '#000' }}>{name}</Text>
-                            <Text style={{ marginHorizontal: 20, fontSize: 18, fontWeight: '600' }}>Không tìm thấy địa điểm phù hợp</Text>
-                        </View>
-                    }
-                </View>
-            </ScrollView>
-            {!isFound && itemPlaceList.length == 0 &&
-                <Lottie source={require('../assets/lotties/64076-404-not-found-page.json')} autoPlay loop />
-            }
-        </>
-    );
-}
-
+                      </View>
+                    </View>
+                    <View>
+                      <Text style={{ color: '#000', fontWeight: 'bold' }}>
+                        Chỉ từ: {data.price}đ
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
+          {!isFound && itemPlaceList.length == 0 && (
+            <View>
+              <Text
+                style={{
+                  marginHorizontal: 20,
+                  fontSize: 24,
+                  fontWeight: '600',
+                  color: '#000',
+                }}>
+                {name}
+              </Text>
+              <Text
+                style={{ marginHorizontal: 20, fontSize: 18, fontWeight: '600' }}>
+                Không tìm thấy địa điểm phù hợp
+              </Text>
+            </View>
+          )}
+        </View>
+      </ScrollView>
+    </>
+  );
+};
 
 const styles = StyleSheet.create({});
 
