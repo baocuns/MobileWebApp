@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   getImageAndDescriptionRoute,
   loginRoute,
+  logoutRoute,
   registerRoute,
 } from '../routes/APIRoute';
 import {getInfoFailed, getInfoStart, getInfoSuccess} from './mapSlice';
@@ -20,6 +21,7 @@ import {
 } from './authSlice';
 
 import {getUsersStart, getUsersFail, getUsersSuccess} from './userSilce';
+import {combineReducers} from 'redux';
 
 export const getImageDescriptionByNameSearch = async (name, dispatch) => {
   dispatch(getInfoStart());
@@ -68,7 +70,7 @@ export const registerUser = async (
       password: password,
       email: email,
     });
-    // console.log('>>>check register: ', res.data);
+    console.log('>>>check register: ', res.data.data);
     alert('bạn đã đăng kí thành công');
     dispatch(registerSuccess(res.data));
     navigation.navigate('Login');
@@ -78,15 +80,24 @@ export const registerUser = async (
   }
 };
 
-export const LogoutUser = async (accessToken, dispatch, id) => {
+export const logoutUser = async (accessToken, dispatch) => {
   dispatch(logoutUserStart());
   try {
-    const res = await axios.post('v1/auth/logout' + id, {
-      Headers: {token: `Bearer ${accessToken}`},
-    });
+    const res = await axios.post(
+      logoutRoute,
+      {a: 1},
+      {
+        headers: {token: `Travel ${accessToken}`},
+      },
+    );
     dispatch(logoutUserSuccess(res.data));
-  } catch (err) {
-    dispatch(logoutUserFail(err.reponse.data));
+    alert('đăng xuất thành công');
+    // navigation.navigate('Users');
+  } catch (error) {
+    // alert('đang xuất thất bại');
+    console.log(error);
+    dispatch(logoutUserFail(error));
+    alert('đang xuất thất bại');
   }
 };
 
