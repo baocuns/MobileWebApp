@@ -30,7 +30,7 @@ const FavariteList = ({ navigation }) => {
         {tours.map((tour, index) => {
           if (tour.title !== undefined) {
             return (
-              <FavouriteItem navigation={navigation} tour={tour} />
+              <FavouriteItem navigation={navigation} tours={tours} tour={tour} />
             )
           }
         })

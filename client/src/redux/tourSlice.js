@@ -21,6 +21,9 @@ const tourSlice = createSlice({
         saveNearSawTour: (state, action) => {
             state.nearSaw.tour.unshift(action.payload);
         },
+        deleteFavouriteTour(state, action) {
+            state.favourite.tour = action.payload;
+        },
         reset: () => initialState
     },
 });
@@ -28,6 +31,7 @@ const tourSlice = createSlice({
 export const {
     saveFavouriteTour,
     saveNearSawTour,
+    deleteFavouriteTour,
     reset
 } = tourSlice.actions;
 

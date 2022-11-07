@@ -44,6 +44,7 @@ const ProvinceDetail = ({ navigation, route }) => {
                 <Lottie style={{ zIndex: 10 }} source={require('../assets/lotties/travel.json')} autoPlay loop />
             }
             <ScrollView
+                style={{ zIndex: 10 }}
                 showsVerticalScrollIndicator={false}
             >
 
@@ -113,6 +114,9 @@ const ProvinceDetail = ({ navigation, route }) => {
                     }
                 </View>
             </ScrollView>
+            {!isFound && itemPlaceList.length == 0 &&
+                <Lottie source={require('../assets/lotties/64076-404-not-found-page.json')} autoPlay loop />
+            }
         </>
     );
 }
