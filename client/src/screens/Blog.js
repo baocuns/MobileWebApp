@@ -51,109 +51,10 @@ const Blog = () => {
                 type: "jpg",
                 camera: "Sony"
             },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'4'} source={require('../assets/images/slider/4.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'5'} source={require('../assets/images/slider/5.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'6'} source={require('../assets/images/slider/6.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'7'} source={require('../assets/images/slider/7.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'8'} source={require('../assets/images/slider/8.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'9'} source={require('../assets/images/slider/9.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'10'} source={require('../assets/images/slider/10.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'11'} source={require('../assets/images/slider/11.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'12'} source={require('../assets/images/slider/12.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'13'} source={require('../assets/images/slider/13.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
-            {
-                image: <Image style={styles.imageSlideContainer} key={'14'} source={require('../assets/images/slider/14.jpg')} resizeMode='cover' />,
-                type: "jpg",
-                camera: "Sony"
-            },
         ]
         const state = [
             {
                 id: 1,
-                user: User,
-                time: '10/10/2022',
-                address: 'Đà Nẵng',
-                content: 'Đẹp trai nhất thế giới',
-                image: require('../assets/images/slider/1.jpg'),
-                like: 1345,
-                comment: 35,
-                comment_data: 'ID_Comment_Data',
-                share: 8
-            }, {
-                id: 2,
-                user: User,
-                time: '10/10/2022',
-                address: 'Đà Nẵng',
-                content: 'Đẹp trai nhất thế giới',
-                image: require('../assets/images/slider/1.jpg'),
-                like: 1345,
-                comment: 35,
-                comment_data: 'ID_Comment_Data',
-                share: 8
-            }, {
-                id: 3,
-                user: User,
-                time: '10/10/2022',
-                address: 'Đà Nẵng',
-                content: 'Đẹp trai nhất thế giới',
-                image: require('../assets/images/slider/1.jpg'),
-                like: 1345,
-                comment: 35,
-                comment_data: 'ID_Comment_Data',
-                share: 8
-            }, {
-                id: 4,
-                user: User,
-                time: '10/10/2022',
-                address: 'Đà Nẵng',
-                content: 'Đẹp trai nhất thế giới',
-                image: require('../assets/images/slider/1.jpg'),
-                like: 1345,
-                comment: 35,
-                comment_data: 'ID_Comment_Data',
-                share: 8
-            }, {
-                id: 5,
                 user: User,
                 time: '10/10/2022',
                 address: 'Đà Nẵng',

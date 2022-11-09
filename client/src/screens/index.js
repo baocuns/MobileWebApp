@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Home from './Home';
 import Map from './Map';
 import Blog from './Blog';
+import BlogTW from './BlogTW';
 import Mail from './Mail';
 import Users from './Users';
 import Lottie from 'lottie-react-native';
@@ -74,7 +75,7 @@ function Index() {
       />
       <Tab.Screen
         name="Blog"
-        component={Login}
+        component={BlogTW}
         options={{
           tabBarLabel: 'Blog',
           tabBarIcon: ({focused, color, size}) => (
@@ -89,7 +90,7 @@ function Index() {
       />
       <Tab.Screen
         name="User"
-        component={Users}
+        component={Blog}
         options={{
           tabBarLabel: 'Users',
           tabBarIcon: ({focused, color, size}) => (
