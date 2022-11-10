@@ -6,7 +6,7 @@ import {
   logoutRoute,
   registerRoute,
 } from '../routes/APIRoute';
-import {getInfoFailed, getInfoStart, getInfoSuccess} from './mapSlice';
+import { getInfoFailed, getInfoStart, getInfoSuccess } from './mapSlice';
 
 import {
   loginFailed,
@@ -20,8 +20,9 @@ import {
   logoutUserFail,
 } from './authSlice';
 
-import {getUsersStart, getUsersFail, getUsersSuccess} from './userSilce';
-import {combineReducers} from 'redux';
+import { getUsersStart, getUsersFail, getUsersSuccess } from './userSilce';
+import { combineReducers } from 'redux';
+import { reset } from './tourSlice';
 
 export const getImageDescriptionByNameSearch = async (name, dispatch) => {
   dispatch(getInfoStart());
@@ -85,12 +86,13 @@ export const logoutUser = async (accessToken, dispatch) => {
   try {
     const res = await axios.post(
       logoutRoute,
-      {a: 1},
+      { a: 1 },
       {
-        headers: {token: `Travel ${accessToken}`},
+        headers: { token: `Travel ${accessToken}` },
       },
     );
     dispatch(logoutUserSuccess(res.data));
+    dispatch(reset());
     alert('đăng xuất thành công');
     // navigation.navigate('Users');
   } catch (error) {

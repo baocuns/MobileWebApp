@@ -48,7 +48,7 @@ export default function BoxRating() {
                     <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 26 }}>4.6</Text>
                     <Text>/5</Text>
                     <View>
-                        <Rating />
+                        <Rating starSize={20} />
                     </View>
                     <Text style={{ fontSize: 13, marginLeft: 10 }}>266 đánh giá</Text>
                 </View>
@@ -60,7 +60,7 @@ export default function BoxRating() {
                                 <Image source={require('../assets/images/slider/6.jpg')} style={{ height: 40, width: 40, borderRadius: 50, aspectRatio: 1 }} />
                                 <View>
                                     <Text style={{ fontWeight: 'bold', color: '#000', marginLeft: 10 }}>Bùi Duy Khánh</Text>
-                                    <Rating />
+                                    <Rating starSize={20} />
                                 </View>
                             </View>
                             <Text>3 ngày trước</Text>
@@ -77,7 +77,7 @@ export default function BoxRating() {
                                 <Image source={require('../assets/images/slider/11.jpg')} style={{ height: 40, width: 40, borderRadius: 50, aspectRatio: 1 }} />
                                 <View>
                                     <Text style={{ fontWeight: 'bold', color: '#000', marginLeft: 10 }}>Nguyễn Văn Bảo</Text>
-                                    <Rating />
+                                    <Rating starSize={20} />
                                 </View>
                             </View>
                             <Text>3 ngày trước</Text>
@@ -94,7 +94,7 @@ export default function BoxRating() {
                                 <Image source={require('../assets/images/slider/3.jpg')} style={{ height: 40, width: 40, borderRadius: 50, aspectRatio: 1 }} />
                                 <View>
                                     <Text style={{ fontWeight: 'bold', color: '#000', marginLeft: 10 }}>Trần Văn Khiêm</Text>
-                                    <Rating />
+                                    <Rating starSize={20} />
                                 </View>
                             </View>
                             <Text>3 ngày trước</Text>
@@ -111,7 +111,7 @@ export default function BoxRating() {
                                 <Image source={require('../assets/images/slider/3.jpg')} style={{ height: 40, width: 40, borderRadius: 50, aspectRatio: 1 }} />
                                 <View>
                                     <Text style={{ fontWeight: 'bold', color: '#000', marginLeft: 10 }}>Trần Văn Khiêm</Text>
-                                    <Rating />
+                                    <Rating starSize={20} />
                                 </View>
                             </View>
                             <Text>3 ngày trước</Text>
@@ -128,7 +128,7 @@ export default function BoxRating() {
                                 <Image source={require('../assets/images/slider/3.jpg')} style={{ height: 40, width: 40, borderRadius: 50, aspectRatio: 1 }} />
                                 <View>
                                     <Text style={{ fontWeight: 'bold', color: '#000', marginLeft: 10 }}>Trần Văn Khiêm</Text>
-                                    <Rating />
+                                    <Rating starSize={20} />
                                 </View>
                             </View>
                             <Text>3 ngày trước</Text>
