@@ -8,8 +8,8 @@ const BlankFavorite = () => {
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
             <Image source={blankFavorive}></Image>
-            <Text>Mục Yêu thích đang trống</Text>
-            <Text>Nhấn vào icon hình tim trên trang dịch vụ để lưu vào đây</Text>
+            <Text style={{ color: '#000' }}>Mục Yêu thích đang trống</Text>
+            <Text style={{ color: '#000' }}>Nhấn vào icon hình tim trên trang dịch vụ để lưu vào đây</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Home')} style={{ marginTop: 10, borderWidth: 1, paddingHorizontal: 30, paddingVertical: 10, backgroundColor: '#ffa500', borderRadius: 10 }}>
                 <Text style={{ color: '#000', fontSize: 20 }}>Khám phá ngay</Text>
             </TouchableOpacity>

@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, useColorScheme } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import { NavigationContainer } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme
+} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Index from './src/screens';
@@ -23,6 +27,9 @@ import Friends from './src/screens/Friends'
 import FavoriteService from './src/screens/FavoriteService'
 import FavariteList from './src/components/FavoriteList';
 import FavouriteItem from './src/components/FavouriteItem';
+import { NativeBaseProvider, Box } from "native-base";
+import ActionRaiting from './src/screens/ActionRaiting';
+
 LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
@@ -37,28 +44,32 @@ const App = () => {
     SplashScreen.hide();
   }, []);
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Index" screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Index" component={Index} />
-            <Stack.Screen name="Favorite" component={Favorite} />
-            <Stack.Screen name="DetailPlace" component={DetailPlace} />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="ProvinceDetail" component={ProvinceDetail} />
-            <Stack.Screen name="FavariteList" component={FavariteList} />
-            <Stack.Screen name="FavouriteItem" component={FavouriteItem} />
-            {/* Khiêm */}
-            <Stack.Screen name="UserInfo" component={UserInfo} />
-            <Stack.Screen name="BookNow" component={BookNow} />
-            <Stack.Screen name="BookNowX" component={BookNowX} />
-            <Stack.Screen name="Cart" component={Cart} />
-            <Stack.Screen name="Friends" component={Friends} />
-            <Stack.Screen name="FavoriteService" component={FavoriteService} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </PersistGate>
-    </Provider>
+    <NativeBaseProvider>
+      {/* <Box>Hello world</Box> */}
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="Index" screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Index" component={Index} />
+              <Stack.Screen name="Favorite" component={Favorite} />
+              <Stack.Screen name="DetailPlace" component={DetailPlace} />
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="ProvinceDetail" component={ProvinceDetail} />
+              <Stack.Screen name="FavariteList" component={FavariteList} />
+              <Stack.Screen name="FavouriteItem" component={FavouriteItem} />
+              <Stack.Screen name="ActionRaiting" component={ActionRaiting} />
+              {/* Khiêm */}
+              <Stack.Screen name="UserInfo" component={UserInfo} />
+              <Stack.Screen name="BookNow" component={BookNow} />
+              <Stack.Screen name="BookNowX" component={BookNowX} />
+              <Stack.Screen name="Cart" component={Cart} />
+              <Stack.Screen name="Friends" component={Friends} />
+              <Stack.Screen name="FavoriteService" component={FavoriteService} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </PersistGate>
+      </Provider>
+    </NativeBaseProvider>
   );
 }
 export default App;

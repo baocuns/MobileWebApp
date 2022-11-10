@@ -98,7 +98,7 @@ const Home = ({ navigation }) => {
     }, []);
 
     return (
-        <ImageBackground source={homeScreen} style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#87CEFA' }}>
             <StatusBar hidden />
             <SafeAreaView style={{ flex: 1 }}>
                 {!isFetching ?
@@ -211,7 +211,7 @@ const Home = ({ navigation }) => {
 
                 }}
             />
-        </ImageBackground>
+        </SafeAreaView>
     );
 }
 
