@@ -4,8 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Home from './Home';
 import Map from './Map';
-import Blog from './Blog';
-import BlogTW from './BlogTW';
+import Blog from './Blog/Blog';
 import Mail from './Mail';
 import Users from './Users';
 import Lottie from 'lottie-react-native';
@@ -75,7 +74,7 @@ function Index() {
       />
       <Tab.Screen
         name="Blog"
-        component={BlogTW}
+        component={Blog}
         options={{
           tabBarLabel: 'Blog',
           tabBarIcon: ({focused, color, size}) => (
@@ -90,7 +89,7 @@ function Index() {
       />
       <Tab.Screen
         name="User"
-        component={Blog}
+        component={Users}
         options={{
           tabBarLabel: 'Users',
           tabBarIcon: ({focused, color, size}) => (
