@@ -3,16 +3,20 @@ import { View, StyleSheet, Image, Text, Pressable } from 'react-native';
 import imgPlace from '../assets/images/slider/1.jpg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { deleteFavouriteTour } from '../redux/tourSlice';
+import { deleteTour } from '../redux/functions/tourFunc';
+import { useDispatch } from 'react-redux';
 
-const FavouriteItem = ({ navigation, tour }) => {
-
+const FavouriteItem = ({ navigation, tours, tour }) => {
+    const dispatch = useDispatch();
     return (
         <Pressable
             onPress={() => navigation.navigate('DetailPlace', {
                 slug: tour.slug
             })}
+            onLongPress={() => {
+                deleteTour(tours, tour, dispatch);
+            }}
             style={{
                 flexDirection: 'row',
                 marginVertical: 15,

@@ -22,6 +22,7 @@ import FavoriteList from '../components/FavoriteList';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { useSelector } from 'react-redux';
 import NearList from '../components/NearList';
+import BackArrow from '../components/BackArrow';
 
 const Favorite = ({ navigation }) => {
   const renderScene = SceneMap({
@@ -49,11 +50,10 @@ const Favorite = ({ navigation }) => {
   );
   return (
     <ImageBackground style={{ flex: 1, margin: 10, backgroundColor: '#F5F5F5' }}>
-      <View style={{ height: '8%' }}>
-        <Text style={{ color: '#000', fontSize: 26, fontWeight: '600' }}>
-          Yêu thích
-        </Text>
+      <View style={{ height: '10%' }}>
+        <BackArrow navigation={navigation} />
       </View>
+
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}

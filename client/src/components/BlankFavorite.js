@@ -13,6 +13,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import blankFavorive from '../assets/images/blank-favorite.png';
+
 import {useNavigation} from '@react-navigation/native';
 
 const BlankFavorite = () => {
@@ -37,6 +38,7 @@ const BlankFavorite = () => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({});
 

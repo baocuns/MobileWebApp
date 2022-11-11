@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Home from './Home';
 import Map from './Map';
@@ -13,6 +13,7 @@ import Login from './Login';
 import Cart from './Cart';
 import BookNow from './BookNow';
 import BookNowX from './BookNowX';
+import ActionRaiting from './ActionRaiting';
 const Tab = createBottomTabNavigator();
 
 function Index() {
@@ -20,7 +21,7 @@ function Index() {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        tabBarStyle: {height: 80},
+        tabBarStyle: { height: 80 },
         tabBarActiveTintColor: '#FA7000',
         tabBarInactiveTintColor: '#000',
         headerShown: false,
@@ -30,10 +31,10 @@ function Index() {
         component={Mail}
         options={{
           tabBarLabel: 'Mail',
-          tabBarIcon: ({focused, color, size}) => (
+          tabBarIcon: ({ focused, color, size }) => (
             // <Icon name="envelope" size={30} color={color} />
             <Lottie
-              style={{position: 'absolute', top: 0, zIndex: 100}}
+              style={{ position: 'absolute', top: 0, zIndex: 100 }}
               source={require('../assets/lotties/76038-contact-mail.json')}
               autoPlay={focused}
               loop
@@ -46,9 +47,9 @@ function Index() {
         component={Map}
         options={{
           tabBarLabel: 'Map',
-          tabBarIcon: ({focused, color, size}) => (
+          tabBarIcon: ({ focused, color, size }) => (
             <Lottie
-              style={{position: 'absolute', top: 0, zIndex: 100}}
+              style={{ position: 'absolute', top: 0, zIndex: 100 }}
               source={require('../assets/lotties/47956-area-map.json')}
               autoPlay={focused}
               loop
@@ -62,9 +63,9 @@ function Index() {
         options={{
           tabBarLabel: 'Home',
 
-          tabBarIcon: ({focused, color, size}) => (
+          tabBarIcon: ({ focused, color, size }) => (
             <Lottie
-              style={{position: 'absolute', top: 0, zIndex: 100}}
+              style={{ position: 'absolute', top: 0, zIndex: 100 }}
               source={require('../assets/lotties/95909-home-3d-illustration.json')}
               autoPlay={focused}
               loop
@@ -77,9 +78,9 @@ function Index() {
         component={Blog}
         options={{
           tabBarLabel: 'Blog',
-          tabBarIcon: ({focused, color, size}) => (
+          tabBarIcon: ({ focused, color, size }) => (
             <Lottie
-              style={{position: 'absolute', top: 0, zIndex: 100}}
+              style={{ position: 'absolute', top: 0, zIndex: 100 }}
               source={require('../assets/lotties/48849-blog-post.json')}
               autoPlay={focused}
               loop
@@ -92,9 +93,9 @@ function Index() {
         component={Users}
         options={{
           tabBarLabel: 'Users',
-          tabBarIcon: ({focused, color, size}) => (
+          tabBarIcon: ({ focused, color, size }) => (
             <Lottie
-              style={{position: 'absolute', top: 0, zIndex: 100, color: 'red'}}
+              style={{ position: 'absolute', top: 0, zIndex: 100, color: 'red' }}
               source={require('../assets/lotties/72874-user-profile-v2.json')}
               autoPlay={focused}
               loop
