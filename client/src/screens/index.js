@@ -86,7 +86,7 @@ function Index() {
       />
       <Tab.Screen
         name="Blog"
-        component={Login}
+        component={Blog}
         options={{
           tabBarLabel: i18n.t('blog'),
           tabBarIcon: ({ focused, color, size }) => (

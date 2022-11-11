@@ -20,84 +20,80 @@ import { logoutRoute } from '../routes/APIRoute';
 import i18n from '../i18n';
 import { setLanguage } from '../redux/userSilce';
 
-const Users = ({ navigation }) => {
+import {loginUser} from '../redux/apiRequest';
+import {logoutUser} from '../redux/apiRequest';
+import {useNavigation} from '@react-navigation/native';
+import {useEffect} from 'react';
+import {logoutRoute} from '../routes/APIRoute';
+import axios from 'axios';
+import FastImage from 'react-native-fast-image';
+import {userInfo} from '../redux/apiRequest';
+const Users = ({navigation}) => {
   const dispatch = useDispatch();
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    dispatch(setLanguage(lng));
-    setShowModal(false)
-  }
+  const [profile, setProfile] = useState(null);
+  // const navigate = useNavigate();
   const [accessToken, setAccessToken] = useState('');
   const user = useSelector(state => state.auth.login.currentUser);
   const language = useSelector(state => state.user.language);
   const [showModal, setShowModal] = useState(false);
 
-  return (
-    <>
-      <Center>
-        <Button onPress={() => setShowModal(true)}>Button</Button>
-        <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-          <Modal.Content maxWidth="400px">
-            <Modal.CloseButton />
-            <Modal.Header>Language</Modal.Header>
-            <Modal.Body>
-              <Radio.Group onChange={(e) => changeLanguage(e)} defaultValue={i18n.language} name="myRadioGroup" accessibilityLabel="Pick your favorite number">
-                <Radio value="en" my={1}>
-                  English
-                </Radio>
-                <Radio value="vi" my={1}>
-                  Vietnamese
-                </Radio>
-                <Radio value="ja" my={1}>
-                  Japanese
-                </Radio>
-              </Radio.Group>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button.Group space={2}>
-                <Button onPress={() => {
-                  setShowModal(false);
-                }}>
-                  Cancel
-                </Button>
-              </Button.Group>
-            </Modal.Footer>
-          </Modal.Content>
-        </Modal>
-      </Center>
-      <ScrollView>
-        <View
-          style={{
-            marginTop: 10,
-            marginLeft: 10,
-            marginRight: 10,
-          }}>
-          <View style={{}}>
-            <View>
-              <Icon
-                name="user-circle-o"
-                style={{
-                  fontSize: 80,
-                  color: 'gray',
+  useEffect(() => {
+    axios
+      .post(
+        `https://api.travels.games/api/v1/profile/show/details/${user?.username}`,
+        user?._id,
+        {
+          headers: {
+            token: `Travel ${user?.accessToken}`,
+          },
+        },
+      )
+      .then(res => {
+        console.log(res.data.data[0]);
+        setProfile(res.data.data[0]);
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  }, [user]);
+
+  // const id = user?._id;
+  // setAccessToken(
+  //   useSelector(state => state.auth.login.currentUser).accessToken,
+  // );
+  // const accessToken = accessToken();
 
                   textAlign: 'center',
                 }}
               />
             </View>
 
-            <View
+  // }
+  return (
+    <ScrollView>
+      <View
+        style={{
+          marginTop: 10,
+          marginLeft: 10,
+          marginRight: 10,
+        }}>
+        <View style={{}}>
+          <View
+            style={{
+              flex: 1,
+              padding: 10,
+              alignItems: 'center',
+            }}>
+            <FastImage
+              source={{uri: profile?.images[0]}}
               style={{
-                alignItems: 'center',
-              }}>
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                }}>
-                {user ? user.username : i18n.t('user_info')}
-              </Text>
-            </View>
+                width: 100,
+                height: 100,
+                borderRadius: 10,
+              }}
+              resizeMode="cover"
+            />
+
           </View>
 
           <View
@@ -344,6 +340,115 @@ const Users = ({ navigation }) => {
               </View>
             </View>
           </TouchableOpacity>
+        </View>
+      </View>
+      <View
+        style={{
+          padding: 10,
+          backgroundColor: 'white',
+          margin: 15,
+          borderRadius: 5,
+          borderWidth: 1,
+          borderColor: 'gray',
+        }}>
+        <TouchableOpacity
+          onPress={() => {
+            userInfo(user?.accessToken, dispatch);
+            navigation.navigate('UserInfo', {
+              profile: profile,
+            });
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: 'gray',
+              borderRadius: 10,
+              marginBottom: 10,
+            }}>
+            <View
+              style={{
+                padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
+              }}>
+              <Icon
+                style={{
+                  fontSize: 20,
+                  color: 'black',
+                }}
+                name="user"
+              />
+            </View>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                  backgroundColor: 'white',
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                }}>
+                {user ? user.username : 'Thông tin người dùng'}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: 'gray',
+              borderRadius: 10,
+              marginBottom: 10,
+            }}>
+            <View
+              style={{
+                padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
+              }}>
+              <Icon
+                style={{
+                  fontSize: 20,
+                  color: 'black',
+                }}
+                name="list-alt"
+              />
+            </View>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                  backgroundColor: 'white',
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                }}>
+                Đơn hàng của tôi
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
 
           <TouchableOpacity>
             <View
@@ -440,10 +545,60 @@ const Users = ({ navigation }) => {
                 </Text>
               </View>
             </View>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Login');
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: 'gray',
+              borderRadius: 10,
+              marginBottom: 10,
+            }}>
+            <View
+              style={{
+                padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#ef921b',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
+              }}>
+              <Icon
+                style={{
+                  fontSize: 20,
+                  color: 'black',
+                }}
+                name="user"
+              />
+            </View>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                  backgroundColor: 'white',
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                }}>
+                login
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
