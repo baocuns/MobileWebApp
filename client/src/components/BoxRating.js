@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { View, Button, Dimensions, TouchableOpacity, Text, ScrollView, Image } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
+import i18n from "../i18n";
 import Rating from "./Rating";
 
 const { width, height } = Dimensions.get("window");
@@ -20,7 +21,7 @@ export default function BoxRating() {
                 onPress={() => refRBSheet.current.open()}
                 style={{ borderWidth: 1, width: '100%', justifyContent: 'center', alignItems: 'center', borderRadius: 8, paddingVertical: 10 }}
             >
-                <Text style={{ color: '#000', fontWeight: 'bold' }}>Đọc tất cả đánh giá</Text>
+                <Text style={{ color: '#000', fontWeight: 'bold' }}>{i18n.t('read_all_rating')}</Text>
             </TouchableOpacity>
             <RBSheet
                 ref={refRBSheet}

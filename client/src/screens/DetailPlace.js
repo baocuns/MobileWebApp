@@ -10,6 +10,7 @@ import moment from 'moment';
 import SliderImage from '../components/SliderImage';
 import { saveNearSawTour } from '../redux/tourSlice';
 import Lottie from 'lottie-react-native';
+import i18n from '../i18n';
 
 
 const { width, height } = Dimensions.get("window");
@@ -63,7 +64,9 @@ const DetailPlace = ({ navigation, route }) => {
                                 </View>
                                 {/* Content */}
                                 <View>
-                                    <Text style={{ marginVertical: 10, borderLeftWidth: 5, borderRadius: 5, borderLeftColor: '#ff4500', fontSize: 20, fontWeight: 'bold', color: '#000', paddingLeft: 20 }}>Về dịch vụ này</Text>
+                                    <Text style={{ marginVertical: 10, borderLeftWidth: 5, borderRadius: 5, borderLeftColor: '#ff4500', fontSize: 20, fontWeight: 'bold', color: '#000', paddingLeft: 20 }}>
+                                        {i18n.t('about')}
+                                    </Text>
                                     <Text style={{ color: '#000' }}>
                                         {item && item.description}
                                     </Text>
@@ -72,8 +75,8 @@ const DetailPlace = ({ navigation, route }) => {
                                     {item && item.schedule && item.schedule.map((data, index) => {
                                         return (
                                             <View key={data._id}>
-                                                <Text style={{ color: '#000', fontSize: 20, fontWeight: 'bold', color: '#000' }}>Ngày {index + 1}: {data.title}</Text>
-                                                <Text style={{ color: '#000', fontSize: 14, color: 'green' }}>Ngày: {moment.utc(data.date).format('DD/MM/YYYY')}</Text>
+                                                <Text style={{ color: '#000', fontSize: 20, fontWeight: 'bold', color: '#000' }}>{i18n.t('day')} {index + 1}: {data.title}</Text>
+                                                <Text style={{ color: '#000', fontSize: 14, color: 'green' }}>{i18n.t('day')}: {moment.utc(data.date).format('DD/MM/YYYY')}</Text>
                                                 <Text style={{ color: '#000', fontSize: 14 }}>{data.details}</Text>
                                             </View>
                                         )
@@ -82,14 +85,16 @@ const DetailPlace = ({ navigation, route }) => {
                                 </View>
                                 {/* Rating */}
                                 <View>
-                                    <Text style={{ marginVertical: 10, borderLeftWidth: 5, borderRadius: 5, borderLeftColor: '#ff4500', fontSize: 20, fontWeight: 'bold', color: '#000', paddingLeft: 20 }}>Đánh giá</Text>
+                                    <Text style={{ marginVertical: 10, borderLeftWidth: 5, borderRadius: 5, borderLeftColor: '#ff4500', fontSize: 20, fontWeight: 'bold', color: '#000', paddingLeft: 20 }}>
+                                        {i18n.t('rating')}
+                                    </Text>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                         <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 26 }}>4.6</Text>
                                         <Text>/5</Text>
                                         <Pressable style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}
                                             onPress={() => navigation.navigate('ActionRaiting')}>
                                             <Rating starSize={20} />
-                                            <Text style={{ color: '#ff4500' }}>Viết đánh giá</Text>
+                                            <Text style={{ color: '#ff4500' }}>{i18n.t('write_rating')}</Text>
                                         </Pressable>
                                     </View>
 
@@ -169,10 +174,10 @@ const DetailPlace = ({ navigation, route }) => {
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <TouchableOpacity style={{ backgroundColor: '#ffa500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
-                                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Thêm vào giỏ hàng</Text>
+                                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>{i18n.t('add_to_cart')}</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => navigation.navigate('BookNow')} style={{ backgroundColor: '#ff4500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
-                                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Đặt ngay</Text>
+                                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>{i18n.t('order_now')}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>

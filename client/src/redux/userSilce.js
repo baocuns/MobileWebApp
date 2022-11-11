@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const userSlice = createSlice({
   name: 'user',
@@ -8,6 +8,7 @@ const userSlice = createSlice({
       isFetching: false,
       error: false,
     },
+    language: "en"
   },
   reducers: {
     getUsersStart: state => {
@@ -21,9 +22,12 @@ const userSlice = createSlice({
       state.users.isFetching = false;
       state.users.error = true;
     },
+    setLanguage: (state, action) => {
+      state.language = action.payload;
+    }
   },
 });
 
-export const {getUsersStart, getUsersFail, getUsersSuccess} = userSlice.actions;
+export const { getUsersStart, getUsersFail, getUsersSuccess, setLanguage } = userSlice.actions;
 
 export default userSlice.reducer;

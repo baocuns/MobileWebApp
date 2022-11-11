@@ -3,38 +3,35 @@ import axios from 'axios';
 import {
     View,
     StyleSheet,
-    Image,
     Dimensions,
     Text,
     StatusBar,
-    ImageBackground,
     TextInput,
     ScrollView,
-    TouchableOpacity,
     Pressable,
     RefreshControl,
-    ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FloatingAction } from "react-native-floating-action";
-import homeScreen from '../assets/images/launch_screen.png';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {
     getSliderRoute,
     getToursLastHourRoute,
     HOST_CRAWL,
 } from '../routes/APIRoute';
-import IconAnt from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 import Lottie from 'lottie-react-native';
+import i18n from '../i18n';
+import changeLanguage from '../HOC/changeLanguage';
+import { useNavigation } from '@react-navigation/native';
 
 const { width: screenWidth } = Dimensions.get('window');
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
-const Home = ({ navigation }) => {
+const Home = () => {
+    const navigation = useNavigation();
     const scrollRef = useRef();
     const [isFetching, setIsFetching] = useState(false);
     const [refreshing, setRefreshing] = React.useState(false);
@@ -44,21 +41,21 @@ const Home = ({ navigation }) => {
 
     const actions = [
         {
-            text: "Favourite",
+            text: i18n.t('favourite'),
             icon: <Lottie source={require("../assets/lotties/99703-heart-lottie-animation.json")} autoPlay loop />,
             name: "favourite",
             position: 1,
             color: '#fff'
         },
         {
-            text: "Cart",
+            text: i18n.t('cart'),
             icon: <Lottie source={require('../assets/lotties/8325-mercuri-cart.json')} autoPlay loop />,
             name: "cart",
             position: 2,
             color: '#fff'
         },
         {
-            text: "Scroll up",
+            text: i18n.t('scroll_up'),
             icon: <Lottie source={require("../assets/lotties/9594-grow-up.json")} autoPlay loop />,
             name: "up",
             position: 3,
@@ -115,7 +112,9 @@ const Home = ({ navigation }) => {
                     >
                         <View style={{ alignItems: 'center', justifyContent: 'center', height: 80, width: '100%' }}>
                             <Lottie style={{ zIndex: 10 }} source={require('../assets/lotties/75949-wind-turbine-fan-rotation.json')} autoPlay loop />
-                            <Text style={{ color: '#fff', fontSize: 25, fontWeight: '600' }}>Tìm kiếm niềm vui của bạn</Text>
+                            <Text style={{ color: '#fff', fontSize: 25, fontWeight: '600' }}>
+                                {i18n.t('home.find')}
+                            </Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 80, width: '100%', position: 'relative' }}>
                             <Lottie style={{ position: 'absolute', left: 7, width: 100, zIndex: 1 }} source={require('../assets/lotties/94375-search-new.json')} autoPlay loop />
@@ -162,7 +161,7 @@ const Home = ({ navigation }) => {
                             <Lottie style={{ position: 'absolute', zIndex: 1, left: 50 }} source={require('../assets/lotties/96262-detective-search.json')} autoPlay loop />
                             <Lottie style={{ position: 'absolute', zIndex: 1 }} source={require('../assets/lotties/65902-hott.json')} autoPlay loop />
                             <Text style={{ color: '#fff', backgroundColor: 'rgba(52, 52, 52, 0.8)', padding: 3, fontSize: 25, fontWeight: '600', margin: 10, shadowColor: 'grey' }}>
-                                Tour giờ chót
+                                {i18n.t('home.last_tour')}
                             </Text>
                         </View>
                         {lastTours.map((data, index) => (
@@ -241,4 +240,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Home;
+export default changeLanguage(Home);

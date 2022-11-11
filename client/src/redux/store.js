@@ -12,7 +12,7 @@ import userSlice from './userSilce';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['map', 'user', 'allUsers', 'tour']
+  blacklist: ['user.numchange']
 };
 
 // REDUCER

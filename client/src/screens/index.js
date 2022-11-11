@@ -14,9 +14,16 @@ import Cart from './Cart';
 import BookNow from './BookNow';
 import BookNowX from './BookNowX';
 import ActionRaiting from './ActionRaiting';
+import i18n from '../i18n';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import changeLanguage from '../HOC/changeLanguage';
+import { setLanguage } from '../redux/userSilce';
+
 const Tab = createBottomTabNavigator();
 
 function Index() {
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -25,14 +32,18 @@ function Index() {
         tabBarActiveTintColor: '#FA7000',
         tabBarInactiveTintColor: '#000',
         headerShown: false,
+        tabBarLabelStyle: {
+          fontSize: 16,
+          margin: 0,
+          padding: 0,
+        }
       }}>
       <Tab.Screen
         name="Mail"
         component={Mail}
         options={{
-          tabBarLabel: 'Mail',
+          tabBarLabel: i18n.t('mail'),
           tabBarIcon: ({ focused, color, size }) => (
-            // <Icon name="envelope" size={30} color={color} />
             <Lottie
               style={{ position: 'absolute', top: 0, zIndex: 100 }}
               source={require('../assets/lotties/76038-contact-mail.json')}
@@ -46,7 +57,7 @@ function Index() {
         name="Map"
         component={Map}
         options={{
-          tabBarLabel: 'Map',
+          tabBarLabel: i18n.t('map'),
           tabBarIcon: ({ focused, color, size }) => (
             <Lottie
               style={{ position: 'absolute', top: 0, zIndex: 100 }}
@@ -61,7 +72,7 @@ function Index() {
         name="Home"
         component={Home}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: i18n.t('home'),
 
           tabBarIcon: ({ focused, color, size }) => (
             <Lottie
@@ -77,7 +88,7 @@ function Index() {
         name="Blog"
         component={Login}
         options={{
-          tabBarLabel: 'Blog',
+          tabBarLabel: i18n.t('blog'),
           tabBarIcon: ({ focused, color, size }) => (
             <Lottie
               style={{ position: 'absolute', top: 0, zIndex: 100 }}
@@ -92,7 +103,7 @@ function Index() {
         name="User"
         component={Users}
         options={{
-          tabBarLabel: 'Users',
+          tabBarLabel: i18n.t('users'),
           tabBarIcon: ({ focused, color, size }) => (
             <Lottie
               style={{ position: 'absolute', top: 0, zIndex: 100, color: 'red' }}
@@ -107,4 +118,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default changeLanguage(Index);
