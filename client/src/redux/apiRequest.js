@@ -5,6 +5,7 @@ import {
   loginRoute,
   logoutRoute,
   registerRoute,
+  usersInfoRoute,
 } from '../routes/APIRoute';
 import { getInfoFailed, getInfoStart, getInfoSuccess } from './mapSlice';
 
@@ -18,6 +19,9 @@ import {
   logoutUserStart,
   logoutUserSuccess,
   logoutUserFail,
+  getUsersStart,
+  getUsersSuccess,
+  getUsersFail,
 } from './authSlice';
 
 import { getUsersStart, getUsersFail, getUsersSuccess } from './userSilce';
@@ -100,6 +104,43 @@ export const logoutUser = async (accessToken, dispatch) => {
     console.log(error);
     dispatch(logoutUserFail(error));
     alert('đang xuất thất bại');
+  }
+};
+
+export const userInfo = async (
+  fullname,
+  email,
+  phone,
+  birthday,
+  sex,
+  country,
+  address,
+  image,
+  dispatch,
+  accessToken,
+) => {
+  dispatch(getUsersStart());
+  try {
+    const res = await axios.post(
+      usersInfoRoute,
+      // {a: 1},
+      {
+        headers: {token: `Travel ${accessToken}`},
+        fullname: fullname,
+        email: email,
+        phone: phone,
+        birthday: birthday,
+        sex: sex,
+        country: country,
+        address: address,
+        image: image,
+      },
+    );
+    console.log(res.data);
+    dispatch(getUsersSuccess(res.data));
+  } catch (error) {
+    // console.log(res.data)
+    dispatch(getUsersFail());
   }
 };
 
