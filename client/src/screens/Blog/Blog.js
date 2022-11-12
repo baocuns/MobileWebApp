@@ -15,27 +15,23 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import { useEffect, useState } from 'react';
 import Comment from './Comment';
+import axios from 'axios';
+import FastImage from 'react-native-fast-image';
+import { useSelector } from 'react-redux';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const User1 = {
     fullname: 'Nguyễn Văn Bảo',
     img: require('../../assets/images/slider/1.jpg')
 }
-const User2 = {
-    fullname: 'Bùi Duy Khánh',
-    img: require('../../assets/images/slider/2.jpg')
-}
-const User3 = {
-    fullname: 'Trần Văn Khiêm',
-    img: require('../../assets/images/slider/3.jpg')
-}
+
+
 
 const Blog = () => {
+    const user = useSelector(state => state.auth.login.currentUser);
     const [news, setNews] = useState([])
     const [posts, setPosts] = useState([])
     const [comment, setComment] = useState(false)
-
-
 
     useEffect(() => {
         const listNews = [{
@@ -60,36 +56,45 @@ const Blog = () => {
                 comment: 35,
                 comments: 'ID_Comment_Data',
             },
-            {
-                user: User2,
-                time: '10/10/2022',
-                address: 'Đà Nẵng',
-                content: 'You can also use variant modifiers to target media queries like responsive breakpoints, dark mode, prefers-reduced-motion, and more. For example, use md:font-bold to apply the font-bold utility at only medium screen sizes and above.',
-                image: require('../../assets/images/slider/2.jpg'),
-                like: 1345,
-                comment: 35,
-                comments: 'ID_Comment_Data',
-            },
-            {
-                user: User3,
-                time: '10/10/2022',
-                address: 'Đà Nẵng',
-                content: 'The w-auto utility can be useful if you need to remove an element’s assigned width under a specific condition, like at a particular breakpoint:',
-                image: require('../../assets/images/slider/3.jpg'),
-                like: 1345,
-                comment: 35,
-                comments: 'ID_Comment_Data',
-            },
         ]
-        setPosts(listPost)
         setNews(listNews)
     }, [])
 
-    const handleLike = () => {
-        console.log('LIKE');
+    useEffect(() => {
+        axios.get('https://api.travels.games/api/v1/posts/show/hot')
+            .then(res => {
+                console.log('data', res.data.data[0].images[0]);
+                setPosts(res.data.data)
+            })
+            .catch(err => {
+                console.log('err', err.response.data);
+            })
+    }, [])
+
+    const handleLike = (index) => {
+        let p = posts
+        if (p[index].likes.some(e => e === user?.username)) {
+            p[index].likes = p[index].likes.filter(e => e !== user?.username)
+        } else {
+            p[index].likes.push(user?.username)
+        }
+        p[index].like = p[index].likes.length
+        setPosts([...p])
+
+        axios.put(`https://api.travels.games/api/v1/posts/like/${p[index]._id}`, user?._id, {
+            headers: {
+                token: `Travel ${user?.accessToken}`,
+                _id: user?._id,
+            }
+        })
+            .then(res => {
+                console.log('data',res.data);
+            })
+            .catch(err => {
+                console.log('err', err.response);
+            })
     }
-    const handleComment = (comments) => {
-        console.log(comments);
+    const handleComment = () => {
         setComment(!comment)
     }
 
@@ -150,24 +155,28 @@ const Blog = () => {
                 <View className='w-full h-2.5 bg-slate-300 my-1' />
                 {/* post */}
                 <View className=''>
-                    {posts.map((e, i) => (
-                        <View className='w-full h-auto bg-white'>
+                    {posts && posts.map((e, index) => (
+                        <View key={e._id} className='w-full h-auto bg-white'>
                             <View className='flex flex-row'>
                                 <View className='ml-4 mr-2 my-2'>
                                     <Image
-                                        source={e.user.img}
+                                        source={require('../../assets/images/slider/1.jpg')}
                                         resizeMode='cover'
                                         className='rounded-full h-12 w-12'
                                     />
                                 </View>
                                 <View className='mx-2 my-2'>
                                     <View className='flex flex-row'>
-                                        <Text className='text-black  font-bold'>{e.user.fullname}</Text>
-                                        <Text className='mx-2 '>đang ở</Text>
-                                        <Text className='text-black  font-bold'>{e.address}</Text>
+                                        <Text className='text-black  font-bold'>{e.username}</Text>
+                                        {e.address ? (
+                                            <>
+                                                <Text className='mx-2 '>đang ở</Text>
+                                                <Text className='text-black  font-bold'>{e.address}</Text>
+                                            </>
+                                        ) : ('')}
                                     </View>
                                     <View>
-                                        <Text>{e.time}</Text>
+                                        <Text>{new Date(e.createdAt).toLocaleString()}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -178,8 +187,8 @@ const Blog = () => {
                             {/* image */}
                             <View>
                                 <Image
-                                    className='object-cover w-full'
-                                    source={e.image}
+                                    className='object-cover h-96 w-full'
+                                    source={{ uri: e.images[0] }}
                                 />
                             </View>
                             {/* opstion status */}
@@ -205,7 +214,7 @@ const Blog = () => {
                                 {/* button */}
                                 <View className='flex justify-between flex-row mt-2 border-t border-slate-200 border-solid pt-2 px-4'>
                                     <Pressable className='flex flex-row items-center p-2'
-                                        onPress={handleLike}
+                                        onPress={() => handleLike(index)}
                                     >
                                         <Ionicons
                                             name="heart-outline"
@@ -215,7 +224,7 @@ const Blog = () => {
                                         <Text className=' text-black ml-1'>Yêu Thích</Text>
                                     </Pressable>
                                     <Pressable className='flex flex-row items-center p-2'
-                                        onPress={() => handleComment(e.comments)}
+                                        onPress={() => handleComment()}
                                     >
                                         <Text className=' text-black mr-1'>Bình Luận</Text>
                                         <EvilIcons
