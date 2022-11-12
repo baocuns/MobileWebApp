@@ -2,6 +2,7 @@ import {
   View,
   Text,
   StyleSheet,
+  Button,
   SafeAreaView,
   Pressable,
   ScrollView,
@@ -11,31 +12,21 @@ import React, { useState } from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Center, FormControl, Input, Modal, Radio } from "native-base";
+
 import { loginUser } from '../redux/apiRequest';
 import { logoutUser } from '../redux/apiRequest';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { logoutRoute } from '../routes/APIRoute';
-import i18n from '../i18n';
-import { setLanguage } from '../redux/userSilce';
-
-import {loginUser} from '../redux/apiRequest';
-import {logoutUser} from '../redux/apiRequest';
-import {useNavigation} from '@react-navigation/native';
-import {useEffect} from 'react';
-import {logoutRoute} from '../routes/APIRoute';
 import axios from 'axios';
 import FastImage from 'react-native-fast-image';
-import {userInfo} from '../redux/apiRequest';
-const Users = ({navigation}) => {
+import { userInfo } from '../redux/apiRequest';
+const Users = ({ navigation }) => {
   const dispatch = useDispatch();
   const [profile, setProfile] = useState(null);
   // const navigate = useNavigate();
   const [accessToken, setAccessToken] = useState('');
   const user = useSelector(state => state.auth.login.currentUser);
-  const language = useSelector(state => state.user.language);
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     axios
@@ -63,10 +54,8 @@ const Users = ({navigation}) => {
   // );
   // const accessToken = accessToken();
 
-                  textAlign: 'center',
-                }}
-              />
-            </View>
+  // if (user) {
+  //   console.log('>>> check user: ' + user.username);
 
   // }
   return (
@@ -85,7 +74,7 @@ const Users = ({navigation}) => {
               alignItems: 'center',
             }}>
             <FastImage
-              source={{uri: profile?.images[0]}}
+              source={{ uri: profile?.images[0] }}
               style={{
                 width: 100,
                 height: 100,
@@ -93,155 +82,85 @@ const Users = ({navigation}) => {
               }}
               resizeMode="cover"
             />
-
           </View>
 
           <View
             style={{
-              flexDirection: 'row',
-              paddingTop: 20,
-              alignSelf: 'center',
+              alignItems: 'center',
             }}>
-            <TouchableOpacity
+            <Text
               style={{
-                marginRight: 5,
+                color: 'black',
+                fontSize: 20,
+                fontWeight: 'bold',
               }}>
-              <View
-                style={{
-                  backgroundColor: '#fc5a00',
-                  height: 60,
-                  width: 110,
-                  borderRadius: 10,
-                  justifyContent: 'center',
-                  paddingLeft: 10,
-                }}>
-                <View>
-                  <Icon
-                    style={{
-                      color: 'white',
-                    }}
-                    name="plus"></Icon>
-                </View>
-                <View>
-                  <Text
-                    style={{
-                      color: 'white',
-                    }}>
-                    Mã ưu đãi
-                  </Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                marginRight: 5,
-              }}>
-              <View
-                style={{
-                  backgroundColor: '#ff9c00',
-                  height: 60,
-                  width: 110,
-                  borderRadius: 10,
-                  justifyContent: 'center',
-                  paddingLeft: 10,
-                }}>
-                <View>
-                  <Icon
-                    style={{
-                      color: 'white',
-                    }}
-                    name="plus"></Icon>
-                </View>
-                <View>
-                  <Text
-                    style={{
-                      color: 'white',
-                    }}>
-                    Credit
-                  </Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <View
-                style={{
-                  backgroundColor: '#01c8cf',
-                  height: 60,
-                  width: 110,
-                  borderRadius: 10,
-                  justifyContent: 'center',
-                  paddingLeft: 10,
-                }}>
-                <View>
-                  <Icon
-                    style={{
-                      color: 'white',
-                    }}
-                    name="plus"></Icon>
-                </View>
-                <View>
-                  <Text
-                    style={{
-                      color: 'white',
-                    }}>
-                    Gift Card
-                  </Text>
-                </View>
-              </View>
-            </TouchableOpacity>
+              {user ? user.username : 'Thông tin người dùng'}
+            </Text>
           </View>
         </View>
+
         <View
           style={{
-            padding: 10,
-            backgroundColor: 'white',
-            margin: 15,
-            borderRadius: 5,
-            borderWidth: 1,
-            borderColor: 'gray',
+            flexDirection: 'row',
+            paddingTop: 20,
+            alignSelf: 'center',
           }}>
-          <TouchableOpacity onPress={() => navigation.navigate('UserInfo')}>
+          <TouchableOpacity
+            style={{
+              marginRight: 5,
+            }}>
             <View
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderWidth: 1,
-                borderColor: 'gray',
+                backgroundColor: '#fc5a00',
+                height: 60,
+                width: 110,
                 borderRadius: 10,
-                marginBottom: 10,
+                justifyContent: 'center',
+                paddingLeft: 10,
               }}>
-              <View
-                style={{
-                  padding: 10,
-                  height: 40,
-                  width: 50,
-                  backgroundColor: '#cfbda1',
-                  alignItems: 'center',
-                  borderBottomLeftRadius: 10,
-                  borderTopLeftRadius: 10,
-                  borderRightWidth: 1,
-                  borderRightColor: 'gray',
-                }}>
+              <View>
                 <Icon
                   style={{
-                    fontSize: 20,
-                    color: 'black',
+                    color: 'white',
                   }}
-                  name="user"
-                />
+                  name="plus"></Icon>
               </View>
-              <View
-                style={{
-                  paddingLeft: 10,
-                }}>
+              <View>
                 <Text
                   style={{
-                    color: 'black',
-                    backgroundColor: 'white',
-                    fontSize: 15,
-                    fontWeight: 'bold',
+                    color: 'white',
                   }}>
-                  {user ? user.username : i18n.t('user_info')}
+                  Mã ưu đãi
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              marginRight: 5,
+            }}>
+            <View
+              style={{
+                backgroundColor: '#ff9c00',
+                height: 60,
+                width: 110,
+                borderRadius: 10,
+                justifyContent: 'center',
+                paddingLeft: 10,
+              }}>
+              <View>
+                <Icon
+                  style={{
+                    color: 'white',
+                  }}
+                  name="plus"></Icon>
+              </View>
+              <View>
+                <Text
+                  style={{
+                    color: 'white',
+                  }}>
+                  Credit
                 </Text>
               </View>
             </View>
@@ -249,93 +168,26 @@ const Users = ({navigation}) => {
           <TouchableOpacity>
             <View
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderWidth: 1,
-                borderColor: 'gray',
+                backgroundColor: '#01c8cf',
+                height: 60,
+                width: 110,
                 borderRadius: 10,
-                marginBottom: 10,
+                justifyContent: 'center',
+                paddingLeft: 10,
               }}>
-              <View
-                style={{
-                  padding: 10,
-                  height: 40,
-                  width: 50,
-                  backgroundColor: '#cfbda1',
-                  alignItems: 'center',
-                  borderBottomLeftRadius: 10,
-                  borderTopLeftRadius: 10,
-                  borderRightWidth: 1,
-                  borderRightColor: 'gray',
-                }}>
+              <View>
                 <Icon
                   style={{
-                    fontSize: 20,
-                    color: 'black',
+                    color: 'white',
                   }}
-                  name="list-alt"
-                />
+                  name="plus"></Icon>
               </View>
-              <View
-                style={{
-                  paddingLeft: 10,
-                }}>
+              <View>
                 <Text
                   style={{
-                    color: 'black',
-                    backgroundColor: 'white',
-                    fontSize: 15,
-                    fontWeight: 'bold',
+                    color: 'white',
                   }}>
-                  Đơn hàng của tôi
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderWidth: 1,
-                borderColor: 'gray',
-                borderRadius: 10,
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  padding: 10,
-                  height: 40,
-                  width: 50,
-                  backgroundColor: '#cfbda1',
-                  alignItems: 'center',
-                  borderBottomLeftRadius: 10,
-                  borderTopLeftRadius: 10,
-                  borderRightWidth: 1,
-                  borderRightColor: 'gray',
-                }}>
-                <Icon
-                  style={{
-                    fontSize: 20,
-                    color: 'black',
-                    alignItems: 'center',
-                  }}
-                  name="thumbs-o-up"
-                />
-              </View>
-              <View
-                style={{
-                  paddingLeft: 10,
-                }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    backgroundColor: 'white',
-                    fontSize: 15,
-                    fontWeight: 'bold',
-                  }}>
-                  Đánh giá ứng dụng
+                  Gift Card
                 </Text>
               </View>
             </View>
@@ -450,100 +302,147 @@ const Users = ({navigation}) => {
           </View>
         </TouchableOpacity>
 
-          <TouchableOpacity>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderWidth: 1,
-                borderColor: 'gray',
-                borderRadius: 10,
-                marginBottom: 10,
-              }}>
-              <View
-                style={{
-                  padding: 10,
-                  height: 40,
-                  width: 50,
-                  backgroundColor: '#cfbda1',
-                  alignItems: 'center',
-                  borderBottomLeftRadius: 10,
-                  borderTopLeftRadius: 10,
-                  borderRightWidth: 1,
-                  borderRightColor: 'gray',
-                }}>
-                <Icon
-                  style={{
-                    fontSize: 20,
-                    color: 'black',
-                  }}
-                  name="gear"
-                />
-              </View>
-              <View
-                style={{
-                  paddingLeft: 10,
-                }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    backgroundColor: 'white',
-                    fontSize: 15,
-                    fontWeight: 'bold',
-                  }}>
-                  Cài đặt
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              logoutUser(user?.accessToken, dispatch);
+        <TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: 'gray',
+              borderRadius: 10,
+              marginBottom: 10,
             }}>
             <View
               style={{
-                flexDirection: 'row',
+                padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
                 alignItems: 'center',
-                borderWidth: 1,
-                borderColor: 'gray',
-                borderRadius: 10,
-                marginBottom: 10,
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
               }}>
-              <View
+              <Icon
                 style={{
-                  padding: 10,
-                  height: 40,
-                  width: 50,
-                  backgroundColor: '#ef921b',
+                  fontSize: 20,
+                  color: 'black',
                   alignItems: 'center',
-                  borderBottomLeftRadius: 10,
-                  borderTopLeftRadius: 10,
-                  borderRightWidth: 1,
-                  borderRightColor: 'gray',
-                }}>
-                <Icon
-                  style={{
-                    fontSize: 20,
-                    color: 'black',
-                  }}
-                  name="user-times"
-                />
-              </View>
-              <View
+                }}
+                name="thumbs-o-up"
+              />
+            </View>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
+              <Text
                 style={{
-                  paddingLeft: 10,
+                  color: 'black',
+                  backgroundColor: 'white',
+                  fontSize: 15,
+                  fontWeight: 'bold',
                 }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    backgroundColor: 'white',
-                    fontSize: 15,
-                    fontWeight: 'bold',
-                  }}>
-                  logout
-                </Text>
-              </View>
+                Đánh giá ứng dụng
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: 'gray',
+              borderRadius: 10,
+              marginBottom: 10,
+            }}>
+            <View
+              style={{
+                padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#cfbda1',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
+              }}>
+              <Icon
+                style={{
+                  fontSize: 20,
+                  color: 'black',
+                }}
+                name="gear"
+              />
+            </View>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                  backgroundColor: 'white',
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                }}>
+                Cài đặt
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            logoutUser(user?.accessToken, dispatch);
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: 'gray',
+              borderRadius: 10,
+              marginBottom: 10,
+            }}>
+            <View
+              style={{
+                padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#ef921b',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
+              }}>
+              <Icon
+                style={{
+                  fontSize: 20,
+                  color: 'black',
+                }}
+                name="user-times"
+              />
+            </View>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                  backgroundColor: 'white',
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                }}>
+                logout
+              </Text>
             </View>
           </View>
         </TouchableOpacity>

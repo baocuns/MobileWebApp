@@ -24,7 +24,7 @@ import {
   getUsersFail,
 } from './authSlice';
 
-import { getUsersStart, getUsersFail, getUsersSuccess } from './userSilce';
+// import { getUsersStart, getUsersFail, getUsersSuccess } from './userSilce';
 import { combineReducers } from 'redux';
 import { reset } from './tourSlice';
 
@@ -125,7 +125,7 @@ export const userInfo = async (
       usersInfoRoute,
       // {a: 1},
       {
-        headers: {token: `Travel ${accessToken}`},
+        headers: { token: `Travel ${accessToken}` },
         fullname: fullname,
         email: email,
         phone: phone,
