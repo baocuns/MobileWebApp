@@ -23,7 +23,7 @@ import moment from 'moment';
 import Lottie from 'lottie-react-native';
 import i18n from '../i18n';
 import changeLanguage from '../HOC/changeLanguage';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -38,6 +38,7 @@ const Home = () => {
     const [placeList, setPlaceList] = useState([]);
     const [lastTours, setLastTours] = useState([]);
     const [search, setSearch] = useState("");
+    const { colors } = useTheme();
 
     const actions = [
         {
@@ -95,7 +96,7 @@ const Home = () => {
     }, []);
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#87CEFA' }}>
+        <SafeAreaView style={{ flex: 1 }}>
             <StatusBar hidden />
             <SafeAreaView style={{ flex: 1 }}>
                 {!isFetching ?
@@ -112,7 +113,7 @@ const Home = () => {
                     >
                         <View style={{ alignItems: 'center', justifyContent: 'center', height: 80, width: '100%' }}>
                             <Lottie style={{ zIndex: 10 }} source={require('../assets/lotties/75949-wind-turbine-fan-rotation.json')} autoPlay loop />
-                            <Text style={{ color: '#fff', fontSize: 25, fontWeight: '600' }}>
+                            <Text style={{ color: colors.text, fontSize: 25, fontWeight: '600' }}>
                                 {i18n.t('home.find')}
                             </Text>
                         </View>
@@ -127,7 +128,7 @@ const Home = () => {
                                 })}
                                 value={search}
                                 onChangeText={setSearch}
-                                style={{ paddingLeft: 40, borderRadius: 50, width: '80%', height: 40, backgroundColor: '#fff', fontWeight: '600' }} placeholder='Tìm địa điểm' />
+                                style={{ paddingLeft: 40, borderRadius: 50, width: '80%', height: 40, backgroundColor: '#FF0000', fontWeight: '600', color: '#fff' }} placeholder={i18n.t('home.placeholder')} />
                         </View>
                         {/* ScrollView */}
                         <View style={{ width: screenWidth, height: 220 }} >
@@ -137,7 +138,7 @@ const Home = () => {
                                         <Pressable
                                             onPress={() => navigation.navigate('ProvinceDetail', {
                                                 area_slug: place.slug,
-                                                image: place.thumb,
+                                                image: place.images[0],
                                                 name: place.title
                                             })}
                                             key={index}
@@ -145,7 +146,7 @@ const Home = () => {
                                         >
                                             <FastImage
                                                 style={styles.imageSlideContainer}
-                                                source={{ uri: place.thumb }}
+                                                source={{ uri: place.images[0] }}
                                                 resizeMode='cover'>
                                             </FastImage>
                                             <Text style={{ position: 'absolute', left: 20, bottom: 10, color: '#fff' }}>
@@ -166,22 +167,24 @@ const Home = () => {
                         </View>
                         {lastTours.map((data, index) => (
                             <View key={index} style={{ marginHorizontal: 10 }}>
-                                <Pressable key={index} onPress={() => navigation.navigate('DetailPlace', {
-                                    slug: data.slug
-                                })} style={{ width: '100%', marginVertical: 10, borderRadius: 10, backgroundColor: '#F5F5F5' }}>
-                                    <FastImage source={{ uri: data.thumb }} style={{ width: '100%', height: 200, borderTopLeftRadius: 10, borderTopRightRadius: 10 }} />
+                                <Pressable key={index}
+                                    onPress={() => navigation.navigate('DetailPlace', {
+                                        slug: data.slug
+                                    })}
+                                    style={{ width: '100%', marginVertical: 10, borderRadius: 10, backgroundColor: 'rgba(0, 255, 255, 0.7)' }}>
+                                    <FastImage source={{ uri: data.images[0] }} style={{ width: '100%', height: 200, borderTopLeftRadius: 10, borderTopRightRadius: 10 }} />
                                     <View style={{ margin: 10, flex: 1, justifyContent: 'space-between' }}>
                                         <View>
-                                            <Text style={{ fontSize: 10 }}>Ngày bắt đầu: {moment.utc(data.time_start).format('MM/DD/YYYY')}</Text>
-                                            <Text style={{ fontSize: 10 }}>Ngày kết thúc: {moment.utc(data.time_end).format('MM/DD/YYYY')}</Text>
-                                            <Text style={{ fontWeight: 'bold', color: '#000' }}>{data.title}</Text>
+                                            <Text style={{ color: colors.text, fontSize: 10 }}>{i18n.t('start_day')}: {moment.utc(data.time_start).format('MM/DD/YYYY')}</Text>
+                                            <Text style={{ color: colors.text, fontSize: 10 }}>{i18n.t('end_day')}: {moment.utc(data.time_end).format('MM/DD/YYYY')}</Text>
+                                            <Text style={{ fontWeight: 'bold', color: colors.text }}>{data.title}</Text>
                                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                <Text>Khởi hành: ({moment.utc(data.time_start).format('MM/DD/YYYY')})</Text>
+                                                <Text style={{ color: colors.text }}>{i18n.t('start')}: ({moment.utc(data.time_start).format('MM/DD/YYYY')})</Text>
                                             </View>
                                         </View>
                                         <View>
-                                            <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 10, textDecorationLine: 'line-through' }}>Giá gốc: {data.price}đ</Text>
-                                            <Text style={{ color: '#000', fontWeight: 'bold', justifyContent: 'flex-end' }}>Chỉ từ: {data.sale}đ</Text>
+                                            <Text style={{ color: colors.text, fontWeight: 'bold', fontSize: 10, textDecorationLine: 'line-through' }}>{i18n.t('cost')}: {data.price}đ</Text>
+                                            <Text style={{ color: colors.text, fontWeight: 'bold', justifyContent: 'flex-end' }}>{i18n.t('sale')}: {data.sale}đ</Text>
                                         </View>
                                     </View>
                                 </Pressable>

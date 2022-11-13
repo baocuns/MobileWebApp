@@ -6,9 +6,11 @@ import FastImage from 'react-native-fast-image';
 import { deleteFavouriteTour } from '../redux/tourSlice';
 import { deleteTour } from '../redux/functions/tourFunc';
 import { useDispatch } from 'react-redux';
+import { useTheme } from '@react-navigation/native';
 
 const FavouriteItem = ({ navigation, tours, tour }) => {
     const dispatch = useDispatch();
+    const { colors } = useTheme();
     return (
         <Pressable
             onPress={() => navigation.navigate('DetailPlace', {
@@ -50,17 +52,17 @@ const FavouriteItem = ({ navigation, tours, tour }) => {
                 </Text>
                 <View style={{ flexDirection: 'row' }}>
                     <AntDesign name="star" size={14} color="#FFD700" />
-                    <Text>4.6</Text>
-                    <Text>(243)</Text>
-                    <Text> . </Text>
-                    <Text>3K Đã đặt</Text>
+                    <Text style={{ color: 'gray' }}>4.6</Text>
+                    <Text style={{ color: 'gray' }}>(243)</Text>
+                    <Text style={{ color: 'gray' }}> . </Text>
+                    <Text style={{ color: 'gray' }}>3K Đã đặt</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <Text
                         style={{
                             fontSize: 10,
                             padding: 3,
-                            backgroundColor: '#f5f5f5',
+                            backgroundColor: 'gray',
                             borderRadius: 4,
                             marginRight: 5,
                         }}>
@@ -70,7 +72,7 @@ const FavouriteItem = ({ navigation, tours, tour }) => {
                         style={{
                             fontSize: 10,
                             padding: 3,
-                            backgroundColor: '#f5f5f5',
+                            backgroundColor: 'gray',
                             borderRadius: 4,
                         }}>
                         Xác nhận tức thời

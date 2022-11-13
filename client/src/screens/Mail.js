@@ -18,18 +18,21 @@ import IconAnt from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { reset } from '../redux/tourSlice';
 import Lottie from 'lottie-react-native';
+import { useTheme } from '@react-navigation/native';
+import i18n from '../i18n';
 
 const Mail = ({ navigation }) => {
   const dispatch = useDispatch();
+  const { colors } = useTheme();
 
   return (
     <SafeAreaView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
       {/* Title */}
-      <Lottie source={require('../assets/lotties/travel.json')} autoPlay loop />
+      {/* <Lottie source={require('../assets/lotties/travel.json')} autoPlay loop /> */}
       <View
         style={{ justifyContent: 'center', alignItems: 'center', height: '10%' }}>
-        <Text style={{ fontSize: 20, fontWeight: '600', color: '#000' }}>
-          Hộp Thư
+        <Text style={{ fontSize: 20, fontWeight: '600', color: colors.text }}>
+          {i18n.t('mail')}
         </Text>
       </View>
       {/* Icon List */}
@@ -48,7 +51,7 @@ const Mail = ({ navigation }) => {
             aspectRatio: 1,
           }}>
           <Icon onPress={() => navigation.navigate('Favorite')} name="thumbs-up" size={35} color="blue" brand />
-          <Text>Like</Text>
+          <Text style={{ color: colors.text }}>{i18n.t('like')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -58,7 +61,7 @@ const Mail = ({ navigation }) => {
             aspectRatio: 1,
           }}>
           <Icon onPress={() => navigation.navigate('Friends')} name="user-friends" size={35} color="blue" brand />
-          <Text>Friends</Text>
+          <Text style={{ color: colors.text }}>{i18n.t('friends')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate('Favorite')}
@@ -69,7 +72,7 @@ const Mail = ({ navigation }) => {
             aspectRatio: 1,
           }}>
           <Icon name="address-book" size={35} color="blue" brand />
-          <Text>Address</Text>
+          <Text style={{ color: colors.text }}>{i18n.t('address')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => dispatch(reset())}
@@ -80,7 +83,7 @@ const Mail = ({ navigation }) => {
             aspectRatio: 1,
           }}>
           <Icon name="globe-europe" size={35} color="blue" brand />
-          <Text>OP</Text>
+          <Text style={{ color: colors.text }}>{i18n.t('op')}</Text>
         </TouchableOpacity>
       </View>
       {/* Bình Luận, Thông báo, sự kiện */}
@@ -93,6 +96,7 @@ const Mail = ({ navigation }) => {
             borderWidth: 1,
             height: '26%',
             borderRadius: 10,
+            borderColor: colors.text
           }}>
           <View
             style={{
@@ -104,10 +108,11 @@ const Mail = ({ navigation }) => {
               height: '80%',
               aspectRatio: 1,
               borderRadius: 100,
+              borderColor: colors.text
             }}>
-            <Icon name="comment-dots" size={26} />
+            <Icon name="comment-dots" size={26} color={colors.text} />
           </View>
-          <Text style={{ fontSize: 18, color: '#000' }}>Bình Luận</Text>
+          <Text style={{ fontSize: 18, color: colors.text }}>{i18n.t('comment')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -117,6 +122,7 @@ const Mail = ({ navigation }) => {
             borderWidth: 1,
             height: '26%',
             borderRadius: 10,
+            borderColor: colors.text
           }}>
           <View
             style={{
@@ -128,10 +134,11 @@ const Mail = ({ navigation }) => {
               height: '80%',
               aspectRatio: 1,
               borderRadius: 100,
+              borderColor: colors.text
             }}>
-            <IconAnt name="notification" size={26} />
+            <IconAnt name="notification" size={26} color={colors.text} />
           </View>
-          <Text style={{ fontSize: 18, color: '#000' }}>Thông Báo</Text>
+          <Text style={{ fontSize: 18, color: colors.text }}>{i18n.t('notify')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -141,6 +148,7 @@ const Mail = ({ navigation }) => {
             borderWidth: 1,
             height: '26%',
             borderRadius: 10,
+            borderColor: colors.text
           }}>
           <View
             style={{
@@ -152,10 +160,11 @@ const Mail = ({ navigation }) => {
               height: '80%',
               aspectRatio: 1,
               borderRadius: 100,
+              borderColor: colors.text
             }}>
-            <MaterialIcons name="event-available" size={26} />
+            <MaterialIcons name="event-available" size={26} color={colors.text} />
           </View>
-          <Text style={{ fontSize: 18, color: '#000' }}>Sự Kiện</Text>
+          <Text style={{ fontSize: 18, color: colors.text }}>{i18n.t('event')}</Text>
         </TouchableOpacity>
       </View>
       {/* Hoạt Động Mới */}
@@ -164,10 +173,10 @@ const Mail = ({ navigation }) => {
           style={{
             fontSize: 26,
             fontWeight: '600',
-            color: '#000',
+            color: colors.text,
             marginLeft: 10,
           }}>
-          Hoạt Động Mới
+          {i18n.t('new_activity')}
         </Text>
       </View>
 
@@ -180,6 +189,7 @@ const Mail = ({ navigation }) => {
             borderWidth: 1,
             height: '26%',
             borderRadius: 10,
+            borderColor: colors.text
           }}>
           <View
             style={{
@@ -191,11 +201,12 @@ const Mail = ({ navigation }) => {
               height: '80%',
               aspectRatio: 1,
               borderRadius: 100,
+              borderColor: colors.text
             }}>
-            <MaterialIcons name="person-outline" size={26} />
+            <MaterialIcons name="person-outline" size={26} color={colors.text} />
           </View>
-          <Text style={{ fontSize: 18, color: '#000' }}>
-            Người follow đăng bài blog
+          <Text style={{ fontSize: 18, color: colors.text }}>
+            {i18n.t('people_follow_blog')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -206,6 +217,7 @@ const Mail = ({ navigation }) => {
             borderWidth: 1,
             height: '26%',
             borderRadius: 10,
+            borderColor: colors.text
           }}>
           <View
             style={{
@@ -217,10 +229,11 @@ const Mail = ({ navigation }) => {
               height: '80%',
               aspectRatio: 1,
               borderRadius: 100,
+              borderColor: colors.text
             }}>
-            <IconAnt name="customerservice" size={26} />
+            <IconAnt name="customerservice" size={26} color={colors.text} />
           </View>
-          <Text style={{ fontSize: 18, color: '#000' }}>Trung Tâm Thông Báo</Text>
+          <Text style={{ fontSize: 18, color: colors.text }}>{i18n.t('notify_center')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -230,6 +243,7 @@ const Mail = ({ navigation }) => {
             borderWidth: 1,
             height: '26%',
             borderRadius: 10,
+            borderColor: colors.text,
           }}>
           <View
             style={{
@@ -241,10 +255,11 @@ const Mail = ({ navigation }) => {
               height: '80%',
               aspectRatio: 1,
               borderRadius: 100,
+              borderColor: colors.text
             }}>
-            <IconAnt name="customerservice" size={26} />
+            <IconAnt name="customerservice" size={26} color={colors.text} />
           </View>
-          <Text style={{ fontSize: 18, color: '#000' }}>Trung Tâm Thông Báo</Text>
+          <Text style={{ fontSize: 18, color: colors.text }}>{i18n.t('notify_center')}</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
