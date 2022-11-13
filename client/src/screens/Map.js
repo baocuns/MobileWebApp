@@ -12,12 +12,14 @@ import { getEventAround50KmRoute } from '../routes/APIRoute';
 import { openLink } from '../utils/function';
 import { getImageDescriptionByNameSearch } from '../redux/apiRequest';
 import Lottie from 'lottie-react-native';
+import { mapDarkStyle, mapStandardStyle } from '../utils/mapStyle';
 
 
 const Map = ({ navigation }) => {
     const widthScreen = Dimensions.get('window').width;
     const heightScreen = Dimensions.get('window').height;
     const initState = useSelector((state) => state.map.map);
+    let theme = useSelector(state => state.status.theme);
     let position = initState.position;
     const positionDefault = initState.positionFault;
     const nameSearch = initState.status.nameSelected;
@@ -193,6 +195,7 @@ const Map = ({ navigation }) => {
                         provider={PROVIDER_GOOGLE} // remove if not using Google Maps
                         style={styles.map}
                         initialRegion={position}
+                        customMapStyle={theme === 'dark' ? mapDarkStyle : mapStandardStyle}
                         region={position}
                         camera={{
                             center: {

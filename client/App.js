@@ -16,22 +16,9 @@ LogBox.ignoreAllLogs(); //Ignore all log notifications
 enableLatestRenderer();
 
 const App = () => {
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('language')
-      if (value !== null) {
-        i18n.changeLanguage(value)
-      }
-      console.log("get store: ", value);
-    } catch (e) {
-      // error reading value
-      console.log(e);
-    }
-  }
 
   useEffect(() => {
     SplashScreen.hide();
-    // getData();
   }, []);
 
   return (

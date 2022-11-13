@@ -14,15 +14,16 @@ import {
 } from 'react-native';
 import blankFavorive from '../assets/images/blank-favorite.png';
 
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import i18n from '../i18n';
 
 const BlankFavorite = () => {
   const navigation = useNavigation();
   return (
-    <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
       <Image source={blankFavorive}></Image>
-      <Text>Mục Yêu thích đang trống</Text>
-      <Text>Nhấn vào icon hình tim trên trang dịch vụ để lưu vào đây</Text>
+      <Text>{i18n.t('blank_favourite')}</Text>
+      <Text>{i18n.t('action_discover')}</Text>
       <TouchableOpacity
         onPress={() => navigation.navigate('Home')}
         style={{
@@ -33,7 +34,7 @@ const BlankFavorite = () => {
           backgroundColor: '#ffa500',
           borderRadius: 10,
         }}>
-        <Text style={{color: '#000', fontSize: 20}}>Khám phá ngay</Text>
+        <Text style={{ color: '#000', fontSize: 20 }}>{i18n.t('discover')}</Text>
       </TouchableOpacity>
     </View>
   );

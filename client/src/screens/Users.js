@@ -21,6 +21,7 @@ import { logoutRoute } from '../routes/APIRoute';
 import axios from 'axios';
 import FastImage from 'react-native-fast-image';
 import { userInfo } from '../redux/apiRequest';
+import i18n from '../i18n';
 const Users = ({ navigation }) => {
   const dispatch = useDispatch();
   const [profile, setProfile] = useState(null);
@@ -48,16 +49,6 @@ const Users = ({ navigation }) => {
       });
   }, [user]);
 
-  // const id = user?._id;
-  // setAccessToken(
-  //   useSelector(state => state.auth.login.currentUser).accessToken,
-  // );
-  // const accessToken = accessToken();
-
-  // if (user) {
-  //   console.log('>>> check user: ' + user.username);
-
-  // }
   return (
     <ScrollView>
       <View
@@ -130,7 +121,7 @@ const Users = ({ navigation }) => {
                   style={{
                     color: 'white',
                   }}>
-                  Mã ưu đãi
+                  {i18n.t('code')}
                 </Text>
               </View>
             </View>
@@ -160,7 +151,7 @@ const Users = ({ navigation }) => {
                   style={{
                     color: 'white',
                   }}>
-                  Credit
+                  {i18n.t('credit')}
                 </Text>
               </View>
             </View>
@@ -187,7 +178,7 @@ const Users = ({ navigation }) => {
                   style={{
                     color: 'white',
                   }}>
-                  Gift Card
+                  {i18n.t('gift_card')}
                 </Text>
               </View>
             </View>
@@ -296,7 +287,7 @@ const Users = ({ navigation }) => {
                   fontSize: 15,
                   fontWeight: 'bold',
                 }}>
-                Đơn hàng của tôi
+                {i18n.t('my_order')}
               </Text>
             </View>
           </View>
@@ -344,13 +335,15 @@ const Users = ({ navigation }) => {
                   fontSize: 15,
                   fontWeight: 'bold',
                 }}>
-                Đánh giá ứng dụng
+                {i18n.t('rating_app')}
               </Text>
             </View>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Setting')}
+        >
           <View
             style={{
               flexDirection: 'row',
@@ -391,7 +384,7 @@ const Users = ({ navigation }) => {
                   fontSize: 15,
                   fontWeight: 'bold',
                 }}>
-                Cài đặt
+                {i18n.t('setting')}
               </Text>
             </View>
           </View>
@@ -441,7 +434,7 @@ const Users = ({ navigation }) => {
                   fontSize: 15,
                   fontWeight: 'bold',
                 }}>
-                logout
+                {i18n.t('logout')}
               </Text>
             </View>
           </View>
@@ -491,7 +484,7 @@ const Users = ({ navigation }) => {
                   fontSize: 15,
                   fontWeight: 'bold',
                 }}>
-                login
+                {i18n.t('login')}
               </Text>
             </View>
           </View>

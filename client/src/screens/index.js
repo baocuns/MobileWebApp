@@ -1,28 +1,19 @@
 import * as React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Home from './Home';
 import Map from './Map';
 import Blog from './Blog';
 import Mail from './Mail';
 import Users from './Users';
 import Lottie from 'lottie-react-native';
-import Login from './Login';
-
-import Cart from './Cart';
-import BookNow from './BookNow';
-import BookNowX from './BookNowX';
-import ActionRaiting from './ActionRaiting';
 import i18n from '../i18n';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
 import changeLanguage from '../HOC/changeLanguage';
-import { setLanguage } from '../redux/userSilce';
+import { useTheme } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
 function Index() {
+  const { colors } = useTheme();
 
   return (
     <Tab.Navigator
@@ -30,7 +21,7 @@ function Index() {
       screenOptions={{
         tabBarStyle: { height: 80 },
         tabBarActiveTintColor: '#FA7000',
-        tabBarInactiveTintColor: '#000',
+        tabBarInactiveTintColor: colors.text,
         headerShown: false,
         tabBarLabelStyle: {
           fontSize: 16,

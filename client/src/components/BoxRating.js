@@ -1,3 +1,4 @@
+import { useTheme } from "@react-navigation/native";
 import React, { useRef } from "react";
 import { View, Button, Dimensions, TouchableOpacity, Text, ScrollView, Image } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -8,6 +9,7 @@ const { width, height } = Dimensions.get("window");
 
 export default function BoxRating() {
     const refRBSheet = useRef();
+    const { colors } = useTheme();
     return (
         <View
             style={{
@@ -19,9 +21,9 @@ export default function BoxRating() {
         >
             <TouchableOpacity
                 onPress={() => refRBSheet.current.open()}
-                style={{ borderWidth: 1, width: '100%', justifyContent: 'center', alignItems: 'center', borderRadius: 8, paddingVertical: 10 }}
+                style={{ borderWidth: 1, width: '100%', justifyContent: 'center', alignItems: 'center', borderRadius: 8, paddingVertical: 10, borderColor: colors.text }}
             >
-                <Text style={{ color: '#000', fontWeight: 'bold' }}>{i18n.t('read_all_rating')}</Text>
+                <Text style={{ color: colors.text, fontWeight: 'bold' }}>{i18n.t('read_all_rating')}</Text>
             </TouchableOpacity>
             <RBSheet
                 ref={refRBSheet}

@@ -16,12 +16,15 @@ import FastImage from 'react-native-fast-image';
 import { saveNearSawTour } from '../redux/tourSlice';
 import i18n from '../i18n';
 import Lottie from 'lottie-react-native';
+import { useTheme } from '@react-navigation/native';
 
 const ProvinceDetail = ({ navigation, route }) => {
   const { area_slug, image, name, status } = route.params;
   const [itemPlaceList, setItemPlaceList] = useState([]);
   const [isFound, setIsFound] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
+  const { colors } = useTheme();
+
   const fetchData = async () => {
     setIsFetching(true);
     try {
@@ -56,24 +59,24 @@ const ProvinceDetail = ({ navigation, route }) => {
         />
       )}
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ backgroundColor: '#D3D3D3', flex: 1 }}>
+        <View style={{ flex: 1 }}>
           {!image ? (
             <ImagePlace
               navigation={navigation}
-              image={itemPlaceList[0]?.thumb}
+              image={itemPlaceList[0]?.images[0]}
             />
           ) : (
             <ImagePlace navigation={navigation} image={image} />
           )}
           {itemPlaceList.length > 0 && (
             <View style={{ marginHorizontal: 10 }}>
-              <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 26 }}>
+              <Text style={{ color: colors.text, fontWeight: 'bold', fontSize: 26 }}>
                 {status === 'search' && 'Tìm kiếm với: '}
                 {name}
               </Text>
               <Text
                 style={{
-                  color: '#000',
+                  color: colors.text,
                   fontWeight: 'bold',
                   fontSize: 20,
                   marginVertical: 10,
@@ -92,11 +95,11 @@ const ProvinceDetail = ({ navigation, route }) => {
                       width: 150,
                       marginRight: 10,
                       borderRadius: 10,
-                      backgroundColor: '#F5F5F5',
+                      backgroundColor: 'rgba(0, 255, 255, 0.7)',
                     }}>
                     <FastImage
                       key={data.id}
-                      source={{ uri: data.thumb }}
+                      source={{ uri: data.images[0] }}
                       style={{
                         width: 150,
                         height: 100,
@@ -112,12 +115,12 @@ const ProvinceDetail = ({ navigation, route }) => {
                       }}>
                       <View>
                         <Text style={{ fontSize: 10 }}>{data.tourdate}</Text>
-                        <Text style={{ fontWeight: 'bold', color: '#000' }}>
+                        <Text style={{ fontWeight: 'bold', color: colors.text }}>
                           {data.title}
                         </Text>
                       </View>
                       <View>
-                        <Text style={{ color: '#000', fontWeight: 'bold' }}>
+                        <Text style={{ color: colors.text, fontWeight: 'bold' }}>
                           Chỉ từ: {data.price}đ
                         </Text>
                       </View>
@@ -127,7 +130,7 @@ const ProvinceDetail = ({ navigation, route }) => {
               </ScrollView>
               <Text
                 style={{
-                  color: '#000',
+                  color: colors.text,
                   fontWeight: 'bold',
                   fontSize: 20,
                   marginVertical: 20,
@@ -145,11 +148,11 @@ const ProvinceDetail = ({ navigation, route }) => {
                     width: '100%',
                     marginVertical: 10,
                     borderRadius: 10,
-                    backgroundColor: '#F5F5F5',
+                    backgroundColor: 'rgba(0, 255, 255, 0.7)',
                   }}>
                   <FastImage
                     key={data.id}
-                    source={{ uri: data.thumb }}
+                    source={{ uri: data.images[0] }}
                     style={{
                       width: '100%',
                       height: 200,
@@ -165,7 +168,7 @@ const ProvinceDetail = ({ navigation, route }) => {
                     }}>
                     <View>
                       <Text style={{ fontSize: 10 }}>{data.tourdate}</Text>
-                      <Text style={{ fontWeight: 'bold', color: '#000' }}>
+                      <Text style={{ fontWeight: 'bold', color: colors.text }}>
                         {data.title}
                       </Text>
                       <View
@@ -176,7 +179,7 @@ const ProvinceDetail = ({ navigation, route }) => {
                       </View>
                     </View>
                     <View>
-                      <Text style={{ color: '#000', fontWeight: 'bold' }}>
+                      <Text style={{ color: colors.text, fontWeight: 'bold' }}>
                         Chỉ từ: {data.price}đ
                       </Text>
                     </View>
@@ -192,7 +195,7 @@ const ProvinceDetail = ({ navigation, route }) => {
                   marginHorizontal: 20,
                   fontSize: 24,
                   fontWeight: '600',
-                  color: '#000',
+                  color: colors.text,
                 }}>
                 {name}
               </Text>

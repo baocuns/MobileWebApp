@@ -6,7 +6,7 @@ function changeLanguage(OriginalComponent) {
     function NewComponent() {
         const [loadTranslate, setLoadTranslate] = useState(false);
 
-        const language = useSelector(state => state.user.language);
+        const language = useSelector(state => state.status.language);
         useEffect(() => {
             setLoadTranslate(true);
             i18n.changeLanguage(language);

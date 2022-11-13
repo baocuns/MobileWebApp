@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native'
+import { DarkTheme, DefaultTheme, NavigationContainer, useTheme } from '@react-navigation/native'
 import React, { useEffect } from 'react'
 import Index from '.'
 import FavariteList from '../components/FavoriteList'
@@ -16,14 +16,26 @@ import Login from './Login'
 import ProvinceDetail from './ProvinceDetail'
 import UserInfo from './UserInfo'
 import changeLanguage from '../HOC/changeLanguage';
+import Setting from './Setting';
 import { NativeBaseProvider } from 'native-base';
+import { useColorScheme } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
 
 function RootNav() {
+    let theme = useSelector(state => state.status.theme);
+    // init theme getting started app
+    if (theme === null) {
+        theme = useColorScheme();
+    }
+    useEffect(() => {
+        console.log('theme: ', theme);
+    }, [])
+
     return (
         <NativeBaseProvider>
-            <NavigationContainer>
+            <NavigationContainer theme={theme === 'dark' ? DarkTheme : DefaultTheme}>
                 <Stack.Navigator initialRouteName="Index" screenOptions={{ headerShown: false }}>
                     <Stack.Screen name="Index" component={Index} />
                     <Stack.Screen name="Favorite" component={Favorite} />
@@ -33,6 +45,7 @@ function RootNav() {
                     <Stack.Screen name="FavariteList" component={FavariteList} />
                     <Stack.Screen name="FavouriteItem" component={FavouriteItem} />
                     <Stack.Screen name="ActionRaiting" component={ActionRaiting} />
+                    <Stack.Screen name="Setting" component={Setting} />
                     {/* Khiêm */}
                     <Stack.Screen name="UserInfo" component={UserInfo} />
                     <Stack.Screen name="BookNow" component={BookNow} />
