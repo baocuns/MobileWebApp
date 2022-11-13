@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, SafeAreaView, StatusBar, ScrollView, Dimensions, TouchableOpacity, Image } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, StatusBar, ScrollView, Dimensions, TouchableOpacity, Image, Pressable } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import BoxRating from '../components/BoxRating';
 import Rating from '../components/Rating';
@@ -10,6 +10,7 @@ import moment from 'moment';
 import SliderImage from '../components/SliderImage';
 import { saveNearSawTour } from '../redux/tourSlice';
 import Lottie from 'lottie-react-native';
+import i18n from '../i18n';
 
 
 const { width, height } = Dimensions.get("window");
@@ -56,15 +57,17 @@ const DetailPlace = ({ navigation, route }) => {
                                 <Text style={{ fontWeight: '600', color: '#000', fontSize: 26 }}>{item && item.title}</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <AntDesign name='star' size={14} color='#FFD700' />
-                                    <Text>4.6</Text>
-                                    <Text>(243)</Text>
-                                    <Text> . </Text>
-                                    <Text>3K Đã đặt</Text>
+                                    <Text style={{ color: '#000' }}>4.6</Text>
+                                    <Text style={{ color: '#000' }}>(243)</Text>
+                                    <Text style={{ color: '#000' }}> . </Text>
+                                    <Text style={{ color: '#000' }}>3K Đã đặt</Text>
                                 </View>
                                 {/* Content */}
                                 <View>
-                                    <Text style={{ marginVertical: 10, borderLeftWidth: 5, borderRadius: 5, borderLeftColor: '#ff4500', fontSize: 20, fontWeight: 'bold', color: '#000', paddingLeft: 20 }}>Về dịch vụ này</Text>
-                                    <Text>
+                                    <Text style={{ marginVertical: 10, borderLeftWidth: 5, borderRadius: 5, borderLeftColor: '#ff4500', fontSize: 20, fontWeight: 'bold', color: '#000', paddingLeft: 20 }}>
+                                        {i18n.t('about')}
+                                    </Text>
+                                    <Text style={{ color: '#000' }}>
                                         {item && item.description}
                                     </Text>
                                 </View>
@@ -72,9 +75,9 @@ const DetailPlace = ({ navigation, route }) => {
                                     {item && item.schedule && item.schedule.map((data, index) => {
                                         return (
                                             <View key={data._id}>
-                                                <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000' }}>Ngày {index + 1}: {data.title}</Text>
-                                                <Text style={{ fontSize: 14, color: 'green' }}>Ngày: {moment.utc(data.date).format('DD/MM/YYYY')}</Text>
-                                                <Text style={{ fontSize: 14 }}>{data.details}</Text>
+                                                <Text style={{ color: '#000', fontSize: 20, fontWeight: 'bold', color: '#000' }}>{i18n.t('day')} {index + 1}: {data.title}</Text>
+                                                <Text style={{ color: '#000', fontSize: 14, color: 'green' }}>{i18n.t('day')}: {moment.utc(data.date).format('DD/MM/YYYY')}</Text>
+                                                <Text style={{ color: '#000', fontSize: 14 }}>{data.details}</Text>
                                             </View>
                                         )
                                     })}
@@ -82,13 +85,17 @@ const DetailPlace = ({ navigation, route }) => {
                                 </View>
                                 {/* Rating */}
                                 <View>
-                                    <Text style={{ marginVertical: 10, borderLeftWidth: 5, borderRadius: 5, borderLeftColor: '#ff4500', fontSize: 20, fontWeight: 'bold', color: '#000', paddingLeft: 20 }}>Đánh giá</Text>
+                                    <Text style={{ marginVertical: 10, borderLeftWidth: 5, borderRadius: 5, borderLeftColor: '#ff4500', fontSize: 20, fontWeight: 'bold', color: '#000', paddingLeft: 20 }}>
+                                        {i18n.t('rating')}
+                                    </Text>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                         <Text style={{ color: '#000', fontWeight: 'bold', fontSize: 26 }}>4.6</Text>
                                         <Text>/5</Text>
-                                        <View>
-                                            <Rating />
-                                        </View>
+                                        <Pressable style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}
+                                            onPress={() => navigation.navigate('ActionRaiting')}>
+                                            <Rating starSize={20} />
+                                            <Text style={{ color: '#ff4500' }}>{i18n.t('write_rating')}</Text>
+                                        </Pressable>
                                     </View>
 
                                     {/* ScrollView Rating */}
@@ -102,10 +109,10 @@ const DetailPlace = ({ navigation, route }) => {
                                                     <Image source={require('../assets/images/slider/6.jpg')} style={{ height: 40, width: 40, borderRadius: 50, aspectRatio: 1 }} />
                                                     <View>
                                                         <Text style={{ fontWeight: 'bold', color: '#000', marginLeft: 10 }}>Bùi Duy Khánh</Text>
-                                                        <Rating />
+                                                        <Rating starSize={20} />
                                                     </View>
                                                 </View>
-                                                <Text>3 ngày trước</Text>
+                                                <Text style={{ color: '#000' }}>3 ngày trước</Text>
                                             </View>
                                             <View style={{ margin: 10 }}>
                                                 <Text style={{ color: '#000' }}>
@@ -119,10 +126,10 @@ const DetailPlace = ({ navigation, route }) => {
                                                     <Image source={require('../assets/images/slider/11.jpg')} style={{ height: 40, width: 40, borderRadius: 50, aspectRatio: 1 }} />
                                                     <View>
                                                         <Text style={{ fontWeight: 'bold', color: '#000', marginLeft: 10 }}>Nguyễn Văn Bảo</Text>
-                                                        <Rating />
+                                                        <Rating starSize={20} />
                                                     </View>
                                                 </View>
-                                                <Text>3 ngày trước</Text>
+                                                <Text style={{ color: '#000' }}>3 ngày trước</Text>
                                             </View>
                                             <View style={{ margin: 10 }}>
                                                 <Text style={{ color: '#000' }}>
@@ -136,10 +143,10 @@ const DetailPlace = ({ navigation, route }) => {
                                                     <Image source={require('../assets/images/slider/3.jpg')} style={{ height: 40, width: 40, borderRadius: 50, aspectRatio: 1 }} />
                                                     <View>
                                                         <Text style={{ fontWeight: 'bold', color: '#000', marginLeft: 10 }}>Trần Văn Khiêm</Text>
-                                                        <Rating />
+                                                        <Rating starSize={20} />
                                                     </View>
                                                 </View>
-                                                <Text>3 ngày trước</Text>
+                                                <Text style={{ color: '#000' }}>3 ngày trước</Text>
                                             </View>
                                             <View style={{ margin: 10 }}>
                                                 <Text style={{ color: '#000' }}>
@@ -167,10 +174,10 @@ const DetailPlace = ({ navigation, route }) => {
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <TouchableOpacity style={{ backgroundColor: '#ffa500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
-                                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Thêm vào giỏ hàng</Text>
+                                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>{i18n.t('add_to_cart')}</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => navigation.navigate('BookNow')} style={{ backgroundColor: '#ff4500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
-                                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Đặt ngay</Text>
+                                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>{i18n.t('order_now')}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>

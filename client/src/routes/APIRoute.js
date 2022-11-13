@@ -12,3 +12,4 @@ export const getImageAndDescriptionRoute = `${HOST_CRAWL}/api/get-description-ma
 export const loginRoute = `${HOST}/api/v1/auth/login`;
 export const registerRoute = `${HOST}/api/v1/auth/register`;
 export const logoutRoute = `${HOST}/api/v1/auth/logout`;
+// export const usersInfoRoute = `${HOST}/api/v1/profile/show/details/`;

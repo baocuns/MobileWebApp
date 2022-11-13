@@ -169,7 +169,7 @@ const Map = ({ navigation }) => {
                                         <View style={styles.modalView}>
                                             {info?.descriptionArr.map((des, index) => {
                                                 return (
-                                                    <Text style={{ marginVertical: 10 }}>{des.description?.replace(/(<([^>]+)>)/ig, "")}</Text>
+                                                    <Text style={{ marginVertical: 10, color: '#000' }}>{des.description?.replace(/(<([^>]+)>)/ig, "")}</Text>
                                                 )
                                             })}
                                             <Pressable

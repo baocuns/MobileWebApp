@@ -1,7 +1,7 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { persistStore, persistReducer } from 'redux-persist';
+import {persistStore, persistReducer} from 'redux-persist';
 import mapReducer from './mapSlice';
 import tourSlice from './tourSlice';
 
@@ -12,7 +12,6 @@ import userSlice from './userSilce';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['map', 'user', 'allUsers', 'tour']
 };
 
 // REDUCER
@@ -20,7 +19,7 @@ const rootReducer = combineReducers({
   map: mapReducer,
   auth: authSlice,
   user: userSlice,
-  tour: tourSlice
+  tour: tourSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

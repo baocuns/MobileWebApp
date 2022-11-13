@@ -8,26 +8,45 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {loginUser} from '../redux/apiRequest';
-import {logoutUser} from '../redux/apiRequest';
-import {useNavigation} from '@react-navigation/native';
-import {useEffect} from 'react';
-import {logoutRoute} from '../routes/APIRoute';
-
-const Users = ({navigation}) => {
+import { loginUser } from '../redux/apiRequest';
+import { logoutUser } from '../redux/apiRequest';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect } from 'react';
+import { logoutRoute } from '../routes/APIRoute';
+import axios from 'axios';
+import FastImage from 'react-native-fast-image';
+import { userInfo } from '../redux/apiRequest';
+const Users = ({ navigation }) => {
   const dispatch = useDispatch();
+  const [profile, setProfile] = useState(null);
   // const navigate = useNavigate();
   const [accessToken, setAccessToken] = useState('');
   const user = useSelector(state => state.auth.login.currentUser);
 
-  // useEffect(() => {
-  //   user && setAccessToken(user.accessToken);
-  // }, []);
+  useEffect(() => {
+    axios
+      .post(
+        `https://api.travels.games/api/v1/profile/show/details/${user?.username}`,
+        user?._id,
+        {
+          headers: {
+            token: `Travel ${user?.accessToken}`,
+          },
+        },
+      )
+      .then(res => {
+        console.log(res.data.data[0]);
+        setProfile(res.data.data[0]);
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  }, [user]);
 
   // const id = user?._id;
   // setAccessToken(
@@ -48,15 +67,20 @@ const Users = ({navigation}) => {
           marginRight: 10,
         }}>
         <View style={{}}>
-          <View>
-            <Icon
-              name="user-circle-o"
+          <View
+            style={{
+              flex: 1,
+              padding: 10,
+              alignItems: 'center',
+            }}>
+            <FastImage
+              source={{ uri: profile?.images[0] }}
               style={{
-                fontSize: 80,
-                color: 'gray',
-
-                textAlign: 'center',
+                width: 100,
+                height: 100,
+                borderRadius: 10,
               }}
+              resizeMode="cover"
             />
           </View>
 
@@ -179,7 +203,13 @@ const Users = ({navigation}) => {
           borderWidth: 1,
           borderColor: 'gray',
         }}>
-        <TouchableOpacity onPress={() => navigation.navigate('UserInfo')}>
+        <TouchableOpacity
+          onPress={() => {
+            userInfo(user?.accessToken, dispatch);
+            navigation.navigate('UserInfo', {
+              profile: profile,
+            });
+          }}>
           <View
             style={{
               flexDirection: 'row',
@@ -412,6 +442,56 @@ const Users = ({navigation}) => {
                   fontWeight: 'bold',
                 }}>
                 logout
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Login');
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: 'gray',
+              borderRadius: 10,
+              marginBottom: 10,
+            }}>
+            <View
+              style={{
+                padding: 10,
+                height: 40,
+                width: 50,
+                backgroundColor: '#ef921b',
+                alignItems: 'center',
+                borderBottomLeftRadius: 10,
+                borderTopLeftRadius: 10,
+                borderRightWidth: 1,
+                borderRightColor: 'gray',
+              }}>
+              <Icon
+                style={{
+                  fontSize: 20,
+                  color: 'black',
+                }}
+                name="user"
+              />
+            </View>
+            <View
+              style={{
+                paddingLeft: 10,
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                  backgroundColor: 'white',
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                }}>
+                login
               </Text>
             </View>
           </View>

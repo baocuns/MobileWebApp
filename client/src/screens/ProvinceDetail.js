@@ -14,6 +14,7 @@ import axios from 'axios';
 import { getAllPlaceForNameRoute, searchByNameRoute } from '../routes/APIRoute';
 import FastImage from 'react-native-fast-image';
 import { saveNearSawTour } from '../redux/tourSlice';
+import i18n from '../i18n';
 import Lottie from 'lottie-react-native';
 
 const ProvinceDetail = ({ navigation, route }) => {
@@ -77,7 +78,7 @@ const ProvinceDetail = ({ navigation, route }) => {
                   fontSize: 20,
                   marginVertical: 10,
                 }}>
-                Hoạt động nên thử
+                {i18n.t('activity_should_try')}
               </Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {itemPlaceList.map(data => (
@@ -131,7 +132,7 @@ const ProvinceDetail = ({ navigation, route }) => {
                   fontSize: 20,
                   marginVertical: 20,
                 }}>
-                Các hoạt động nổi bật bật
+                {i18n.t('outstanding_activity')}
               </Text>
               {itemPlaceList.map(data => (
                 <TouchableOpacity
