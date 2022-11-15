@@ -7,41 +7,22 @@ import {
   Pressable,
   Button,
   TouchableOpacity,
+  I18nManager,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import FastImage from 'react-native-fast-image';
 
-import {userInfo} from '../redux/apiRequest';
+import { userInfo } from '../redux/apiRequest';
+import { useTheme } from '@react-navigation/native';
+import i18n from '../i18n'
 
-const UserInfo = ({route, navigation}) => {
+const UserInfo = ({ route, navigation }) => {
   // const [profile, setProfile] = useState(null);
-  const {profile} = route.params;
-  const user = useSelector(state => state.auth.login.currentUser);
-  // const [fullname, setFullname] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [phone, setPhone] = useState('');
-  // const [birthday, setBirthday] = useState('');
-  // const [sex, setSex] = useState('');
-  // const [country, setCountry] = useState('');
-  // const [address, setAddress] = useState('');
-  // const [image, setImage] = useState('');
-  const dispatch = useDispatch();
-  // useEffect(() => {
-  //   getList()
-  // },[])
-  // const onChangeFullname = value => {
-  //   setFullname(value);
-  // };
-  // const onChangeEmail = value => {
-  //   setEmail(value);
-  // };
-
-  // const onChangePhone = value => {
-  //   setPhone(value);
-  // };
+  const { profile } = route.params;
+  const { colors } = useTheme();
 
   return (
     <ScrollView>
@@ -52,7 +33,7 @@ const UserInfo = ({route, navigation}) => {
           alignItems: 'center',
         }}>
         <FastImage
-          source={{uri: profile?.images[0]}}
+          source={{ uri: profile?.images[0] }}
           style={{
             width: 100,
             height: 100,
@@ -74,14 +55,14 @@ const UserInfo = ({route, navigation}) => {
             marginLeft: 10,
             marginRight: 10,
             marginBottom: 10,
-            backgroundColor: 'white',
+
           }}>
           <TextInput
             value={profile?.fullname}
             // onChangeText={value => setFullname(value)}
             placeholder="fullname"
             style={{
-              fontWeight: 'bold',
+              fontWeight: 'bold', color: colors.text
             }}
           />
         </View>
@@ -93,14 +74,14 @@ const UserInfo = ({route, navigation}) => {
             marginLeft: 10,
             marginRight: 10,
             marginBottom: 10,
-            backgroundColor: 'white',
+
           }}>
           <TextInput
             value={profile?.email}
             // onChangeText={value => setEmail(value)}
             placeholder="email"
             style={{
-              fontWeight: 'bold',
+              fontWeight: 'bold', color: colors.text
             }}
           />
         </View>
@@ -112,14 +93,14 @@ const UserInfo = ({route, navigation}) => {
             marginLeft: 10,
             marginRight: 10,
             marginBottom: 10,
-            backgroundColor: 'white',
+
           }}>
           <TextInput
             value={profile?.phone}
             // onChangeText={value => setPhone(value)}
             placeholder="phone"
             style={{
-              fontWeight: 'bold',
+              fontWeight: 'bold', color: colors.text
             }}
           />
         </View>
@@ -131,14 +112,14 @@ const UserInfo = ({route, navigation}) => {
             marginLeft: 10,
             marginRight: 10,
             marginBottom: 10,
-            backgroundColor: 'white',
+
           }}>
           <TextInput
             value={new Date(profile?.birthday).toLocaleString()}
             // onChangeText={value => setBirthday(value)}
             placeholder="birthday"
             style={{
-              fontWeight: 'bold',
+              fontWeight: 'bold', color: colors.text
             }}
           />
         </View>
@@ -150,14 +131,14 @@ const UserInfo = ({route, navigation}) => {
             marginLeft: 10,
             marginRight: 10,
             marginBottom: 10,
-            backgroundColor: 'white',
+
           }}>
           <TextInput
             value={profile?.sex}
             // onChangeText={value => setSex(value)}
             placeholder="sex"
             style={{
-              fontWeight: 'bold',
+              fontWeight: 'bold', color: colors.text
             }}
           />
         </View>
@@ -169,14 +150,14 @@ const UserInfo = ({route, navigation}) => {
             marginLeft: 10,
             marginRight: 10,
             marginBottom: 10,
-            backgroundColor: 'white',
+
           }}>
           <TextInput
             value={profile?.country}
             onChangeText={value => setCountry(value)}
             placeholder="country"
             style={{
-              fontWeight: 'bold',
+              fontWeight: 'bold', color: colors.text
             }}
           />
         </View>
@@ -188,14 +169,14 @@ const UserInfo = ({route, navigation}) => {
             marginLeft: 10,
             marginRight: 10,
             marginBottom: 10,
-            backgroundColor: 'white',
+
           }}>
           <TextInput
             value={profile?.address}
             onChangeText={value => setAddress(value)}
             placeholder="address"
             style={{
-              fontWeight: 'bold',
+              fontWeight: 'bold', color: colors.text
             }}
           />
         </View>
@@ -219,7 +200,7 @@ const UserInfo = ({route, navigation}) => {
                 paddingHorizontal: 10,
                 paddingVertical: 10,
               }}>
-              Save
+              {i18n.t('save')}
             </Text>
           </Pressable>
         </View>

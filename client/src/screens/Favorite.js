@@ -54,7 +54,7 @@ const Favorite = ({ navigation }) => {
   return (
     <ImageBackground style={{ flex: 1, margin: 10 }}>
       <View style={{ height: '10%' }}>
-        <BackArrow navigation={navigation} />
+        <BackArrow />
       </View>
 
       <TabView

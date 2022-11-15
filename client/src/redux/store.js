@@ -13,6 +13,7 @@ import statusSlice from './statusSlice';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
+  blacklist: ['map']
 };
 
 // REDUCER

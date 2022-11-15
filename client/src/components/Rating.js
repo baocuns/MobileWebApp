@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import StarRating from 'react-native-star-rating-widget';
 
-const Rating = ({ starSize }) => {
-    const [rating, setRating] = useState(4.6);
+const Rating = ({ starSize, numberStar = 0 }) => {
+    const [rating, setRating] = useState(numberStar);
     return (
         <StarRating
             rating={rating}

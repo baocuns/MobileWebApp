@@ -17,6 +17,7 @@ import { saveNearSawTour } from '../redux/tourSlice';
 import i18n from '../i18n';
 import Lottie from 'lottie-react-native';
 import { useTheme } from '@react-navigation/native';
+import { Box, Button } from 'native-base';
 
 const ProvinceDetail = ({ navigation, route }) => {
   const { area_slug, image, name, status } = route.params;
@@ -89,6 +90,7 @@ const ProvinceDetail = ({ navigation, route }) => {
                     onPress={() =>
                       navigation.navigate('DetailPlace', {
                         slug: data.slug,
+                        data: data
                       })
                     }
                     style={{
@@ -201,8 +203,11 @@ const ProvinceDetail = ({ navigation, route }) => {
               </Text>
               <Text
                 style={{ marginHorizontal: 20, fontSize: 18, fontWeight: '600' }}>
-                Không tìm thấy địa điểm phù hợp
+                Không tìm thấy địa điểm này
               </Text>
+              <Box alignItems="center">
+                <Button onPress={() => navigation.goBack()}>Trở về</Button>
+              </Box>
             </View>
           )}
         </View>

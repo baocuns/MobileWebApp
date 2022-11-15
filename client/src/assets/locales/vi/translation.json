@@ -1,7 +1,7 @@
 {
     "home.find": "Chào mừng đến với Travel App",
     "home.placeholder": "Tìm địa điểm muốn đến",
-    "home.last_tour": "Tour giò chót",
+    "home.last_tour": "Tour giờ chót",
     "favourite": "Yêu thích",
     "scroll_up": "Lên trên cùng",
     "cart": "Giỏ hàng",
@@ -17,7 +17,7 @@
     "write_rating": "Viết đánh giá",
     "add_to_cart": "Thêm vào giỏ hàng",
     "order_now": "Đặt ngay",
-    "day": "'Ngày",
+    "day": "Ngày",
     "read_all_rating": "Đọc tất cả đánh giá",
     "user_info":"Thông tin người dùng",
     "code": "Mã ưu đãi",
@@ -48,5 +48,6 @@
     "near_see": "Xem gần đây",
     "blank_favourite": "Mục Yêu thích đang trống",
     "action_discover": "Nhấn vào icon hình tim trên trang dịch vụ để lưu vào đây",
-    "discover": "Khám phá ngay"
+    "discover": "Khám phá ngay",
+    "save": "Lưu"
 }
