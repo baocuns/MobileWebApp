@@ -165,7 +165,7 @@ const DetailPlace = ({ navigation, route }) => {
 
                                     {/* Box Rating */}
                                     {rating && rating.ratings.length > 0 &&
-                                        < BoxRating ratings={rating} />
+                                        <BoxRating ratings={rating} />
                                     }
 
                                 </View>
