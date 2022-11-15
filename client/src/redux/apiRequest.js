@@ -5,6 +5,7 @@ import {
   loginRoute,
   logoutRoute,
   registerRoute,
+  sendRatingRoute,
   usersInfoRoute,
 } from '../routes/APIRoute';
 import { getInfoFailed, getInfoStart, getInfoSuccess } from './mapSlice';
@@ -143,6 +144,28 @@ export const userInfo = async (
     dispatch(getUsersFail());
   }
 };
+
+export const sendRatingAction = async (accessToken, userID, numberStar, ratingCotent, tourID) => {
+  try {
+    const res = await axios.post(
+      sendRatingRoute,
+      {
+        content: ratingCotent,
+        rate: numberStar,
+        parent_id: tourID
+      },
+      {
+        headers: {
+          _id: userID,
+          token: `Travel ${accessToken}`,
+        },
+      }
+    )
+    return res;
+  } catch (error) {
+    return error.response.data;
+  }
+}
 
 // export const getAllUsers = async (accessToken, dispatch) => {
 //   dispatch(getUsersStart());

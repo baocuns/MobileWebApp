@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Image, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveFavouriteTour } from '../redux/tourSlice';
+import { useEffect } from 'react';
+import { deleteTour } from '../redux/functions/tourFunc';
 const { width } = Dimensions.get("window");
 const height = width * 0.6;//60%
 
 const SliderImage = ({ navigation, image, item }) => {
     const tourState = useSelector((state) => state.tour);
+    const tours = tourState.favourite.tour;
     const dispatch = useDispatch();
     const imageList = image;
     const [active, setActive] = useState(0);
@@ -21,6 +25,11 @@ const SliderImage = ({ navigation, image, item }) => {
     const addFavouriteList = () => {
         dispatch(saveFavouriteTour(item));
     }
+    useEffect(() => {
+        console.log('isInclude: ', tours.includes(item));
+
+    }, [])
+
     return (
         <>
             {/* Slide image */}
@@ -54,10 +63,19 @@ const SliderImage = ({ navigation, image, item }) => {
                         <Ionicons name='md-chevron-back-outline' style={{ backgroundColor: '#f5f5f5', padding: 10, borderRadius: 50, aspectRatio: 1 }} size={30} color='#888' />
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', width: 90, justifyContent: 'space-between' }}>
-                        <Ionicons onPress={() => addFavouriteList()}
-                            onLongPress={() => navigation.navigate('Favorite')}
-                            name='md-heart-sharp'
-                            style={{ backgroundColor: '#f5f5f5', padding: 10, borderRadius: 50, aspectRatio: 1, color: '#FF3030' }} size={30} color='#888' />
+                        {tours.includes(item) ?
+                            <AntDesign onPress={() => {
+                                deleteTour(tours, item, dispatch)
+                            }}
+                                onLongPress={() => navigation.navigate('Favorite')}
+                                name='heart'
+                                style={{ backgroundColor: '#f5f5f5', padding: 10, borderRadius: 50, aspectRatio: 1, color: '#FF3030' }} size={30} color='#888' />
+                            :
+                            <AntDesign onPress={() => addFavouriteList()}
+                                onLongPress={() => navigation.navigate('Favorite')}
+                                name='hearto'
+                                style={{ backgroundColor: '#f5f5f5', padding: 10, borderRadius: 50, aspectRatio: 1, color: '#FF3030' }} size={30} color='#888' />
+                        }
                         <View style={{ position: 'absolute', right: 40, top: -8, backgroundColor: '#fff', borderRadius: 50, width: 20, height: 20, justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ color: '#ff4500' }}>
                                 {tourState.favourite.tour.length}

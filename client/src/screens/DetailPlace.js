@@ -4,23 +4,28 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import BoxRating from '../components/BoxRating';
 import Rating from '../components/Rating';
 import { useDispatch } from 'react-redux';
-import { getDetailRoute } from '../routes/APIRoute';
+import { getDetailRoute, showAllRatingRoute } from '../routes/APIRoute';
 import axios from 'axios';
 import moment from 'moment';
 import SliderImage from '../components/SliderImage';
 import { saveNearSawTour } from '../redux/tourSlice';
 import Lottie from 'lottie-react-native';
 import i18n from '../i18n';
-import { useTheme } from '@react-navigation/native';
+import { useIsFocused, useTheme } from '@react-navigation/native';
+import FastImage from 'react-native-fast-image';
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
 
-
+TimeAgo.addDefaultLocale(en)
+const timeAgo = new TimeAgo('en-US')
 const { width, height } = Dimensions.get("window");
-
 const DetailPlace = ({ navigation, route }) => {
     const dispatch = useDispatch();
     const { slug } = route.params;
+    const isFocused = useIsFocused();
     const [item, setItem] = useState([]);
     const [isFetching, setIsFetching] = useState(false);
+    const [rating, setRating] = useState(null)
     const { colors } = useTheme();
 
     const fetchData = async () => {
@@ -36,9 +41,21 @@ const DetailPlace = ({ navigation, route }) => {
             setIsFetching(false);
         }
     }
+    const loadRating = async () => {
+        try {
+            const res = await axios.get(showAllRatingRoute + "/" + item._id);
+            setRating(res.data.data);
+        } catch (error) {
+            console.log('ERROR: ', error);
+        }
+    }
     useEffect(() => {
         fetchData();
     }, []);
+    useEffect(() => {
+        loadRating();
+    }, [item, isFocused])
+
 
     return (
         <>
@@ -59,8 +76,8 @@ const DetailPlace = ({ navigation, route }) => {
                                 <Text style={{ fontWeight: '600', color: colors.text, fontSize: 26 }}>{item && item.title}</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <AntDesign name='star' size={14} color='#FFD700' />
-                                    <Text style={{ color: colors.text }}>4.6</Text>
-                                    <Text style={{ color: colors.text }}>(243)</Text>
+                                    <Text style={{ color: colors.text }}>{rating?.avg}</Text>
+                                    <Text style={{ color: '#ff4500' }}>({rating?.ratings?.length} Lượt đánh giá)</Text>
                                     <Text style={{ color: colors.text }}> . </Text>
                                     <Text style={{ color: colors.text }}>3K Đã đặt</Text>
                                 </View>
@@ -91,76 +108,65 @@ const DetailPlace = ({ navigation, route }) => {
                                         {i18n.t('rating')}
                                     </Text>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <Text style={{ color: colors.text, fontWeight: 'bold', fontSize: 26 }}>4.6</Text>
-                                        <Text>/5</Text>
-                                        <Pressable style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}
-                                            onPress={() => navigation.navigate('ActionRaiting')}>
-                                            <Rating starSize={20} />
+                                        <Text style={{ color: colors.text, fontWeight: 'bold', fontSize: 26 }}>{rating?.avg}</Text>
+                                        {rating && rating.ratings.length > 0 ?
+                                            <>
+                                                <Text>/5</Text>
+                                                <View style={{ position: 'relative' }}>
+                                                    <Rating starSize={20} numberStar={rating.avg} />
+                                                    <View style={{ position: 'absolute', backgroundColor: 'transparent', top: 0, left: 0, right: 0, bottom: 0 }}></View>
+                                                </View>
+                                            </>
+                                            :
+                                            <Text style={{ color: colors.text }}>Chưa có ai đánh giá</Text>
+                                        }
+                                        <Pressable style={{ flex: 1, justifyContent: "flex-end", alignItems: 'flex-end' }}
+                                            onPress={() => navigation.navigate('ActionRaiting', {
+                                                tourID: item._id
+                                            })}>
+
                                             <Text style={{ color: '#ff4500' }}>{i18n.t('write_rating')}</Text>
                                         </Pressable>
                                     </View>
 
                                     {/* ScrollView Rating */}
-                                    <ScrollView
-                                        horizontal
-                                        showsHorizontalScrollIndicator={false}
-                                    >
-                                        <View style={{ width: width - 100, marginRight: 20, borderWidth: 1, borderRadius: 10, borderColor: '#DCDCDC', marginVertical: 20 }}>
-                                            <View style={{ margin: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <Image source={require('../assets/images/slider/6.jpg')} style={{ height: 40, width: 40, borderRadius: 50, aspectRatio: 1 }} />
-                                                    <View>
-                                                        <Text style={{ fontWeight: 'bold', color: colors.text, marginLeft: 10 }}>Bùi Duy Khánh</Text>
-                                                        <Rating starSize={20} />
+                                    {rating &&
+                                        <ScrollView
+                                            horizontal
+                                            showsHorizontalScrollIndicator={false}
+                                        >
+                                            {rating.ratings.map((rating, index) => {
+                                                let milisecond = ((new Date()).getTime()) - (new Date(rating.updatedAt).getTime());
+                                                return (
+                                                    <View style={{ width: width - 100, marginRight: 20, borderWidth: 1, borderRadius: 10, borderColor: '#DCDCDC', marginVertical: 20 }}>
+                                                        <View style={{ margin: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                                <FastImage source={{ uri: rating.profile[0].images[0] }} style={{ height: 40, width: 40, borderRadius: 50, aspectRatio: 1 }} />
+                                                                <View>
+                                                                    <Text style={{ fontWeight: 'bold', color: colors.text, marginLeft: 10 }}>{rating.profile[0].fullname}</Text>
+                                                                    <View style={{ position: 'relative' }}>
+                                                                        <Rating starSize={20} numberStar={rating.rate} />
+                                                                        <View style={{ position: 'absolute', backgroundColor: 'transparent', top: 0, left: 0, right: 0, bottom: 0 }}></View>
+                                                                    </View>
+                                                                </View>
+                                                            </View>
+                                                            <Text style={{ color: colors.text }}>{timeAgo.format(Date.now() - milisecond, 'round')}</Text>
+                                                        </View>
+                                                        <View style={{ margin: 10 }}>
+                                                            <Text style={{ color: colors.text }}>
+                                                                {rating.content}
+                                                            </Text>
+                                                        </View>
                                                     </View>
-                                                </View>
-                                                <Text style={{ color: colors.text }}>3 ngày trước</Text>
-                                            </View>
-                                            <View style={{ margin: 10 }}>
-                                                <Text style={{ color: colors.text }}>
-                                                    Không gian tuyệt vời, có điều đồ ăn hơi ít, đi ăn về vẫn đói bụng 😂
-                                                </Text>
-                                            </View>
-                                        </View>
-                                        <View style={{ width: width - 100, marginRight: 20, borderWidth: 1, borderRadius: 10, borderColor: '#DCDCDC', marginVertical: 20 }}>
-                                            <View style={{ margin: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <Image source={require('../assets/images/slider/11.jpg')} style={{ height: 40, width: 40, borderRadius: 50, aspectRatio: 1 }} />
-                                                    <View>
-                                                        <Text style={{ fontWeight: 'bold', color: colors.text, marginLeft: 10 }}>Nguyễn Văn Bảo</Text>
-                                                        <Rating starSize={20} />
-                                                    </View>
-                                                </View>
-                                                <Text style={{ color: colors.text }}>3 ngày trước</Text>
-                                            </View>
-                                            <View style={{ margin: 10 }}>
-                                                <Text style={{ color: colors.text }}>
-                                                    Ở đây ko ai đẹp trai bằng mình cả 😂
-                                                </Text>
-                                            </View>
-                                        </View>
-                                        <View style={{ width: width - 100, marginRight: 20, borderWidth: 1, borderRadius: 10, borderColor: '#DCDCDC', marginVertical: 20 }}>
-                                            <View style={{ margin: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <Image source={require('../assets/images/slider/3.jpg')} style={{ height: 40, width: 40, borderRadius: 50, aspectRatio: 1 }} />
-                                                    <View>
-                                                        <Text style={{ fontWeight: 'bold', color: colors.text, marginLeft: 10 }}>Trần Văn Khiêm</Text>
-                                                        <Rating starSize={20} />
-                                                    </View>
-                                                </View>
-                                                <Text style={{ color: colors.text }}>3 ngày trước</Text>
-                                            </View>
-                                            <View style={{ margin: 10 }}>
-                                                <Text style={{ color: colors.text }}>
-                                                    Đồ ăn rất ngon, phục vụ nhiệt tình, rất thích hợp cho những ai đi cùng bạn bè có trải nghiệm mới lạ trên sông Sài Gòn 😂
-                                                </Text>
-                                            </View>
-                                        </View>
-
-                                    </ScrollView>
+                                                );
+                                            })}
+                                        </ScrollView>
+                                    }
 
                                     {/* Box Rating */}
-                                    <BoxRating />
+                                    {rating && rating.ratings.length > 0 &&
+                                        <BoxRating ratings={rating} />
+                                    }
 
                                 </View>
                             </View>
