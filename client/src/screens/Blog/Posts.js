@@ -14,7 +14,7 @@ import {
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import Comment from './Comment';
+import Comments from './Comments';
 
 // value defauld
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
@@ -22,7 +22,8 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const Posts = ({ user }) => {
     const [posts, setPosts] = useState([])
-    const [comment, setComment] = useState(false)
+    const [openComment, setOpenComment] = useState(false)
+    const [postsId, setPostsId] = useState()
 
     const handleLike = (index) => {
         let p = posts
@@ -47,8 +48,14 @@ const Posts = ({ user }) => {
                 console.log('err', err.response);
             })
     }
-    const handleComment = () => {
-        setComment(!comment)
+    const handleCommentUp = (index) => {
+        let p = posts
+        p[index].comment++
+        setPosts([...p])
+    }
+    const handleComment = (_id, index) => {
+        setOpenComment(!openComment)
+        setPostsId({ _id: _id, index: index })
     }
 
     useEffect(() => {
@@ -142,7 +149,7 @@ const Posts = ({ user }) => {
                                 <Text className=' text-black ml-1'>Yêu Thích</Text>
                             </Pressable>
                             <Pressable className='flex flex-row items-center p-2'
-                                onPress={() => handleComment()}
+                                onPress={() => handleComment(e._id, index)}
                             >
                                 <Text className=' text-black mr-1'>Bình Luận</Text>
                                 <EvilIcons
@@ -158,9 +165,13 @@ const Posts = ({ user }) => {
             ))}
 
             {/* comment */}
-            <Comment
-                open={comment}
+            <Comments
+                open={openComment}
                 handleComment={handleComment}
+                object_id={postsId?._id}
+                user={user}
+                index={postsId?.index}
+                handleCommentUp={handleCommentUp}
             />
         </View>
     )
