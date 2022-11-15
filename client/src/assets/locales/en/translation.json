@@ -15,7 +15,7 @@
     "about": "About",
     "rating": "Rating",
     "write_rating": "Write rating",
-    "day": "'Day",
+    "day": "Day",
     "read_all_rating": "Read All Rating",
     "add_to_cart": "Add to cart",
     "order_now": "Order now",
@@ -45,8 +45,9 @@
     "dark_mode": "Dark mode",
     "start": "Start",
     "cost": "Cost",
-    "near_see": "recently viewed",
+    "near_see": "Recently viewed",
     "blank_favourite": "Blank favourite",
     "action_discover": "Click the heart icon on the service page to save it here",
-    "discover": "Discover now"
+    "discover": "Discover now",
+    "save": "Save"
 }

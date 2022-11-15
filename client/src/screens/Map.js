@@ -14,7 +14,6 @@ import { getImageDescriptionByNameSearch } from '../redux/apiRequest';
 import Lottie from 'lottie-react-native';
 import { mapDarkStyle, mapStandardStyle } from '../utils/mapStyle';
 
-
 const Map = ({ navigation }) => {
     const widthScreen = Dimensions.get('window').width;
     const heightScreen = Dimensions.get('window').height;
@@ -33,6 +32,14 @@ const Map = ({ navigation }) => {
     const [currentName, setCurrentName] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
+    const findTour = () => {
+        navigation.navigate('ProvinceDetail', {
+            area_slug: currentName,
+            status: 'search',
+            name: currentName,
+        })
+        setModalVisible(false);
+    }
     const getCurrentPosition = () => {
         Geolocation.getCurrentPosition((pos) => {
             const crd = pos.coords;
@@ -157,12 +164,7 @@ const Map = ({ navigation }) => {
                                         </TouchableOpacity>
                                         <TouchableOpacity
                                             onPress={() => {
-                                                navigation.navigate('ProvinceDetail', {
-                                                    area_slug: currentName,
-                                                    status: 'search',
-                                                    name: currentName
-                                                })
-                                                setModalVisible(false);
+                                                findTour();
                                             }}
                                             style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'green', borderRadius: 3, paddingVertical: 10 }}>
                                             <Text style={{ color: '#fff' }}>Tìm kiếm trong tour</Text>
@@ -233,6 +235,8 @@ const Map = ({ navigation }) => {
                                     ref={(ref) => makerRef.current.push({ ref, name: marker.properties.name })}
                                     onPress={(e) => {
                                         e.preventDefault();
+                                        // setModalVisible(true)
+
                                         if (currentName != marker.properties.name) {
                                             setIsFetching(true);
                                         }
@@ -249,7 +253,7 @@ const Map = ({ navigation }) => {
                                         <View style={{ width: widthScreen, height: 200, justifyContent: 'flex-end', alignItems: 'center', position: 'relative', top: -10 }}>
                                             <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', borderRadius: 10, width: widthScreen - 60, padding: 20, position: 'relative' }}>
                                                 <Text style={{ zIndex: 10, color: '#000', fontWeight: 'bold' }}>{marker.properties.name}</Text>
-                                                <Text style={{ zIndex: 10 }}>{marker.properties.formatted}</Text>
+                                                <Text style={{ zIndex: 10, color: '#000' }}>{marker.properties.formatted}</Text>
                                                 {/* <Text style={{ zIndex: 10 }}>{info?.descriptionArr[2].description?.replace(/(<([^>]+)>)/ig, "")}</Text> */}
                                                 <View style={{ bottom: 0, backgroundColor: '#fff', width: 50, height: 50, position: 'absolute', transform: [{ rotate: "45deg" }] }}>
 
@@ -261,7 +265,7 @@ const Map = ({ navigation }) => {
                             );
                         })}
                         {/* Marker event */}
-                        {markersEvent.map((marker, index) => {
+                        {/* {markersEvent.map((marker, index) => {
                             const ps = {
                                 latitude: marker.latitude,
                                 longitude: marker.longitude,
@@ -270,6 +274,16 @@ const Map = ({ navigation }) => {
                             };
                             return (
                                 <Marker key={marker._id} coordinate={ps}
+                                    onPress={(e) => {
+                                        e.preventDefault();
+                                        if (currentName != marker.properties.name) {
+                                            setIsFetching(true);
+                                        }
+                                        getImageDescriptionByNameSearch(marker.properties.name, dispatch).then(() => {
+                                            setCurrentName(marker.properties.name)
+                                            setModalVisible(true)
+                                        })
+                                    }}
                                     onCalloutPress={() => openLink(marker.title)}
                                     icon={require("../assets/map_marker.png")}
                                     title={marker.title}
@@ -288,10 +302,12 @@ const Map = ({ navigation }) => {
                                     </Callout>
                                 </Marker>
                             );
-                        })}
+                        })} */}
                         <Circle
                             center={position}
                             radius={50000}
+                            fillColor="rgba(0, 255, 255, 0.4)"
+                            strokeWidth={0.3}
                         />
                     </MapView>
                 </View>

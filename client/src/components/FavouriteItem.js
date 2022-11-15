@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, StyleSheet, Image, Text, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Image, Text, Pressable, Alert } from 'react-native';
 import imgPlace from '../assets/images/slider/1.jpg';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image';
@@ -10,14 +10,30 @@ import { useTheme } from '@react-navigation/native';
 
 const FavouriteItem = ({ navigation, tours, tour }) => {
     const dispatch = useDispatch();
-    const { colors } = useTheme();
+
     return (
         <Pressable
-            onPress={() => navigation.navigate('DetailPlace', {
-                slug: tour.slug
-            })}
-            onLongPress={() => {
-                deleteTour(tours, tour, dispatch);
+            onPress={() => {
+                // deleteTour(tours, tour, dispatch);
+                Alert.alert(
+                    "Travel app",
+                    "Hey guys, you have a good day",
+                    [
+                        {
+                            text: "Cancel",
+                            onPress: () => console.log("Cancel Pressed"),
+                            style: "cancel"
+                        },
+                        {
+                            text: "Xóa", onPress: () => deleteTour(tours, tour, dispatch)
+                        },
+                        {
+                            text: "Xem chi tiết", onPress: () => navigation.navigate('DetailPlace', {
+                                slug: tour.slug
+                            })
+                        }
+                    ]
+                );
             }}
             style={{
                 flexDirection: 'row',
@@ -44,7 +60,7 @@ const FavouriteItem = ({ navigation, tours, tour }) => {
                 />
             </View>
             <View style={{ flex: 1, marginLeft: 10 }}>
-                <Text style={{ fontSize: 11 }}>
+                <Text style={{ fontSize: 11, color: '#000' }}>
                     Vui chơi và giải trí * {tour?.address_end}
                 </Text>
                 <Text style={{ fontWeight: '600', color: '#000' }}>

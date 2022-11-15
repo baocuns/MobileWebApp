@@ -87,6 +87,7 @@ const Setting = () => {
                     </Modal.Content>
                 </Modal>
             </Center>
+            {/* end modal */}
             <BackArrow name={i18n.t('setting')} />
             <Box px={10} flex={1} pt={5}>
                 <FlatList data={data} renderItem={({
