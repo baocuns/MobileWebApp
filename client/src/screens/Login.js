@@ -19,7 +19,7 @@ import { loginRoute } from '../routes/APIRoute';
 import { registerRoute } from '../routes/APIRoute';
 import { loginUser } from '../redux/apiRequest';
 import { registerUser } from '../redux/apiRequest';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import { loginFailed, registerFailed } from '../redux/AuthSlice';
 import i18n from '../i18n';
 
@@ -71,7 +71,7 @@ const BlueComponent = ({ navigation }) => {
           alignItems: 'center',
         }}>
         <View
-          style={{ height: 1, width: '30%', backgroundColor: '#707070' }}></View>
+          style={{ height: 1, width: '30%', grobackundColor: '#707070' }}></View>
         <Text> Or connect with </Text>
         <View
           style={{ height: 1, width: '30%', backgroundColor: '#707070' }}></View>
@@ -140,25 +140,24 @@ const GreenComponent = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const { colors } = useTheme();
 
   return (
     <View
       style={{
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        backgroundColor: '#F5F5F5',
         height: '100%',
         width: '100%',
       }}>
       {/* Login in your account */}
-      <Text style={{ fontSize: 24, color: '#000', fontWeight: '600' }}>
+      <Text style={{ fontSize: 24, color: colors.text, fontWeight: '600' }}>
         Login in your account
       </Text>
       {/* Email */}
       <View
         style={{
           flexDirection: 'row',
-          backgroundColor: '#fff',
           width: windowWidth - 60,
           height: 45,
           marginTop: 20,
@@ -181,7 +180,6 @@ const GreenComponent = ({ navigation }) => {
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'row',
-          backgroundColor: '#fff',
           width: windowWidth - 60,
           height: 45,
           marginTop: 20,
@@ -245,24 +243,23 @@ const PinkComponent = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
+  const { colors } = useTheme();
   return (
     <View
       style={{
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        backgroundColor: '#F5F5F5',
         height: '100%',
         width: '100%',
       }}>
       {/* Login in your account */}
-      <Text style={{ fontSize: 24, color: '#000', fontWeight: '600' }}>
+      <Text style={{ fontSize: 24, color: colors.text, fontWeight: '600' }}>
         Sign up a account
       </Text>
       {/* Email */}
       <View
         style={{
           flexDirection: 'row',
-          backgroundColor: '#fff',
           width: windowWidth - 60,
           height: 45,
           marginTop: 20,
@@ -285,7 +282,6 @@ const PinkComponent = ({ navigation }) => {
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'row',
-          backgroundColor: '#fff',
           width: windowWidth - 60,
           height: 45,
           marginTop: 20,
@@ -316,7 +312,6 @@ const PinkComponent = ({ navigation }) => {
       <View
         style={{
           flexDirection: 'row',
-          backgroundColor: '#fff',
           width: windowWidth - 60,
           height: 45,
           marginTop: 20,
