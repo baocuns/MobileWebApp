@@ -8,21 +8,21 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { loginUser } from '../redux/apiRequest';
-import { logoutUser } from '../redux/apiRequest';
-import { useNavigation } from '@react-navigation/native';
-import { useEffect } from 'react';
-import { logoutRoute } from '../routes/APIRoute';
+import {loginUser} from '../redux/apiRequest';
+import {logoutUser} from '../redux/apiRequest';
+import {useNavigation} from '@react-navigation/native';
+import {useEffect} from 'react';
+import {logoutRoute} from '../routes/APIRoute';
 import axios from 'axios';
 import FastImage from 'react-native-fast-image';
-import { userInfo } from '../redux/apiRequest';
+import {userInfo} from '../redux/apiRequest';
 import i18n from '../i18n';
-const Users = ({ navigation }) => {
+const Users = ({navigation}) => {
   const dispatch = useDispatch();
   const [profile, setProfile] = useState(null);
   // const navigate = useNavigate();
@@ -65,7 +65,7 @@ const Users = ({ navigation }) => {
               alignItems: 'center',
             }}>
             <FastImage
-              source={{ uri: profile?.images[0] }}
+              source={{uri: profile?.images[0]}}
               style={{
                 width: 100,
                 height: 100,
@@ -246,6 +246,7 @@ const Users = ({ navigation }) => {
             </View>
           </View>
         </TouchableOpacity>
+
         <TouchableOpacity>
           <View
             style={{
@@ -341,9 +342,7 @@ const Users = ({ navigation }) => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Setting')}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
           <View
             style={{
               flexDirection: 'row',
@@ -442,7 +441,7 @@ const Users = ({ navigation }) => {
 
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Login');
+            navigation.navigate('LoginNew');
           }}>
           <View
             style={{

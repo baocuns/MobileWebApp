@@ -36,7 +36,7 @@ const Friends = () => {
           </View>
           <View>
             <Text
-              style={{ 
+              style={{
                 color: 'black',
                 fontSize: 15,
                 fontWeight: 'bold',
@@ -392,7 +392,6 @@ const Friends = () => {
                   name="chevron-down"
                 />
               </TouchableOpacity>
-            
             </View>
           </View>
 
@@ -445,7 +444,7 @@ const Friends = () => {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              marginBottom: 10
+              marginBottom: 10,
             }}>
             <View
               style={{
@@ -521,7 +520,7 @@ const Friends = () => {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              marginBottom: 10
+              marginBottom: 10,
             }}>
             <View
               style={{
@@ -597,7 +596,7 @@ const Friends = () => {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              marginBottom: 10
+              marginBottom: 10,
             }}>
             <View
               style={{
@@ -669,9 +668,6 @@ const Friends = () => {
               </View>
             </View>
           </View>
-       
-       
-       
         </View>
       </View>
     </ScrollView>

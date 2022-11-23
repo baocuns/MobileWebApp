@@ -7,7 +7,7 @@ import {
   registerRoute,
   usersInfoRoute,
 } from '../routes/APIRoute';
-import { getInfoFailed, getInfoStart, getInfoSuccess } from './mapSlice';
+import {getInfoFailed, getInfoStart, getInfoSuccess} from './mapSlice';
 
 import {
   loginFailed,
@@ -25,8 +25,8 @@ import {
 } from './authSlice';
 
 // import { getUsersStart, getUsersFail, getUsersSuccess } from './userSilce';
-import { combineReducers } from 'redux';
-import { reset } from './tourSlice';
+import {combineReducers} from 'redux';
+import {reset} from './tourSlice';
 
 export const getImageDescriptionByNameSearch = async (name, dispatch) => {
   dispatch(getInfoStart());
@@ -78,7 +78,7 @@ export const registerUser = async (
     console.log('>>>check register: ', res.data.data);
     alert('bạn đã đăng kí thành công');
     dispatch(registerSuccess(res.data));
-    navigation.navigate('Login');
+    navigation.navigate('LoginNew');
   } catch (error) {
     alert('đã có tài khoản như vậy rồi nha');
     dispatch(registerFailed());
@@ -90,9 +90,9 @@ export const logoutUser = async (accessToken, dispatch) => {
   try {
     const res = await axios.post(
       logoutRoute,
-      { a: 1 },
+      {a: 1},
       {
-        headers: { token: `Travel ${accessToken}` },
+        headers: {token: `Travel ${accessToken}`},
       },
     );
     dispatch(logoutUserSuccess(res.data));
@@ -121,21 +121,17 @@ export const userInfo = async (
 ) => {
   dispatch(getUsersStart());
   try {
-    const res = await axios.post(
-      usersInfoRoute,
-      // {a: 1},
-      {
-        headers: { token: `Travel ${accessToken}` },
-        fullname: fullname,
-        email: email,
-        phone: phone,
-        birthday: birthday,
-        sex: sex,
-        country: country,
-        address: address,
-        image: image,
-      },
-    );
+    const res = await axios.post(usersInfoRoute, {
+      headers: {token: `Travel ${accessToken}`},
+      fullname: fullname,
+      email: email,
+      phone: phone,
+      birthday: birthday,
+      sex: sex,
+      country: country,
+      address: address,
+      image: image,
+    });
     console.log(res.data);
     dispatch(getUsersSuccess(res.data));
   } catch (error) {
@@ -143,6 +139,22 @@ export const userInfo = async (
     dispatch(getUsersFail());
   }
 };
+
+export const createUSer =
+  async =>
+  (
+    fullname,
+    email,
+    phone,
+    birthday,
+    sex,
+    country,
+    address,
+    image,
+    dispatch,
+    accessToken,
+    user_id,
+  ) => {};
 
 // export const getAllUsers = async (accessToken, dispatch) => {
 //   dispatch(getUsersStart());
