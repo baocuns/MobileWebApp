@@ -12,8 +12,8 @@ import { getEventAround50KmRoute } from '../routes/APIRoute';
 import { openLink } from '../utils/function';
 import { getImageDescriptionByNameSearch } from '../redux/apiRequest';
 import Lottie from 'lottie-react-native';
+import { Box, Slider, useToast } from 'native-base'
 import { mapDarkStyle, mapStandardStyle } from '../utils/mapStyle';
-
 
 const Map = ({ navigation }) => {
     const widthScreen = Dimensions.get('window').width;
@@ -33,6 +33,17 @@ const Map = ({ navigation }) => {
     const [currentName, setCurrentName] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
+    const [onChangeEndValue, setOnChangeEndValue] = React.useState(70);
+    const [radius, setRadius] = useState(50000);
+    const toast = useToast();
+    const findTour = () => {
+        navigation.navigate('ProvinceDetail', {
+            area_slug: currentName,
+            status: 'search',
+            name: currentName,
+        })
+        setModalVisible(false);
+    }
     const getCurrentPosition = () => {
         Geolocation.getCurrentPosition((pos) => {
             const crd = pos.coords;
@@ -57,7 +68,7 @@ const Map = ({ navigation }) => {
         if (nameSearch == 'default') {
             setIsFetching(true);
             position = positionDefault;
-            await axios.get(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${position.longitude},${position.latitude},50000&bias=proximity:${position.longitude},${position.latitude}&limit=100&apiKey=${API_KEY}`)
+            await axios.get(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${position.longitude},${position.latitude},${radius}&bias=proximity:${position.longitude},${position.latitude}&limit=100&apiKey=${API_KEY}`)
                 .then(res => {
                     const itemMarker = res.data;
                     dispatch(getMapDefaultSuccess(position));
@@ -80,7 +91,7 @@ const Map = ({ navigation }) => {
                 // get position lon, lat to search locaction
                 const { data: info } = await geoSeacrch.get(`?format=json&apiKey=${API_KEY}&text=${nameSearch}`);
                 // search location around 50km
-                const { data: itemMarker } = await axios.get(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${info.results[0].lon},${info.results[0].lat},50000&bias=proximity:${info.results[0].lon},${info.results[0].lat}&limit=100&apiKey=${API_KEY}`)
+                const { data: itemMarker } = await axios.get(`${URL}?categories=${TOURISM}&filter=${FILTER_CIRCLE}:${info.results[0].lon},${info.results[0].lat},${radius}&bias=proximity:${info.results[0].lon},${info.results[0].lat}&limit=100&apiKey=${API_KEY}`)
                 const position = {
                     latitude: info.results[0].lat,
                     longitude: info.results[0].lon,
@@ -107,7 +118,7 @@ const Map = ({ navigation }) => {
     //get marker around 50km radius
     useEffect(() => {
         getMarker();
-    }, [nameSearch]);
+    }, [nameSearch, radius]);
 
     // get Image and Description
     useEffect(() => {
@@ -128,8 +139,6 @@ const Map = ({ navigation }) => {
             {isFetching &&
                 <Lottie style={{ position: 'absolute', top: 0, zIndex: 100 }} source={require('../assets/lotties/travel.json')} autoPlay loop />
             }
-
-            {/* <StatusBar hidden /> */}
             <View style={{ flex: 1 }}>
                 <View style={{ position: 'relative' }}>
                     <Modal
@@ -157,12 +166,7 @@ const Map = ({ navigation }) => {
                                         </TouchableOpacity>
                                         <TouchableOpacity
                                             onPress={() => {
-                                                navigation.navigate('ProvinceDetail', {
-                                                    area_slug: currentName,
-                                                    status: 'search',
-                                                    name: currentName
-                                                })
-                                                setModalVisible(false);
+                                                findTour();
                                             }}
                                             style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'green', borderRadius: 3, paddingVertical: 10 }}>
                                             <Text style={{ color: '#fff' }}>Tìm kiếm trong tour</Text>
@@ -233,6 +237,8 @@ const Map = ({ navigation }) => {
                                     ref={(ref) => makerRef.current.push({ ref, name: marker.properties.name })}
                                     onPress={(e) => {
                                         e.preventDefault();
+                                        // setModalVisible(true)
+
                                         if (currentName != marker.properties.name) {
                                             setIsFetching(true);
                                         }
@@ -249,7 +255,7 @@ const Map = ({ navigation }) => {
                                         <View style={{ width: widthScreen, height: 200, justifyContent: 'flex-end', alignItems: 'center', position: 'relative', top: -10 }}>
                                             <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', borderRadius: 10, width: widthScreen - 60, padding: 20, position: 'relative' }}>
                                                 <Text style={{ zIndex: 10, color: '#000', fontWeight: 'bold' }}>{marker.properties.name}</Text>
-                                                <Text style={{ zIndex: 10 }}>{marker.properties.formatted}</Text>
+                                                <Text style={{ zIndex: 10, color: '#000' }}>{marker.properties.formatted}</Text>
                                                 {/* <Text style={{ zIndex: 10 }}>{info?.descriptionArr[2].description?.replace(/(<([^>]+)>)/ig, "")}</Text> */}
                                                 <View style={{ bottom: 0, backgroundColor: '#fff', width: 50, height: 50, position: 'absolute', transform: [{ rotate: "45deg" }] }}>
 
@@ -261,7 +267,7 @@ const Map = ({ navigation }) => {
                             );
                         })}
                         {/* Marker event */}
-                        {markersEvent.map((marker, index) => {
+                        {/* {markersEvent.map((marker, index) => {
                             const ps = {
                                 latitude: marker.latitude,
                                 longitude: marker.longitude,
@@ -270,6 +276,16 @@ const Map = ({ navigation }) => {
                             };
                             return (
                                 <Marker key={marker._id} coordinate={ps}
+                                    onPress={(e) => {
+                                        e.preventDefault();
+                                        if (currentName != marker.properties.name) {
+                                            setIsFetching(true);
+                                        }
+                                        getImageDescriptionByNameSearch(marker.properties.name, dispatch).then(() => {
+                                            setCurrentName(marker.properties.name)
+                                            setModalVisible(true)
+                                        })
+                                    }}
                                     onCalloutPress={() => openLink(marker.title)}
                                     icon={require("../assets/map_marker.png")}
                                     title={marker.title}
@@ -288,17 +304,46 @@ const Map = ({ navigation }) => {
                                     </Callout>
                                 </Marker>
                             );
-                        })}
+                        })} */}
                         <Circle
                             center={position}
-                            radius={50000}
+                            radius={radius}
+                            fillColor="rgba(0, 255, 255, 0.4)"
+                            strokeWidth={0.3}
                         />
                     </MapView>
+                    <View style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: 30 }}>
+                        <Box alignItems="center" w="100%">
+                            <Slider w="3/4" maxW="300" defaultValue={50000} minValue={2000} maxValue={50000}
+                                accessibilityLabel="hello world"
+                                step={10}
+                                colorScheme="emerald"
+                                onChangeEnd={v => {
+                                    v &&
+                                        // setOnChangeEndValue(Math.floor(v));
+                                        setRadius(Math.floor(v))
+                                    console.log(Math.floor(v));
+                                    toast.show({
+                                        render: () => {
+                                            return <Box bg="emerald.500" px="2" py="1" rounded="sm" mb={5}>
+                                                <Text>
+                                                    Radius: {v / 1000} km
+                                                </Text>
+                                            </Box>;
+                                        }
+                                    });
+                                }}
+                            >
+                                <Slider.Track>
+                                    <Slider.FilledTrack />
+                                </Slider.Track>
+                                <Slider.Thumb />
+                            </Slider>
+                        </Box>
+                    </View>
                 </View>
 
             </View >
-
-
         </>
 
     );

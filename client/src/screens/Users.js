@@ -23,7 +23,10 @@ import FastImage from 'react-native-fast-image';
 import {userInfo} from '../redux/apiRequest';
 import i18n from '../i18n';
 const Users = ({navigation}) => {
+import changeLanguage from '../HOC/changeLanguage';
+const Users = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const [profile, setProfile] = useState(null);
   // const navigate = useNavigate();
   const [accessToken, setAccessToken] = useState('');
@@ -42,6 +45,7 @@ const Users = ({navigation}) => {
       )
       .then(res => {
         console.log(res.data.data[0]);
+
         setProfile(res.data.data[0]);
       })
       .catch(err => {
@@ -85,7 +89,7 @@ const Users = ({navigation}) => {
                 fontSize: 20,
                 fontWeight: 'bold',
               }}>
-              {user ? user.username : 'Thông tin người dùng'}
+              {user ? user.username : i18n.t('user_info')}
             </Text>
           </View>
         </View>
@@ -241,7 +245,7 @@ const Users = ({navigation}) => {
                   fontSize: 15,
                   fontWeight: 'bold',
                 }}>
-                {user ? user.username : 'Thông tin người dùng'}
+                {user ? user.username : i18n.t('user_info')}
               </Text>
             </View>
           </View>
@@ -492,5 +496,4 @@ const Users = ({navigation}) => {
     </ScrollView>
   );
 };
-
-export default Users;
+export default changeLanguage(Users);

@@ -9,21 +9,32 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
-} from 'react-native';
-import React, {useState, useEffect} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {useDispatch, useSelector} from 'react-redux';
-import FastImage from 'react-native-fast-image';
+  I18nManager,
 
-import axios from 'axios';
-import {userInfo} from '../redux/apiRequest';
-// photos
+} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+
+
+
+
 import DocumentPicker from 'react-native-document-picker';
 
 const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 
-const UserInfo = ({route, navigation}) => {
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import FastImage from 'react-native-fast-image';
+
+import { userInfo } from '../redux/apiRequest';
+import { useTheme } from '@react-navigation/native';
+import i18n from '../i18n'
+
+
+const UserInfo = ({ route, navigation }) => {
   // const [profile, setProfile] = useState(null);
+
   const [profile, setProfile] = useState(route.params.profile);
   const user = useSelector(state => state.auth.login.currentUser);
 
@@ -96,6 +107,10 @@ const UserInfo = ({route, navigation}) => {
     }
   };
 
+  const { profile } = route.params;
+  const { colors } = useTheme();
+
+
   return (
     <ScrollView>
       <View
@@ -103,6 +118,7 @@ const UserInfo = ({route, navigation}) => {
           flex: 1,
           alignItems: 'center',
         }}>
+
         {profile && (
           <FastImage
             source={{uri: profile?.images[0]}}
@@ -140,6 +156,15 @@ const UserInfo = ({route, navigation}) => {
             Select Photo
           </Text>
         </TouchableOpacity>
+        <FastImage
+          source={{ uri: profile?.images[0] }}
+          style={{
+            width: 100,
+            height: 100,
+            borderRadius: 10,
+          }}
+          resizeMode="cover"
+        />
       </View>
       <View
         style={{
@@ -153,15 +178,20 @@ const UserInfo = ({route, navigation}) => {
             borderRadius: 20,
             marginLeft: 10,
             marginRight: 10,
+
             marginBottom: 5,
             backgroundColor: 'white',
+
+            marginBottom: 10,
+
+
           }}>
           <TextInput
             value={profile?.fullname}
             onChangeText={fullname => setFullname(fullname)}
             placeholder="fullname"
             style={{
-              fontWeight: 'bold',
+              fontWeight: 'bold', color: colors.text
             }}
           />
         </View>
@@ -174,6 +204,7 @@ const UserInfo = ({route, navigation}) => {
             marginRight: 10,
             marginBottom: 5,
             backgroundColor: 'white',
+            marginBottom: 10,
           }}>
           <TextInput
             value={user ? user.email : email}
@@ -181,7 +212,7 @@ const UserInfo = ({route, navigation}) => {
             onChangeText={email => setEmail(email)}
             placeholder="email"
             style={{
-              fontWeight: 'bold',
+              fontWeight: 'bold', color: colors.text
             }}
           />
         </View>
@@ -194,13 +225,14 @@ const UserInfo = ({route, navigation}) => {
             marginRight: 10,
             marginBottom: 5,
             backgroundColor: 'white',
+            marginBottom: 10,
           }}>
           <TextInput
             value={profile?.phone}
             onChangeText={phone => setPhone(phone)}
             placeholder="phone"
             style={{
-              fontWeight: 'bold',
+              fontWeight: 'bold', color: colors.text
             }}
           />
         </View>
@@ -213,6 +245,7 @@ const UserInfo = ({route, navigation}) => {
             marginRight: 10,
             marginBottom: 5,
             backgroundColor: 'white',
+            marginBottom: 10,
           }}>
           <TextInput
             // value={new Date(profile?.birthday).toLocaleString(Date)}
@@ -220,7 +253,7 @@ const UserInfo = ({route, navigation}) => {
             onChangeText={birthday => setBirthday(birthday)}
             placeholder="birthday"
             style={{
-              fontWeight: 'bold',
+              fontWeight: 'bold', color: colors.text
             }}
           />
         </View>
@@ -233,13 +266,14 @@ const UserInfo = ({route, navigation}) => {
             marginRight: 10,
             marginBottom: 5,
             backgroundColor: 'white',
+            marginBottom: 10,
           }}>
           <TextInput
             value={profile?.sex}
             onChangeText={sex => setSex(sex)}
             placeholder="sex"
             style={{
-              fontWeight: 'bold',
+              fontWeight: 'bold', color: colors.text
             }}
           />
         </View>
@@ -252,13 +286,14 @@ const UserInfo = ({route, navigation}) => {
             marginRight: 10,
             marginBottom: 5,
             backgroundColor: 'white',
+            marginBottom: 10,
           }}>
           <TextInput
             value={profile?.country}
             onChangeText={country => setCountry(country)}
             placeholder="country"
             style={{
-              fontWeight: 'bold',
+              fontWeight: 'bold', color: colors.text
             }}
           />
         </View>
@@ -271,13 +306,14 @@ const UserInfo = ({route, navigation}) => {
             marginRight: 10,
             marginBottom: 5,
             backgroundColor: 'white',
+            marginBottom: 10,
           }}>
           <TextInput
             value={profile?.address}
             onChangeText={address => setAddress(address)}
             placeholder="address"
             style={{
-              fontWeight: 'bold',
+              fontWeight: 'bold', color: colors.text
             }}
           />
         </View>
@@ -304,6 +340,7 @@ const UserInfo = ({route, navigation}) => {
                 paddingVertical: 10,
               }}>
               create user
+              {i18n.t('save')}
             </Text>
           </Pressable>
         </View>

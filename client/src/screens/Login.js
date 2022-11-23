@@ -16,12 +16,12 @@ import {useDispatch, useSelector, useNavigate} from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
-import {loginRoute} from '../routes/APIRoute';
-import {registerRoute} from '../routes/APIRoute';
-import {loginUser} from '../redux/apiRequest';
-import {registerUser} from '../redux/apiRequest';
-import {useNavigation} from '@react-navigation/native';
-import {loginFailed, registerFailed} from '../redux/AuthSlice';
+import { loginRoute } from '../routes/APIRoute';
+import { registerRoute } from '../routes/APIRoute';
+import { loginUser } from '../redux/apiRequest';
+import { registerUser } from '../redux/apiRequest';
+import { useNavigation, useTheme } from '@react-navigation/native';
+import { loginFailed, registerFailed } from '../redux/AuthSlice';
 import i18n from '../i18n';
 
 const windowWidth = Dimensions.get('window').width;
@@ -98,7 +98,7 @@ const BlueComponent = ({navigation}) => {
           alignItems: 'center',
         }}>
         <View
-          style={{height: 1, width: '30%', backgroundColor: '#707070'}}></View>
+          style={{ height: 1, width: '30%', grobackundColor: '#707070' }}></View>
         <Text> Or connect with </Text>
         <View
           style={{height: 1, width: '30%', backgroundColor: '#707070'}}></View>
@@ -174,50 +174,23 @@ const GreenComponent = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   GoogleSignin.configure({
-  //     scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-  //     webClientId:
-  //       '806603507551-5p2v79i03n9p5f7v3kp5hj5lo9s0trqj.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
-
-  //     accountName: '', // [Android] specifies an account name on the device that should be used
-
-  //     googleServicePlistPath: '', // [iOS] if you renamed your GoogleService-Info file, new name here, e.g. GoogleService-Info-Staging
-  //     openIdRealm: '', // [iOS] The OpenID2 realm of the home web server. This allows Google to include the user's OpenID Identifier in the OpenID Connect ID token.
-  //     profileImageSize: 120, // [iOS] The desired height (and width) of the profile image. Defaults to 120px
-  //   });
-  // });
-
-  // const GoogleSignin = async () => {
-  //   // Check if your device supports Google Play
-  //   await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-  //   // Get the users ID token
-  //   const {idToken} = await GoogleSignin.signIn();
-
-  //   // Create a Google credential with the token
-  //   const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-  //   // Sign-in the user with the credential
-  //   return auth().signInWithCredential(googleCredential);
-  // };
+  const { colors } = useTheme();
   return (
     <View
       style={{
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        backgroundColor: '#F5F5F5',
         height: '100%',
         width: '100%',
       }}>
       {/* Login in your account */}
-      <Text style={{fontSize: 24, color: '#000', fontWeight: '600'}}>
+      <Text style={{ fontSize: 24, color: colors.text, fontWeight: '600' }}>
         Login in your account
       </Text>
       {/* Email */}
       <View
         style={{
           flexDirection: 'row',
-          backgroundColor: '#fff',
           width: windowWidth - 60,
           height: 45,
           marginTop: 20,
@@ -240,7 +213,6 @@ const GreenComponent = ({navigation}) => {
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'row',
-          backgroundColor: '#fff',
           width: windowWidth - 60,
           height: 45,
           marginTop: 20,
@@ -304,24 +276,23 @@ const PinkComponent = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
+  const { colors } = useTheme();
   return (
     <View
       style={{
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        backgroundColor: '#F5F5F5',
         height: '100%',
         width: '100%',
       }}>
       {/* Login in your account */}
-      <Text style={{fontSize: 24, color: '#000', fontWeight: '600'}}>
+      <Text style={{ fontSize: 24, color: colors.text, fontWeight: '600' }}>
         Sign up a account
       </Text>
       {/* Email */}
       <View
         style={{
           flexDirection: 'row',
-          backgroundColor: '#fff',
           width: windowWidth - 60,
           height: 45,
           marginTop: 20,
@@ -344,7 +315,6 @@ const PinkComponent = ({navigation}) => {
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'row',
-          backgroundColor: '#fff',
           width: windowWidth - 60,
           height: 45,
           marginTop: 20,
@@ -375,7 +345,6 @@ const PinkComponent = ({navigation}) => {
       <View
         style={{
           flexDirection: 'row',
-          backgroundColor: '#fff',
           width: windowWidth - 60,
           height: 45,
           marginTop: 20,
