@@ -8,22 +8,23 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {loginUser} from '../redux/apiRequest';
-import {logoutUser} from '../redux/apiRequest';
-import {useNavigation} from '@react-navigation/native';
-import {useEffect} from 'react';
-import {logoutRoute} from '../routes/APIRoute';
+import { loginUser } from '../redux/apiRequest';
+import { logoutUser } from '../redux/apiRequest';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect } from 'react';
+import { logoutRoute } from '../routes/APIRoute';
 import axios from 'axios';
 import FastImage from 'react-native-fast-image';
-import {userInfo} from '../redux/apiRequest';
+import { userInfo } from '../redux/apiRequest';
 import i18n from '../i18n';
-const Users = ({navigation}) => {
 import changeLanguage from '../HOC/changeLanguage';
+
+
 const Users = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -69,7 +70,7 @@ const Users = () => {
               alignItems: 'center',
             }}>
             <FastImage
-              source={{uri: profile?.images[0]}}
+              source={{ uri: profile?.images[0] }}
               style={{
                 width: 100,
                 height: 100,
@@ -495,5 +496,5 @@ const Users = () => {
       </View>
     </ScrollView>
   );
-};
+}
 export default changeLanguage(Users);

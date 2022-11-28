@@ -21,7 +21,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import DocumentPicker from 'react-native-document-picker';
 
-const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -107,7 +107,7 @@ const UserInfo = ({ route, navigation }) => {
     }
   };
 
-  const { profile } = route.params;
+  // const { profile } = route.params;
   const { colors } = useTheme();
 
 
@@ -121,7 +121,7 @@ const UserInfo = ({ route, navigation }) => {
 
         {profile && (
           <FastImage
-            source={{uri: profile?.images[0]}}
+            source={{ uri: profile?.images[0] }}
             style={{
               width: 100,
               height: 100,
@@ -145,7 +145,7 @@ const UserInfo = ({ route, navigation }) => {
                   ((screenWidth - 200) / singleFile.width) * singleFile.height,
                 width: screenWidth,
               }}
-              source={{uri: singleFile.uri}}
+              source={{ uri: singleFile.uri }}
             />
           )}
         </View>
