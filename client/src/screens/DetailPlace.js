@@ -11,13 +11,9 @@ import SliderImage from '../components/SliderImage';
 import { saveNearSawTour } from '../redux/tourSlice';
 import Lottie from 'lottie-react-native';
 import i18n from '../i18n';
+import { formatTime } from '../utils/function';
 import { useIsFocused, useTheme } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
-import TimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-
-TimeAgo.addDefaultLocale(en)
-const timeAgo = new TimeAgo('en-US')
 const { width, height } = Dimensions.get("window");
 const DetailPlace = ({ navigation, route }) => {
     const dispatch = useDispatch();
@@ -136,7 +132,6 @@ const DetailPlace = ({ navigation, route }) => {
                                             showsHorizontalScrollIndicator={false}
                                         >
                                             {rating.ratings.map((rating, index) => {
-                                                let milisecond = ((new Date()).getTime()) - (new Date(rating.updatedAt).getTime());
                                                 return (
                                                     <View style={{ width: width - 100, marginRight: 20, borderWidth: 1, borderRadius: 10, borderColor: '#DCDCDC', marginVertical: 20 }}>
                                                         <View style={{ margin: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -150,7 +145,10 @@ const DetailPlace = ({ navigation, route }) => {
                                                                     </View>
                                                                 </View>
                                                             </View>
-                                                            <Text style={{ color: colors.text }}>{timeAgo.format(Date.now() - milisecond, 'round')}</Text>
+                                                            <Text style={{ color: colors.text }}>
+                                                                {/* {timeAgo.format(Date.now() - milisecond, 'round')} */}
+                                                                {formatTime(rating.updatedAt)}
+                                                            </Text>
                                                         </View>
                                                         <View style={{ margin: 10 }}>
                                                             <Text style={{ color: colors.text }}>
@@ -196,8 +194,5 @@ const DetailPlace = ({ navigation, route }) => {
         </>
     );
 }
-
-const styles = StyleSheet.create({
-})
 
 export default DetailPlace;
