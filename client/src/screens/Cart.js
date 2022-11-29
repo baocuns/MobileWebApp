@@ -7,12 +7,87 @@ import {
   ScrollView,
   Button,
   TouchableOpacity,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+import BackArrow from '../components/BackArrow';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import FastImage from 'react-native-fast-image';
+import { PhotoRoute } from '../utils/constant';
+import { formatVND } from '../utils/function';
 
 const Cart = () => {
+  const user = useSelector(state => state.auth.login.currentUser);
+  const [carts, setCarts] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const loadingCart = async (accessToken, userId) => {
+    try {
+      setIsFetching(true)
+      const res = await axios.post('https://api.travels.games/api/v1/cart/show', {
+        a: 1
+      },
+        {
+          headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json",
+            "token": `Travel ${accessToken}`,
+            "_id": userId
+          }
+        }
+      );
+      setCarts(res.data.data[0].tours);
+      setIsFetching(false)
+
+    } catch (error) {
+      console.log(error);
+      setIsFetching(false)
+    }
+  }
+  const sumTotal = () => {
+    let sum = 0;
+    carts.map((cart) => {
+      sum += cart.price;
+    })
+    return sum;
+  }
+
+  const removeToCart = async (slug) => {
+    setIsFetching(true);
+    try {
+      const res = await axios.delete('https://api.travels.games/api/v1/cart/delete/' + slug,
+        {
+          headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json",
+            "token": `Travel ${user.accessToken}`,
+            "_id": user._id
+          }
+        }
+      );
+      loadingCart(
+        user.accessToken,
+        user._id
+      );
+      setIsFetching(false);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      setIsFetching(false);
+    }
+  }
+
+  useEffect(() => {
+    loadingCart(
+      user.accessToken,
+      user._id
+    );
+
+  }, [])
+
   return (
     <View
       style={{
@@ -26,419 +101,110 @@ const Cart = () => {
           style={{
             paddingLeft: 10,
           }}>
-          <View style={{paddingBottom: 20, paddingLeft: 10, paddingTop: 20}}>
-            <Text
-              style={{
-                color: 'black',
-                fontSize: 20,
-                fontWeight: 'bold',
-              }}>
-              Đã hết hạn
-            </Text>
-          </View>
+          <BackArrow name="Giỏ hàng" />
+
 
           {/* hình ảnh */}
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
-
-                alignSelf: 'center',
-              }}>
-              <View
-                style={{
-                  paddingLeft: 20,
-                  paddingTop: 5,
-                }}>
-                <Image
-                  style={{
-                    width: 70,
-                    height: 70,
-                    borderRadius: 10,
-                  }}
-                  source={require('../assets/images/levi.jpg')}
-                />
-              </View>
-
-              <View
-                style={{
-                  paddingLeft: 20,
-                  marginRight: 10,
-                }}>
+          {carts.map((cart, index) => {
+            return (
+              <View>
                 <View
                   style={{
-                    width: 250,
-                  }}>
-                  <Text
-                    numberOfLines={2}
-                    style={{
-                      color: 'black',
-                      fontWeight: 'bold',
-                      fontSize: 17,
-                      paddingBottom: 5,
-                    }}>
-                    Mua 1 tặng khỏi chả nha con
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    vé vào cổng HappyLand
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    23/9/2022
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    1 X Trẻ Em (cao tử 1m mấy ai biết)
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'orange'}}>Dịch vụ không hổ trợ</Text>
-                </View>
-              </View>
-            </View>
-            <View>
-              <View>
-                <TouchableOpacity
-                  style={{
-                    alignItems: 'flex-end',
-                    marginRight: 20,
-                  }}>
-                  <Text
-                    style={{
-                      color: 'black',
-                      textDecorationLine: 'underline',
-                    }}>
-                    Edit
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
+                    flexDirection: 'row',
 
-                alignSelf: 'center',
-              }}>
-              <View
-                style={{
-                  paddingLeft: 20,
-                  paddingTop: 5,
-                }}>
-                <Image
-                  style={{
-                    width: 70,
-                    height: 70,
-                    borderRadius: 10,
-                  }}
-                  source={require('../assets/images/levi.jpg')}
-                />
-              </View>
+                    alignSelf: 'center',
+                  }}>
+                  <View
+                    style={{
+                      paddingLeft: 20,
+                      paddingTop: 5,
+                    }}>
+                    <FastImage
+                      style={{
+                        width: 70,
+                        height: 70,
+                        borderRadius: 10,
+                      }}
+                      source={{ uri: PhotoRoute + cart.images[0] }}
+                    />
+                  </View>
 
-              <View
-                style={{
-                  paddingLeft: 20,
-                  marginRight: 10,
-                }}>
-                <View
-                  style={{
-                    width: 250,
-                  }}>
-                  <Text
-                    numberOfLines={2}
+                  <View
                     style={{
-                      color: 'black',
-                      fontWeight: 'bold',
-                      fontSize: 17,
-                      paddingBottom: 5,
+                      paddingLeft: 20,
+                      marginRight: 10,
                     }}>
-                    Mua 1 tặng khỏi chả nha con
-                  </Text>
+                    <View
+                      style={{
+                        width: 250,
+                      }}>
+                      <Text
+                        numberOfLines={2}
+                        style={{
+                          color: 'black',
+                          fontWeight: 'bold',
+                          fontSize: 17,
+                          paddingBottom: 5,
+                        }}>
+                        {cart.title}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text style={{ color: 'black', paddingBottom: 5 }}>
+                        {formatVND(cart.price)}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text style={{ color: 'black', paddingBottom: 5 }}>
+                        Ngày đi: 23/9/2022
+                      </Text>
+                    </View>
+                    <View>
+                      <Text style={{ color: 'orange' }}>Dịch vụ không hổ trợ</Text>
+                    </View>
+                  </View>
                 </View>
                 <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    vé vào cổng HappyLand
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    23/9/2022
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    1 X Trẻ Em (cao tử 1m mấy ai biết)
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'orange'}}>Dịch vụ không hổ trợ</Text>
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Alert.alert(
+                          "Travel app",
+                          "Hey guys, are you sure ?",
+                          [
+                            {
+                              text: "Cancel",
+                              onPress: () => console.log("Cancel Pressed"),
+                              style: "cancel"
+                            },
+                            {
+                              text: "Xóa", onPress: () => {
+                                removeToCart(cart.slug)
+                              }
+                            },
+                          ]
+                        );
+                      }}
+                      style={{
+                        alignItems: 'flex-end',
+                        marginRight: 20,
+                      }}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          textDecorationLine: 'underline',
+                        }}>
+                        Delete
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
-            </View>
-            <View>
-              <View>
-                <TouchableOpacity
-                  style={{
-                    alignItems: 'flex-end',
-                    marginRight: 20,
-                  }}>
-                  <Text
-                    style={{
-                      color: 'black',
-                      textDecorationLine: 'underline',
-                    }}>
-                    Edit
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
+            )
+          })}
 
-                alignSelf: 'center',
-              }}>
-              <View
-                style={{
-                  paddingLeft: 20,
-                  paddingTop: 5,
-                }}>
-                <Image
-                  style={{
-                    width: 70,
-                    height: 70,
-                    borderRadius: 10,
-                  }}
-                  source={require('../assets/images/levi.jpg')}
-                />
-              </View>
-
-              <View
-                style={{
-                  paddingLeft: 20,
-                  marginRight: 10,
-                }}>
-                <View
-                  style={{
-                    width: 250,
-                  }}>
-                  <Text
-                    numberOfLines={2}
-                    style={{
-                      color: 'black',
-                      fontWeight: 'bold',
-                      fontSize: 17,
-                      paddingBottom: 5,
-                    }}>
-                    Mua 1 tặng khỏi chả nha con
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    vé vào cổng HappyLand
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    23/9/2022
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    1 X Trẻ Em (cao tử 1m mấy ai biết)
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'orange'}}>Dịch vụ không hổ trợ</Text>
-                </View>
-              </View>
-            </View>
-            <View>
-              <View>
-                <TouchableOpacity
-                  style={{
-                    alignItems: 'flex-end',
-                    marginRight: 20,
-                  }}>
-                  <Text
-                    style={{
-                      color: 'black',
-                      textDecorationLine: 'underline',
-                    }}>
-                    Edit
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
-
-                alignSelf: 'center',
-              }}>
-              <View
-                style={{
-                  paddingLeft: 20,
-                  paddingTop: 5,
-                }}>
-                <Image
-                  style={{
-                    width: 70,
-                    height: 70,
-                    borderRadius: 10,
-                  }}
-                  source={require('../assets/images/levi.jpg')}
-                />
-              </View>
-
-              <View
-                style={{
-                  paddingLeft: 20,
-                  marginRight: 10,
-                }}>
-                <View
-                  style={{
-                    width: 250,
-                  }}>
-                  <Text
-                    numberOfLines={2}
-                    style={{
-                      color: 'black',
-                      fontWeight: 'bold',
-                      fontSize: 17,
-                      paddingBottom: 5,
-                    }}>
-                    Mua 1 tặng khỏi chả nha con
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    vé vào cổng HappyLand
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    23/9/2022
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    1 X Trẻ Em (cao tử 1m mấy ai biết)
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'orange'}}>Dịch vụ không hổ trợ</Text>
-                </View>
-              </View>
-            </View>
-            <View>
-              <View>
-                <TouchableOpacity
-                  style={{
-                    alignItems: 'flex-end',
-                    marginRight: 20,
-                  }}>
-                  <Text
-                    style={{
-                      color: 'black',
-                      textDecorationLine: 'underline',
-                    }}>
-                    Edit
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
-
-                alignSelf: 'center',
-              }}>
-              <View
-                style={{
-                  paddingLeft: 20,
-                  paddingTop: 5,
-                }}>
-                <Image
-                  style={{
-                    width: 70,
-                    height: 70,
-                    borderRadius: 10,
-                  }}
-                  source={require('../assets/images/levi.jpg')}
-                />
-              </View>
-
-              <View
-                style={{
-                  paddingLeft: 20,
-                  marginRight: 10,
-                }}>
-                <View
-                  style={{
-                    width: 250,
-                  }}>
-                  <Text
-                    numberOfLines={2}
-                    style={{
-                      color: 'black',
-                      fontWeight: 'bold',
-                      fontSize: 17,
-                      paddingBottom: 5,
-                    }}>
-                    Mua 1 tặng khỏi chả nha con
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    vé vào cổng HappyLand
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    23/9/2022
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'black', paddingBottom: 5}}>
-                    1 X Trẻ Em (cao tử 1m mấy ai biết)
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{color: 'orange'}}>Dịch vụ không hổ trợ</Text>
-                </View>
-              </View>
-            </View>
-            <View>
-              <View>
-                <TouchableOpacity
-                  style={{
-                    alignItems: 'flex-end',
-                    marginRight: 20,
-                  }}>
-                  <Text
-                    style={{
-                      color: 'black',
-                      textDecorationLine: 'underline',
-                    }}>
-                    Edit
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
         </View>
+        {isFetching && <ActivityIndicator size="large" color="#0000ff" />}
       </ScrollView>
 
       <View
@@ -471,7 +237,7 @@ const Cart = () => {
                 fontWeight: 'bold',
                 fontSize: 15,
               }}>
-              ₫ 0
+              ₫ {sumTotal()}
             </Text>
           </View>
           <View

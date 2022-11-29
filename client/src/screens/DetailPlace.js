@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, SafeAreaView, StatusBar, ScrollView, Dimensions, TouchableOpacity, Image, Pressable } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, StatusBar, ScrollView, Dimensions, TouchableOpacity, Image, Pressable, Alert } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import BoxRating from '../components/BoxRating';
 import Rating from '../components/Rating';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getDetailRoute, showAllRatingRoute } from '../routes/APIRoute';
 import axios from 'axios';
 import moment from 'moment';
 import SliderImage from '../components/SliderImage';
-import { saveNearSawTour } from '../redux/tourSlice';
+import { saveNearSawTour, setNumberCart } from '../redux/tourSlice';
 import Lottie from 'lottie-react-native';
 import i18n from '../i18n';
 import { formatTime } from '../utils/function';
@@ -23,8 +23,55 @@ const DetailPlace = ({ navigation, route }) => {
     const [isFetching, setIsFetching] = useState(false);
     const [rating, setRating] = useState(null)
     const { colors } = useTheme();
+    const [cartNumber, setCartNumber] = useState(0)
+    const user = useSelector(state => state.auth.login.currentUser);
 
+    const loadingCart = async () => {
+        try {
+            const res = await axios.post('https://api.travels.games/api/v1/cart/show', {
+                a: 1
+            },
+                {
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-type": "application/json",
+                        "token": `Travel ${user.accessToken}`,
+                        "_id": user._id
+                    }
+                }
+            );
+            setCartNumber(res.data.data[0].tours.length);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const addToCart = async (slug) => {
+        try {
+            const res = await axios.post('https://api.travels.games/api/v1/cart/store/' + slug, {
+                a: 1
+            },
+                {
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-type": "application/json",
+                        "token": `Travel ${user.accessToken}`,
+                        "_id": user._id
+                    }
+                }
+            )
+            Alert.alert(
+                "Travel app",
+                "Sản phẩm đã được thêm trong giỏ hàng"
+            );
+            loadingCart();
+            return res.data;
+        } catch (error) {
+            console.log(error);
+        }
+    }
     const fetchData = async () => {
+
         setIsFetching(true);
         try {
             const res = await axios.get(getDetailRoute + "/" + slug)
@@ -46,8 +93,9 @@ const DetailPlace = ({ navigation, route }) => {
         }
     }
     useEffect(() => {
+        loadingCart();
         fetchData();
-    }, []);
+    }, [isFocused]);
     useEffect(() => {
         loadRating();
     }, [item, isFocused])
@@ -67,7 +115,7 @@ const DetailPlace = ({ navigation, route }) => {
                             style={{ height: height * 0.85 }}>
                             {/* Slider Image */}
                             {item && item.images &&
-                                <SliderImage navigation={navigation} image={item.images} item={item} />}
+                                <SliderImage navigation={navigation} image={item.images} item={item} cartNumber={cartNumber} />}
                             <View style={{ margin: 10 }}>
                                 <Text style={{ fontWeight: '600', color: colors.text, fontSize: 26 }}>{item && item.title}</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -133,7 +181,7 @@ const DetailPlace = ({ navigation, route }) => {
                                         >
                                             {rating.ratings.map((rating, index) => {
                                                 return (
-                                                    <View style={{ width: width - 100, marginRight: 20, borderWidth: 1, borderRadius: 10, borderColor: '#DCDCDC', marginVertical: 20 }}>
+                                                    <View key={index} style={{ width: width - 100, marginRight: 20, borderWidth: 1, borderRadius: 10, borderColor: '#DCDCDC', marginVertical: 20 }}>
                                                         <View style={{ margin: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                                                 <FastImage source={{ uri: rating.profile[0].images[0] }} style={{ height: 40, width: 40, borderRadius: 50, aspectRatio: 1 }} />
@@ -146,7 +194,6 @@ const DetailPlace = ({ navigation, route }) => {
                                                                 </View>
                                                             </View>
                                                             <Text style={{ color: colors.text }}>
-                                                                {/* {timeAgo.format(Date.now() - milisecond, 'round')} */}
                                                                 {formatTime(rating.updatedAt)}
                                                             </Text>
                                                         </View>
@@ -179,7 +226,7 @@ const DetailPlace = ({ navigation, route }) => {
                                     <Text style={{ fontWeight: 'normal', fontSize: 12, textDecorationLine: 'line-through', color: colors.text }}>{item.price}đ</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <TouchableOpacity style={{ backgroundColor: '#ffa500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
+                                    <TouchableOpacity onPress={() => addToCart(item.slug)} style={{ backgroundColor: '#ffa500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
                                         <Text style={{ color: colors.text, fontWeight: 'bold', fontSize: 16 }}>{i18n.t('add_to_cart')}</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => navigation.navigate('BookNow')} style={{ backgroundColor: '#ff4500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
