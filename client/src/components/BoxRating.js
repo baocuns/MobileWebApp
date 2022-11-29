@@ -68,7 +68,7 @@ export default function BoxRating({ ratings }) {
                             let milisecond = ((new Date()).getTime()) - (new Date(rating.updatedAt).getTime());
 
                             return (
-                                <View style={{ width: width - 60, borderWidth: 1, borderRadius: 10, borderColor: '#DCDCDC', marginVertical: 8 }}>
+                                <View key={index} style={{ width: width - 60, borderWidth: 1, borderRadius: 10, borderColor: '#DCDCDC', marginVertical: 8 }}>
                                     <View style={{ margin: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                             <FastImage source={{ uri: rating.profile[0].images[0] }} style={{ height: 40, width: 40, borderRadius: 50, aspectRatio: 1 }} />

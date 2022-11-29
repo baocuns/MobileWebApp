@@ -36,3 +36,6 @@ export const formatTime = (time) => {
   const milisecond = ((new Date()).getTime()) - (new Date(time).getTime());
   return timeAgo.format(Date.now() - milisecond, 'round')
 }
+export const formatVND = (money) => {
+  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(money);
+}
