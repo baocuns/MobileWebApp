@@ -179,7 +179,7 @@ const Cart = () => {
                             },
                             {
                               text: "Xóa", onPress: () => {
-                                removeToCart(cart.slug)
+                                removeToCart(cart._id)
                               }
                             },
                           ]

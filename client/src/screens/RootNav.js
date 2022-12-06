@@ -1,11 +1,11 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   DarkTheme,
   DefaultTheme,
   NavigationContainer,
   useTheme,
 } from '@react-navigation/native';
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Index from '.';
 import FavariteList from '../components/FavoriteList';
 import FavouriteItem from '../components/FavouriteItem';
@@ -24,9 +24,9 @@ import ProvinceDetail from './ProvinceDetail';
 import UserInfo from './UserInfo';
 import changeLanguage from '../HOC/changeLanguage';
 import Setting from './Setting';
-import {NativeBaseProvider} from 'native-base';
-import {useColorScheme} from 'react-native';
-import {useSelector} from 'react-redux';
+import { NativeBaseProvider } from 'native-base';
+import { useColorScheme } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
 
@@ -45,7 +45,7 @@ function RootNav() {
       <NavigationContainer theme={theme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack.Navigator
           initialRouteName="Index"
-          screenOptions={{headerShown: false}}>
+          screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="Favorite" component={Favorite} />
           <Stack.Screen name="DetailPlace" component={DetailPlace} />
