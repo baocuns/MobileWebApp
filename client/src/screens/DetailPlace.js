@@ -46,9 +46,9 @@ const DetailPlace = ({ navigation, route }) => {
             console.log(error);
         }
     }
-    const addToCart = async (slug) => {
+    const addToCart = async (_id) => {
         try {
-            const res = await axios.post('https://api.travels.games/api/v1/cart/store/' + slug, {
+            const res = await axios.post('https://api.travels.games/api/v1/cart/store/' + _id, {
                 a: 1
             },
                 {
@@ -67,7 +67,13 @@ const DetailPlace = ({ navigation, route }) => {
             loadingCart();
             return res.data;
         } catch (error) {
-            console.log(error);
+            if (error.response.data.msg == "Service already in cart!") {
+                Alert.alert(
+                    "Travel app",
+                    "Sản phẩm đã tồn tại trong giỏ hàng"
+                );
+            }
+            // console.log(error.response.data.msg);
         }
     }
     const fetchData = async () => {
@@ -226,7 +232,7 @@ const DetailPlace = ({ navigation, route }) => {
                                     <Text style={{ fontWeight: 'normal', fontSize: 12, textDecorationLine: 'line-through', color: colors.text }}>{item.price}đ</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <TouchableOpacity onPress={() => addToCart(item.slug)} style={{ backgroundColor: '#ffa500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
+                                    <TouchableOpacity onPress={() => addToCart(item._id)} style={{ backgroundColor: '#ffa500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
                                         <Text style={{ color: colors.text, fontWeight: 'bold', fontSize: 16 }}>{i18n.t('add_to_cart')}</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => navigation.navigate('BookNow')} style={{ backgroundColor: '#ff4500', paddingVertical: 10, width: '49%', alignItems: 'center', borderRadius: 7 }}>
