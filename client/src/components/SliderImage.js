@@ -9,7 +9,7 @@ import { deleteTour } from '../redux/functions/tourFunc';
 const { width } = Dimensions.get("window");
 const height = width * 0.6;//60%
 
-const SliderImage = ({ navigation, image, item }) => {
+const SliderImage = ({ navigation, image, item, cartNumber }) => {
     const tourState = useSelector((state) => state.tour);
     const tours = tourState.favourite.tour;
     const dispatch = useDispatch();
@@ -84,7 +84,7 @@ const SliderImage = ({ navigation, image, item }) => {
                         <Ionicons onPress={() => navigation.navigate('Cart')} name='md-cart-outline' style={{ backgroundColor: '#f5f5f5', padding: 10, borderRadius: 50, aspectRatio: 1 }} size={30} color='#888' />
                         <View style={{ position: 'absolute', right: -10, top: -8, backgroundColor: '#fff', borderRadius: 50, width: 20, height: 20, justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ color: '#ff4500' }}>
-                                {tourState.favourite.tour.length}
+                                {cartNumber}
                             </Text>
                         </View>
                     </View>

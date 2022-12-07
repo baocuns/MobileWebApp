@@ -23,6 +23,8 @@ import FastImage from 'react-native-fast-image';
 import { userInfo } from '../redux/apiRequest';
 import i18n from '../i18n';
 import changeLanguage from '../HOC/changeLanguage';
+
+
 const Users = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -249,6 +251,7 @@ const Users = () => {
             </View>
           </View>
         </TouchableOpacity>
+
         <TouchableOpacity>
           <View
             style={{
@@ -344,9 +347,7 @@ const Users = () => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Setting')}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
           <View
             style={{
               flexDirection: 'row',
@@ -445,7 +446,7 @@ const Users = () => {
 
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Login');
+            navigation.navigate('LoginNew');
           }}>
           <View
             style={{
@@ -495,6 +496,5 @@ const Users = () => {
       </View>
     </ScrollView>
   );
-};
-
+}
 export default changeLanguage(Users);

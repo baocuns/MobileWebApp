@@ -84,13 +84,13 @@ const Posts = ({ user, handleComments }) => {
                                 <Text className='text-black  font-bold'>{e.profile[0].fullname}</Text>
                                 {e.address ? (
                                     <>
-                                        <Text className='mx-2 '>đang ở</Text>
-                                        <Text className='text-black  font-bold'>{e.address}</Text>
+                                        <Text className='mx-2 text-zinc-800'>đang ở</Text>
+                                        <Text className='text-black font-bold'>{e.address}</Text>
                                     </>
                                 ) : ('')}
                             </View>
                             <View>
-                                <Text>{new Date(e.createdAt).toLocaleString()}</Text>
+                                <Text className='text-neutral-800'>{new Date(e.createdAt).toLocaleString()}</Text>
                             </View>
                         </View>
                     </View>
