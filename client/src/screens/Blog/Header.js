@@ -35,6 +35,7 @@ const Header = ({user}) => {
             }
         )
             .then(res => {
+                console.log(res.data.data);
                 setProfile(res.data.data[0])
             })
 

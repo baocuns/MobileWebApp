@@ -14,16 +14,13 @@ import {
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import Comments from './Comments';
 
 // value defauld
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 
-const Posts = ({ user }) => {
+const Posts = ({ user, handleComments }) => {
     const [posts, setPosts] = useState([])
-    const [openComment, setOpenComment] = useState(false)
-    const [postsId, setPostsId] = useState()
 
     const handleLike = (index) => {
         let p = posts
@@ -52,10 +49,6 @@ const Posts = ({ user }) => {
         let p = posts
         p[index].comment++
         setPosts([...p])
-    }
-    const handleComment = (_id, index) => {
-        setOpenComment(!openComment)
-        setPostsId({ _id: _id, index: index })
     }
 
     useEffect(() => {
@@ -149,7 +142,7 @@ const Posts = ({ user }) => {
                                 <Text className=' text-black ml-1'>Yêu Thích</Text>
                             </Pressable>
                             <Pressable className='flex flex-row items-center p-2'
-                                onPress={() => handleComment(e._id, index)}
+                                onPress={() => handleComments(e._id)}
                             >
                                 <Text className=' text-black mr-1'>Bình Luận</Text>
                                 <EvilIcons
@@ -163,16 +156,6 @@ const Posts = ({ user }) => {
                     <View className='w-full h-2.5 bg-slate-300 my-1' />
                 </View>
             ))}
-
-            {/* comment */}
-            <Comments
-                open={openComment}
-                handleComment={handleComment}
-                object_id={postsId?._id}
-                user={user}
-                index={postsId?.index}
-                handleCommentUp={handleCommentUp}
-            />
         </View>
     )
 }
