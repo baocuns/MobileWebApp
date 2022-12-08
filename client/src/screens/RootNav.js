@@ -27,6 +27,8 @@ import Setting from './Setting';
 import { NativeBaseProvider } from 'native-base';
 import { useColorScheme } from 'react-native';
 import { useSelector } from 'react-redux';
+import Checkout from './Checkout/Checkout';
+import Payment from './Checkout/Payment';
 
 const Stack = createStackNavigator();
 
@@ -55,6 +57,9 @@ function RootNav() {
           <Stack.Screen name="FavouriteItem" component={FavouriteItem} />
           <Stack.Screen name="ActionRaiting" component={ActionRaiting} />
           <Stack.Screen name="Setting" component={Setting} />
+          {/* bao */}
+          <Stack.Screen name="Checkout" component={Checkout} />
+          <Stack.Screen name="Payment" component={Payment} />
           {/* Khiêm */}
           <Stack.Screen name="UserInfo" component={UserInfo} />
           <Stack.Screen name="BookNow" component={BookNow} />
