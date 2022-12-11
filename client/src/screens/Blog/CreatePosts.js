@@ -10,7 +10,8 @@ import {
     Alert,
     Modal,
     Pressable,
-    TouchableOpacity
+    TouchableOpacity,
+    ToastAndroid
 } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -45,9 +46,10 @@ const CreatePosts = ({ user, open, handleOpenCreatePosts }) => {
     // posts upload
     const handlePostUpload = () => {
         if (!data.content) {
-            return alert('Post nooo')
+            return ToastAndroid.show("Bạn chưa nhập nội dung bài viết !", ToastAndroid.SHORT);
         }
         if (singleFile != null) {
+            setIsFetching(true)
             // If file selected then create FormData
             const fileToUpload = singleFile
             let formData = new FormData()
@@ -64,13 +66,19 @@ const CreatePosts = ({ user, open, handleOpenCreatePosts }) => {
             })
                 .then(res => {
                     console.log(res.data)
+                    setIsFetching(false)
+                    ToastAndroid.show("Bạn đăng bài viết thành công !", ToastAndroid.SHORT);
+                    handleCloseCreate()
                 })
                 .catch(err => {
                     console.log(err.response.data)
+                    setIsFetching(false)
+                    ToastAndroid.show("Bạn đăng bài viết thất bại, vui lòng thử lại sau !", ToastAndroid.SHORT);
+                    handleCloseCreate()
                 })
         } else {
             // If no file selected the show alert
-            alert('Please Select File first')
+            ToastAndroid.show("Vui lòng chọn hình ảnh !", ToastAndroid.SHORT);
         }
     }
 
@@ -184,15 +192,19 @@ const CreatePosts = ({ user, open, handleOpenCreatePosts }) => {
                                 </View>
                                 {/* list */}
                                 <View>
-                                    {markers.map((marker, index) => (
-                                        <Pressable
-                                            key={index}
-                                            className='py-2 my-2 bg-cyan-100 rounded'
-                                            onPress={() => handleLocationChange(marker.properties.name)}
-                                        >
-                                            <Text className='text-black text-base px-4'>{marker.properties.name}</Text>
-                                        </Pressable>
-                                    ))}
+                                    {markers.map((marker, index) => {
+                                        if (marker.properties.name) {
+                                            return (
+                                                <TouchableOpacity
+                                                    key={index}
+                                                    className='py-2 my-2 bg-green-100 rounded'
+                                                    onPress={() => handleLocationChange(marker.properties.name)}
+                                                >
+                                                    <Text className='text-black text-base px-4'>{marker.properties.name}</Text>
+                                                </TouchableOpacity>
+                                            )
+                                        }
+                                    })}
                                 </View>
                             </ScrollView>
                         </View>
@@ -211,13 +223,13 @@ const CreatePosts = ({ user, open, handleOpenCreatePosts }) => {
                                 <Text className='text-black text-xl'>Create Posts</Text>
                             </View>
                             <View className='w-2/6 flex flex-row items-center justify-end'>
-                                <Pressable
+                                <TouchableOpacity
                                     onPress={handlePostUpload}
                                     className='bg-green-600 rounded flex flex-row items-center justify-center pr-2'
                                 >
                                     <Text className='text-white p-2'>Post up</Text>
                                     <AntDesign name='upload' size={18} color='white' />
-                                </Pressable>
+                                </TouchableOpacity>
                             </View>
                         </View>
                         {/* input posts */}
@@ -229,13 +241,14 @@ const CreatePosts = ({ user, open, handleOpenCreatePosts }) => {
                                     <Text className='text-black'>{data?.location}</Text>
                                 </View>
                             )}
+                            {/* posts content */}
                             <View>
                                 <TextInput
                                     multiline={true}
                                     numberOfLines={1}
                                     value={data?.content}
                                     onChangeText={(text) => handleDataChange('content', text)}
-                                    className='text-xl'
+                                    className='text-base'
                                     placeholder='What are you thinking in that small brain?'
                                 />
                             </View>

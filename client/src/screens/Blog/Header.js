@@ -10,7 +10,8 @@ import {
     ScrollView,
     Alert,
     Modal,
-    Pressable
+    Pressable,
+    TouchableOpacity
 } from 'react-native'
 import { useSelector } from "react-redux";
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -35,7 +36,7 @@ const Header = ({user}) => {
             }
         )
             .then(res => {
-                console.log(res.data.data);
+                // console.log(res.data.data);
                 setProfile(res.data.data[0])
             })
 
@@ -54,20 +55,20 @@ const Header = ({user}) => {
                     />
                 </View>
                 <View className='w-4/6'>
-                    <Pressable
+                    <TouchableOpacity
                         onPress={handleOpenCreatePosts}
                         className='py-2 w-auto rounded-full bg-white border border-gray-400 flex flex-row items-center px-4 hover:bg-gray-300'
                     >
                         <Text className='text-black'>Bạn đang đang nghĩ gì vậy ?</Text>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
                 <View className='w-1/6 flex flex-row items-center justify-center ml-1'>
-                    <Pressable
+                    <TouchableOpacity
                         onPress={handleOpenCreatePosts}
                         className='p-2'
                     >
                         <Fontisto name="photograph" size={30} color='#45bd62' />
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
             </View>
 
