@@ -8,6 +8,8 @@ import {
     TextInput,
     ScrollView,
     Pressable,
+    TouchableOpacity,
+    ToastAndroid,
 } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -20,13 +22,16 @@ import {
     BottomSheetModalProvider,
     BottomSheetScrollView
 } from '@gorhom/bottom-sheet';
+import { formatTime } from '../../utils/function';
+
+
 
 const Comments = ({ object_id, user }) => {
 
     const [isLoader, setIsLoader] = useState(false)
     const [profile, setProfile] = useState()
     // comment
-    const [comment, setComment] = useState('')
+    const [comment, setComment] = useState()
     const [comments, setComments] = useState([])
     const [reply, setReply] = useState(null)
     const [parent, setParent] = useState(null)
@@ -48,13 +53,10 @@ const Comments = ({ object_id, user }) => {
         setComment(text)
     }
 
-    const handleCloseComment = () => {
-        setComment('')
-        setReply(null)
-        setParent(null)
-        handleComment()
-    }
     const handleSubmitComment = () => {
+        if (!comment) {
+            return ToastAndroid.show("Bạn chưa nhập nội dung bình luận !", ToastAndroid.SHORT);
+        }
         setIsLoader(true)
         const data = {
             object_id: object_id,
@@ -74,7 +76,7 @@ const Comments = ({ object_id, user }) => {
                     profile: [profile],
                     profileReply: [reply],
                 }]))
-                setComment('')
+                setComment()
                 setReply(null)
                 setParent(null)
                 setIsLoader(false)
@@ -93,6 +95,7 @@ const Comments = ({ object_id, user }) => {
             axios.post(`https://api.travels.games/api/v1/comment/show/${object_id}`)
                 .then(res => {
                     setComments(res.data.data)
+                    console.log(res.data.data);
                     setIsLoader(false)
                 })
                 .catch(err => {
@@ -118,13 +121,20 @@ const Comments = ({ object_id, user }) => {
     }, [])
 
     return (
-        <View className='h-[100%] flex justify-end'>
-            <View className={`h-[85%] ${keyboard.keyboardShown ? `pb-[60%]`: ''}`}>
+        <View className={`h-[100%] flex justify-end`}>
+            <View className={`${reply ? 'h-[85%]' : 'h-[90%]'}`}>
                 <BottomSheetScrollView>
-                    <View className='mx-4 my-2'>
-                        {comments.length !== 0 && comments.map((cmt, index) => (
-                            <View key={index}>
-                                {!cmt.parent_id ? (
+                    <View className='mx-4 my-2 p-4'>
+                        {comments.length !== 0 && comments.map((cmt, index) => {
+                            let replys = []
+                            comments.forEach((j, i) => {
+                                if (cmt._id === j.parent_id) {
+                                    replys.push(j)
+                                }
+                            })
+
+                            return (
+                                <View key={index} className='my-1 border-b border-gray-300'>
                                     <View>
                                         <View className='flex flex-row'>
                                             <View className='w-1/6'>
@@ -138,7 +148,7 @@ const Comments = ({ object_id, user }) => {
                                                     <Text className=' text-black font-bold'>{cmt.profile[0].fullname}</Text>
                                                 </View>
                                                 <View>
-                                                    <Text>{new Date(cmt.updatedAt).toLocaleString()}</Text>
+                                                    <Text>{formatTime(cmt.updatedAt)}</Text>
                                                 </View>
                                             </View>
                                         </View>
@@ -146,7 +156,7 @@ const Comments = ({ object_id, user }) => {
                                             <Text className='text-justify text-black text-sm'>{cmt.content}</Text>
                                         </View>
                                         <View className='flex flex-row justify-end'>
-                                            <Pressable
+                                            <TouchableOpacity
                                                 onPress={() => handleReply(cmt)}
                                                 className='mb-2 flex flex-row items-center'
                                             >
@@ -156,45 +166,43 @@ const Comments = ({ object_id, user }) => {
                                                     color='red'
                                                 />
                                                 <Text className='ml-1'>Trả Lời</Text>
-                                            </Pressable>
+                                            </TouchableOpacity>
                                         </View>
                                     </View>
-                                ) : (
-                                    <View>
-                                        {/* reply */}
-                                        <View className='flex flex-row'>
+                                    {replys.map((rl, index) => (
+                                        <View key={index} className='flex flex-row'>
                                             <View className='w-1/6' />
                                             <View className='w-5/6' >
                                                 <View className='flex flex-row'>
                                                     <View className='w-1/6'>
                                                         <Image
                                                             className='object-cover h-12 w-12 rounded-full'
-                                                            source={{ uri: cmt.profile[0].images[0] }}
+                                                            source={{ uri: rl.profile[0].images[0] }}
                                                         />
                                                     </View>
                                                     <View className='w-5/6 ml-2'>
                                                         <View className='flex flex-row items-center w-5/6'>
-                                                            <Text className='text-black mr-2 font-bold'>{cmt.profile[0].fullname}</Text>
+                                                            <Text className='text-black mr-2 font-bold'>{rl.profile[0].fullname}</Text>
                                                             <AntDesign
                                                                 name='right'
                                                                 size={14}
                                                                 color='red'
                                                             />
-                                                            <Text className='text-black ml-2 font-bold'>{cmt.profileReply[0].fullname}</Text>
+                                                            <Text className='text-black ml-2 font-bold'>{rl.profileReply[0].fullname}</Text>
                                                         </View>
                                                         <View>
-                                                            <Text>{new Date(cmt.updatedAt).toLocaleString()}</Text>
+                                                            <Text>{formatTime(cmt.updatedAt)}</Text>
                                                         </View>
                                                     </View>
                                                 </View>
                                                 {/* comment */}
                                                 <View className='mt-2'>
-                                                    <Text className='text-justify text-black text-sm'>{cmt.content}</Text>
+                                                    <Text className='text-justify text-black text-sm'>{rl.content}</Text>
                                                 </View>
-                                                {/* button reply */}
+                                                {/* button rl */}
                                                 <View className='flex flex-row justify-end'>
-                                                    <Pressable
-                                                        onPress={() => handleReply(cmt)}
+                                                    <TouchableOpacity
+                                                        onPress={() => handleReply(rl)}
                                                         className='mb-2 flex flex-row items-center'
                                                     >
                                                         <AntDesign
@@ -203,14 +211,15 @@ const Comments = ({ object_id, user }) => {
                                                             color='red'
                                                         />
                                                         <Text className='ml-1'>Trả Lời</Text>
-                                                    </Pressable>
+                                                    </TouchableOpacity>
                                                 </View>
                                             </View>
                                         </View>
-                                    </View>
-                                )}
-                            </View>
-                        ))}
+                                    ))}
+                                </View>
+                            )
+                        })}
+
                         {/* no comment */}
                         {comments.length === 0 && (
                             <View className='p-4'>
@@ -229,17 +238,8 @@ const Comments = ({ object_id, user }) => {
                 </BottomSheetScrollView>
             </View>
             {/* input comment */}
-            <View className='h-[15%]'>
-                <View className={`w-full p-4 border-t border-gray-300 bg-white`}
-                    style={keyboard.keyboardShown ? {
-                        position: 'absolute',
-                        width: '100%',
-                        bottom: keyboard.keyboardHeight
-                    } : {
-                        position: 'relative',
-                        bottom: 0
-                    }}
-                >
+            <View className={`${reply ? 'h-[15%] pb-4' : 'h-[10%]'}`}>
+                <View className={`w-full p-2 border-t border-gray-300 bg-white`}>
                     {reply && (
                         <View className='flex flex-row justify-center items-center'>
                             <View className='w-1/6'></View>
@@ -266,15 +266,15 @@ const Comments = ({ object_id, user }) => {
                             ref={TextInputComment}
                             className='bg-gray-100 rounded-full pl-4 py-2 w-4/6'
                             placeholder='Bình luận . . .'
-                            value={comment}
+                            value={comment ? comment : ''}
                             onChangeText={handleChangeComment}
                         />
-                        <Pressable
+                        <TouchableOpacity
                             onPress={handleSubmitComment}
                             className='ml-2'
                         >
                             <FontAwesome name='send' size={30} color='#38bdf8' />
-                        </Pressable>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>

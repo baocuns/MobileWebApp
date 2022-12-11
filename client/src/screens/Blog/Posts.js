@@ -10,16 +10,18 @@ import {
     ScrollView,
     Alert,
     Modal,
-    Pressable
+    TouchableOpacity,
+    ToastAndroid
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import { formatTime } from '../../utils/function';
 
 // value defauld
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 
-const Posts = ({ user, handleComments }) => {
+const Posts = ({ user, handleComments, isRefresh, handleRefresh }) => {
     const [posts, setPosts] = useState([])
 
     const handleLike = (index) => {
@@ -45,20 +47,20 @@ const Posts = ({ user, handleComments }) => {
                 console.log('err', err.response);
             })
     }
-    const handleCommentUp = (index) => {
-        let p = posts
-        p[index].comment++
-        setPosts([...p])
-    }
 
+    // call posts
     useEffect(() => {
         axios.get('https://api.travels.games/api/v1/posts/show/hot')
             .then(res => {
-                res.data.data.forEach((element) => {
-                    Image.getSize(element.images[0], (width, height) => {
+                var posts = []
+                res.data.data.forEach(async (element) => {
+                    await Image.getSize(element.images[0], (width, height) => {
                         element.height = (screenWidth / width) * height
-                        setPosts(prev => ([...prev, element]))
+                        posts.push(element)
                     })
+                    if (posts.length === res.data.data.length) {
+                        setPosts([...posts])
+                    }
                 })
             })
             .catch(err => {
@@ -66,13 +68,39 @@ const Posts = ({ user, handleComments }) => {
             })
     }, [])
 
+    // refresh posts
+    useEffect(() => {
+        isRefresh && handleCallHotPost()
+    }, [isRefresh])
+
+    const handleCallHotPost = () => {
+        axios.get('https://api.travels.games/api/v1/posts/show/hot')
+            .then(res => {
+                var posts = []
+                res.data.data.forEach(async (element) => {
+                    await Image.getSize(element.images[0], (width, height) => {
+                        element.height = (screenWidth / width) * height
+                        posts.push(element)
+                    })
+                    if (posts.length === res.data.data.length) {
+                        ToastAndroid.show("posts success !", ToastAndroid.SHORT);
+                        handleRefresh(false)
+                        setPosts([...posts])
+                    }
+                })
+            })
+            .catch(err => {
+                console.log('err', err.response.data);
+            })
+    }
+
     return (
         <View>
             {posts && posts.map((e, index) => (
                 <View key={index} className='w-full h-auto bg-white'>
                     {/* user */}
-                    <View className='flex flex-row'>
-                        <View className='ml-4 mr-2 my-2'>
+                    <View className='flex flex-row mx-4 border-b border-gray-300'>
+                        <View className=' mr-2 my-2'>
                             <Image
                                 source={{ uri: e.profile[0].images[0] }}
                                 resizeMode='cover'
@@ -84,19 +112,23 @@ const Posts = ({ user, handleComments }) => {
                                 <Text className='text-black  font-bold'>{e.profile[0].fullname}</Text>
                                 {e.address ? (
                                     <>
-                                        <Text className='mx-2 text-zinc-800'>đang ở</Text>
-                                        <Text className='text-black font-bold'>{e.address}</Text>
+                                        <View className='flex-row items-center mx-2'>
+                                            <EvilIcons name='location' size={20} color='red' />
+                                            <Text className='text-black text-xs'>{e.address}</Text>
+                                        </View>
                                     </>
                                 ) : ('')}
                             </View>
                             <View>
-                                <Text className='text-neutral-800'>{new Date(e.createdAt).toLocaleString()}</Text>
+                                <Text className='text-neutral-800'>{formatTime(e.createdAt)}</Text>
                             </View>
                         </View>
                     </View>
                     {/* content */}
                     <View className='px-4'>
-                        <Text className='text-justify text-black '>{e.content}</Text>
+                        <View className='my-2'>
+                            <Text className='text-justify text-black '>{e.content}</Text>
+                        </View>
                     </View>
                     {/* image */}
                     <View>
@@ -131,7 +163,7 @@ const Posts = ({ user, handleComments }) => {
                         </View>
                         {/* button */}
                         <View className='flex justify-between flex-row mt-2 border-t border-slate-200 border-solid pt-2 px-4'>
-                            <Pressable className='flex flex-row items-center p-2'
+                            <TouchableOpacity className='flex flex-row items-center p-2'
                                 onPress={() => handleLike(index)}
                             >
                                 <Ionicons
@@ -140,8 +172,8 @@ const Posts = ({ user, handleComments }) => {
                                     color='red'
                                 />
                                 <Text className=' text-black ml-1'>Yêu Thích</Text>
-                            </Pressable>
-                            <Pressable className='flex flex-row items-center p-2'
+                            </TouchableOpacity>
+                            <TouchableOpacity className='flex flex-row items-center p-2'
                                 onPress={() => handleComments(e._id)}
                             >
                                 <Text className=' text-black mr-1'>Bình Luận</Text>
@@ -149,7 +181,7 @@ const Posts = ({ user, handleComments }) => {
                                     name="comment"
                                     size={20}
                                     color='red' />
-                            </Pressable>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     {/* phan cach */}
