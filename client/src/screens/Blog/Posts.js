@@ -16,6 +16,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import { formatTime } from '../../utils/function';
+import { Placeholder, PlaceholderLine, ShineOverlay } from 'rn-placeholder';
 
 // value defauld
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
@@ -23,6 +24,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const Posts = ({ user, handleComments, isRefresh, handleRefresh }) => {
     const [posts, setPosts] = useState([])
+    const loading = [1, 2, 3]
 
     const handleLike = (index) => {
         let p = posts
@@ -74,6 +76,7 @@ const Posts = ({ user, handleComments, isRefresh, handleRefresh }) => {
     }, [isRefresh])
 
     const handleCallHotPost = () => {
+        setPosts([])
         axios.get('https://api.travels.games/api/v1/posts/show/hot')
             .then(res => {
                 var posts = []
@@ -83,7 +86,6 @@ const Posts = ({ user, handleComments, isRefresh, handleRefresh }) => {
                         posts.push(element)
                     })
                     if (posts.length === res.data.data.length) {
-                        ToastAndroid.show("posts success !", ToastAndroid.SHORT);
                         handleRefresh(false)
                         setPosts([...posts])
                     }
@@ -96,7 +98,59 @@ const Posts = ({ user, handleComments, isRefresh, handleRefresh }) => {
 
     return (
         <View>
-            {posts && posts.map((e, index) => (
+
+            {/* loading */}
+            {posts.length === 0 && loading.map((e, i) => (
+                <View>
+                    <Placeholder
+                        Animation={ShineOverlay}
+                    >
+                        {/* user */}
+                        <View className='flex-row mx-4 border-b border-gray-300'>
+                            <View className='w-1/5'>
+                                <PlaceholderLine
+                                    className='mr-2 my-2 rounded-full h-12 w-12'
+                                />
+                            </View>
+                            <View className='my-2 w-4/5'>
+                                <PlaceholderLine />
+                                <PlaceholderLine />
+                            </View>
+                        </View>
+                        {/* content */}
+                        <View className='px-4'>
+                            <View className='my-2'>
+                                <PlaceholderLine />
+                                <PlaceholderLine />
+                                <PlaceholderLine />
+                            </View>
+                        </View>
+                        {/* image */}
+                        <View>
+                            <PlaceholderLine
+                                className='w-full h-64'
+                            />
+                        </View>
+                        {/* opstion status */}
+                        <View className='px-4'>
+                            {/* count */}
+                            <View className='flex justify-between flex-row px-4'>
+                                <PlaceholderLine width={20} />
+                                <PlaceholderLine width={20} />
+                            </View>
+                            {/* button */}
+                            <View className='justify-between flex-row border-t border-slate-200 border-solid pt-2 px-4'>
+                                <PlaceholderLine width={20} height={20} />
+                                <PlaceholderLine width={20} height={20} />
+                            </View>
+                        </View>
+                    </Placeholder>
+                    {/* phan cach */}
+                    <View className='w-full h-2.5 bg-slate-300 my-1' />
+                </View>
+            ))}
+
+            {posts.length > 0 && posts.map((e, index) => (
                 <View key={index} className='w-full h-auto bg-white'>
                     {/* user */}
                     <View className='flex flex-row mx-4 border-b border-gray-300'>

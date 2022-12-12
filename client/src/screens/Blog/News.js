@@ -1,12 +1,14 @@
 import { View, Text, ScrollView, Image, Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import { Placeholder, PlaceholderLine, Shine, ShineOverlay } from 'rn-placeholder';
 
 // value defauld
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const News = ({ isRefresh }) => {
     const [news, setNews] = useState([])
+    const loading = [1, 2, 3, 4, 5]
 
     useEffect(() => {
         axios.get('https://api.travels.games/api/v1/posts/show/new')
@@ -28,6 +30,7 @@ const News = ({ isRefresh }) => {
     }, [])
 
     const handleRefreshNews = () => {
+        setNews([])
         axios.get('https://api.travels.games/api/v1/posts/show/new')
             .then(res => {
                 var newss = []
@@ -57,7 +60,28 @@ const News = ({ isRefresh }) => {
                 horizontal
                 className=''
             >
-                {news && news.map((e, index) => (
+                {
+                    news.length === 0 && loading.map((e, i) => (
+                        <View className='my-4 mx-2'>
+                            <Placeholder
+                                Animation={ShineOverlay}
+                            >
+                                <PlaceholderLine
+                                    style={{
+                                        width: screenWidth / 3,
+                                        height: screenHeight / 3.5,
+                                    }}
+                                />
+                            </Placeholder>
+
+                            <View className='absolute bottom-6 left-2 bg-white h-4 right-2 rounded-full' />
+                            <View className='absolute bg-white h-10 w-10 top-0 rounded-full m-2'>
+                            </View>
+                        </View>
+                    ))
+                }
+
+                {news.length > 0 && news.map((e, index) => (
                     <View key={index} className='my-4 mx-2 rounded'>
                         <Image
                             className='rounded object-cover'

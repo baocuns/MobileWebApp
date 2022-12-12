@@ -7530,7 +7530,7 @@ react-native-floating-action@^1.22.0:
   resolved "https://registry.npmjs.org/react-native-floating-action/-/react-native-floating-action-1.22.0.tgz"
   integrity sha512-m/9ueh2bgV+Dopelam2hu+FIY1wrIOPjpcBNgU3I5J9SqWmPQCarSz5L8zsW5QWE4YgXuaVbYAO/pgb0P8x/gQ==
 
-react-native-gesture-handler@^2.6.1:
+react-native-gesture-handler@^2.8.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.8.0.tgz#ef9857871c10663c95a51546225b6e00cd4740cf"
   integrity sha512-poOSfz/w0IyD6Qwq7aaIRRfEaVTl1ecQFoyiIbpOpfNTjm2B1niY2FLrdVQIOtIOe+K9nH55Qal04nr4jGkHdQ==
@@ -7611,7 +7611,7 @@ react-native-raw-bottom-sheet@^2.2.0:
   resolved "https://registry.npmjs.org/react-native-raw-bottom-sheet/-/react-native-raw-bottom-sheet-2.2.0.tgz"
   integrity sha512-qL4JKIqvbcVxbkKzeh51hjV7suoJN3ouxzvLmOg0FBUV1yiJAfEbacjQdtRCI6+OU5pyGFBIifLsTXcFDwHggg==
 
-react-native-reanimated@^2.12.0:
+react-native-reanimated@^2.13.0:
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.13.0.tgz#d64c1386626822d4dc22094b4efe028ff2c49cc9"
   integrity sha512-yUHyYVIegWWIza4+nVyS3CSmI/Mc8kLFVHw2c6gnSHaYhYA4LeEjH/jBkoMzHk9Xd0Ra3cwtjYKAMG8OTp6JVg==
@@ -8075,6 +8075,11 @@ rimraf@~2.6.2:
   integrity sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==
   dependencies:
     glob "^7.1.3"
+
+rn-placeholder@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/rn-placeholder/-/rn-placeholder-3.0.3.tgz#98f635b263ee003af2a984eed32d86ade308df35"
+  integrity sha512-EmVeLT8zDcTPilQZ2OHO/IiYUy2gApKGgbshDZBX0C4qxsn0cFATwgwOwyz8O7Vwg1Hul97Ci95hu7d6Js6XMQ==
 
 rsvp@^4.8.4:
   version "4.8.5"
