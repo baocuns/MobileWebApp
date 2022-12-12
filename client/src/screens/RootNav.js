@@ -1,11 +1,11 @@
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   DarkTheme,
   DefaultTheme,
   NavigationContainer,
   useTheme,
 } from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import Index from '.';
 import FavariteList from '../components/FavoriteList';
 import FavouriteItem from '../components/FavouriteItem';
@@ -24,9 +24,13 @@ import ProvinceDetail from './ProvinceDetail';
 import UserInfo from './UserInfo';
 import changeLanguage from '../HOC/changeLanguage';
 import Setting from './Setting';
-import { NativeBaseProvider } from 'native-base';
-import { useColorScheme } from 'react-native';
-import { useSelector } from 'react-redux';
+import Camera from './Camera';
+import LoginGoogle from './LoginGoogle';
+import Orders from './Order/Orders';
+import Details from './Order/Details';
+import {NativeBaseProvider} from 'native-base';
+import {useColorScheme} from 'react-native';
+import {useSelector} from 'react-redux';
 import Checkout from './Checkout/Checkout';
 import Payment from './Checkout/Payment';
 
@@ -47,7 +51,7 @@ function RootNav() {
       <NavigationContainer theme={theme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack.Navigator
           initialRouteName="Index"
-          screenOptions={{ headerShown: false }}>
+          screenOptions={{headerShown: false}}>
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="Favorite" component={Favorite} />
           <Stack.Screen name="DetailPlace" component={DetailPlace} />
@@ -68,6 +72,11 @@ function RootNav() {
           <Stack.Screen name="Friends" component={Friends} />
           <Stack.Screen name="FavoriteService" component={FavoriteService} />
           <Stack.Screen name="LoginNew" component={LoginNew}></Stack.Screen>
+          <Stack.Screen name="Orders" component={Orders}></Stack.Screen>
+          <Stack.Screen name="Order" component={Details}></Stack.Screen>
+          <Stack.Screen
+            name="LoginGoogle"
+            component={LoginGoogle}></Stack.Screen>
           <Stack.Screen
             name="RegisterNew"
             component={RegisterNew}></Stack.Screen>
