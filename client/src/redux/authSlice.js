@@ -1,23 +1,25 @@
 import {createSlice} from '@reduxjs/toolkit';
+
+const initialState = {
+  login: {
+    currentUser: null,
+    isFetching: false,
+    error: false,
+  },
+  register: {
+    isFetching: false,
+    error: false,
+  },
+  user: {
+    currentUser: null,
+    isFetching: false,
+    error: false,
+  },
+};
+
 const authSlice = createSlice({
   name: 'auth',
-  initialState: {
-    login: {
-      currentUser: null,
-      isFetching: false,
-      error: false,
-    },
-    register: {
-      isFetching: false,
-      error: false,
-    },
-    user: {
-      currentUser: null,
-      isFetching: false,
-      error: false,
-    },
-  },
-
+  initialState,
   reducers: {
     loginStart: state => {
       state.login.isFetching = true;
@@ -72,6 +74,7 @@ const authSlice = createSlice({
       state.user.isFetching = false;
       state.user.error = true;
     },
+    resetUser: () => initialState,
   },
 });
 
@@ -93,6 +96,7 @@ export const {
   getUsersStart,
   getUsersSuccess,
   getUsersFail,
+  resetUser,
 } = authSlice.actions;
 
 export default authSlice.reducer;

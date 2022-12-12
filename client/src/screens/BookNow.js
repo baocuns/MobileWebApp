@@ -14,7 +14,7 @@ const BookNow = ({navigation}) => {
           paddingTop: 20,
           paddingLeft: 20,
           backgroundColor: '#FFFFFF',
-          paddingBottom: 10
+          paddingBottom: 10,
         }}>
         <View
           style={{
@@ -22,9 +22,9 @@ const BookNow = ({navigation}) => {
             paddingRight: 20,
           }}>
           <Icon
-            onPress={()=>navigation.goBack()}
+            onPress={() => navigation.goBack()}
             style={{
-              paddingHorizontal:10,
+              paddingHorizontal: 10,
               fontSize: 20,
               color: 'black',
             }}
@@ -494,15 +494,16 @@ const BookNow = ({navigation}) => {
             </View>
           </View>
 
-          <View style={{
-            paddingTop: 10
-          }}>
+          <View
+            style={{
+              paddingTop: 10,
+            }}>
             <View
               style={{
                 justifyContent: 'flex-end',
               }}>
               <TouchableOpacity
-                onPress={()=> navigation.navigate('BookNowX')}
+                onPress={() => navigation.navigate('BookNowX')}
                 style={{
                   backgroundColor: 'orange',
                   width: '100%',

@@ -10,34 +10,25 @@ import {
   Dimensions,
   Image,
   I18nManager,
-
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-
-
-
-
 import DocumentPicker from 'react-native-document-picker';
 
 const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
-
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
 import FastImage from 'react-native-fast-image';
 
-import { userInfo } from '../redux/apiRequest';
-import { useTheme } from '@react-navigation/native';
-import i18n from '../i18n'
-
-
-const UserInfo = ({ route, navigation }) => {
+import {userInfo} from '../redux/apiRequest';
+import {useTheme} from '@react-navigation/native';
+import i18n from '../i18n';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {loadingUser} from '../utils/function';
+const UserInfo = ({route, navigation}) => {
   // const [profile, setProfile] = useState(null);
-
-  const [profile, setProfile] = useState(route.params.profile);
+  const [profile, setProfile] = useState();
   const user = useSelector(state => state.auth.login.currentUser);
-
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   // const email = useSelector(state => state.auth.login.currentUser);
@@ -49,7 +40,6 @@ const UserInfo = ({ route, navigation }) => {
   const [photos, setPhotos] = useState('');
   // const [username, setUsername] = useState('');
   const dispatch = useDispatch();
-
   // photos
   const [singleFile, setSingleFile] = useState(null);
   const selectFile = async () => {
@@ -61,6 +51,8 @@ const UserInfo = ({ route, navigation }) => {
         Image.getSize(e.uri, (width, height) => {
           e.width = width;
           e.height = height;
+
+          console.log(e);
           setSingleFile(e);
         });
       });
@@ -74,10 +66,48 @@ const UserInfo = ({ route, navigation }) => {
       }
     }
   };
+  const [imageUri, setimageUri] = useState(null);
+  const openCamera = () => {
+    let options = {
+      storageOptions: {
+        path: 'images',
+        mediaType: 'photo',
+      },
+    };
 
+    launchCamera(options, response => {
+      // console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image piker');
+      } else if (response.error) {
+        console.log('ImagePicker error: ', response.error);
+      } else if (response.customButton) {
+        console.log('user tapped custom button:', response.customButton);
+      } else {
+        const source = {uri: response.assets[0].uri};
+        // const source = {
+        //   uri: 'data:image/jpeg;base64,' + response.data,
+        //   isStatic: true,
+        // };
+        const file = {
+          fileCopyUri: null,
+          height: response.assets[0].height,
+          width: response.assets[0].width,
+          name: response.assets[0].fileName,
+          size: response.assets[0].fileSize,
+          type: response.assets[0].type,
+          uri: response.assets[0].uri,
+        };
+        setSingleFile(file);
+        console.log(response.assets[0]);
+        setimageUri(source);
+      }
+    });
+  };
   const createUser = async () => {
     if (singleFile != null) {
       let formData = new FormData();
+      // formData.append('camera', imageUri);
       formData.append('photos', singleFile);
       formData.append('user_id', user?._id);
       formData.append('fullname', fullname);
@@ -98,7 +128,7 @@ const UserInfo = ({ route, navigation }) => {
         },
       })
         .then(res => {
-          console.log('res.data.data', res.data);
+          console.log('res.data.data', res);
           navigation.goBack();
         })
         .catch(err => {
@@ -107,9 +137,16 @@ const UserInfo = ({ route, navigation }) => {
     }
   };
 
-  const { profile } = route.params;
-  const { colors } = useTheme();
-
+  // const { profile } = route.params;
+  const {colors} = useTheme();
+  const fetchData = async () => {
+    console.log('Hello fen');
+    const res = await loadingUser(user);
+    setProfile(res);
+  };
+  useEffect(() => {
+    fetchData();
+  }, [user]);
 
   return (
     <ScrollView>
@@ -117,14 +154,14 @@ const UserInfo = ({ route, navigation }) => {
         style={{
           flex: 1,
           alignItems: 'center',
+          paddingTop: 10,
         }}>
-
         {profile && (
           <FastImage
             source={{uri: profile?.images[0]}}
             style={{
-              width: 100,
-              height: 100,
+              width: 50,
+              height: 50,
               borderRadius: 10,
             }}
             resizeMode="cover"
@@ -140,31 +177,64 @@ const UserInfo = ({ route, navigation }) => {
           {singleFile && (
             <Image
               style={{
-                padding: 10,
-                height:
-                  ((screenWidth - 200) / singleFile.width) * singleFile.height,
-                width: screenWidth,
+                padding: 50,
+                height: 50,
+                borderRadius: 10,
+                // height:
+                //   ((screenWidth - 200) / singleFile.width) * singleFile.height,
+                // width: screenWidth,
               }}
               source={{uri: singleFile.uri}}
             />
           )}
         </View>
-        <TouchableOpacity
-          onPress={selectFile}
-          className="bg-gray-600 my-4 px-4 rounded flex flex-row items-center justify-center py-2">
-          <Text className="text-white mr-2 text-base, font-bold, items-center">
-            Select Photo
-          </Text>
-        </TouchableOpacity>
-        <FastImage
-          source={{ uri: profile?.images[0] }}
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          {/* <View>
+            <TouchableOpacity className="bg-gray-600 my-4 px-4 rounded flex flex-row items-center justify-center py-2">
+              <Text className="text-white mr-2 text-base, font-bold, items-center"></Text>
+            </TouchableOpacity>
+          </View> */}
+          <View style={{padding: 10}}>
+            <Button style={{}} title={'Select Photo'} onPress={selectFile} />
+          </View>
+          {/* camara */}
+          {/* hiển hình tại đây */}
+          {/* <Image
+          style={{
+            height: 100,
+            width: 100,
+            borderRadius: 10,
+            // borderWidth: 2,
+            borderColor: 'black',
+          }}
+          // source={{uri: imageUri.uri}}
+          source={imageUri}
+        /> */}
+          <View style={{padding: 10}}>
+            <Button
+              title={'Open Camara'}
+              onPress={() => {
+                openCamera();
+                //   alert('presed');
+              }}
+            />
+          </View>
+        </View>
+        {/* <FastImage
+          source={{uri: profile?.images[0]}}
           style={{
             width: 100,
             height: 100,
             borderRadius: 10,
           }}
           resizeMode="cover"
-        />
+        /> */}
       </View>
       <View
         style={{
@@ -183,15 +253,14 @@ const UserInfo = ({ route, navigation }) => {
             backgroundColor: 'white',
 
             marginBottom: 10,
-
-
           }}>
           <TextInput
             value={profile?.fullname}
             onChangeText={fullname => setFullname(fullname)}
             placeholder="fullname"
             style={{
-              fontWeight: 'bold', color: colors.text
+              fontWeight: 'bold',
+              color: colors.text,
             }}
           />
         </View>
@@ -212,7 +281,8 @@ const UserInfo = ({ route, navigation }) => {
             onChangeText={email => setEmail(email)}
             placeholder="email"
             style={{
-              fontWeight: 'bold', color: colors.text
+              fontWeight: 'bold',
+              color: colors.text,
             }}
           />
         </View>
@@ -232,7 +302,8 @@ const UserInfo = ({ route, navigation }) => {
             onChangeText={phone => setPhone(phone)}
             placeholder="phone"
             style={{
-              fontWeight: 'bold', color: colors.text
+              fontWeight: 'bold',
+              color: colors.text,
             }}
           />
         </View>
@@ -253,7 +324,8 @@ const UserInfo = ({ route, navigation }) => {
             onChangeText={birthday => setBirthday(birthday)}
             placeholder="birthday"
             style={{
-              fontWeight: 'bold', color: colors.text
+              fontWeight: 'bold',
+              color: colors.text,
             }}
           />
         </View>
@@ -273,7 +345,8 @@ const UserInfo = ({ route, navigation }) => {
             onChangeText={sex => setSex(sex)}
             placeholder="sex"
             style={{
-              fontWeight: 'bold', color: colors.text
+              fontWeight: 'bold',
+              color: colors.text,
             }}
           />
         </View>
@@ -293,7 +366,8 @@ const UserInfo = ({ route, navigation }) => {
             onChangeText={country => setCountry(country)}
             placeholder="country"
             style={{
-              fontWeight: 'bold', color: colors.text
+              fontWeight: 'bold',
+              color: colors.text,
             }}
           />
         </View>
@@ -313,7 +387,8 @@ const UserInfo = ({ route, navigation }) => {
             onChangeText={address => setAddress(address)}
             placeholder="address"
             style={{
-              fontWeight: 'bold', color: colors.text
+              fontWeight: 'bold',
+              color: colors.text,
             }}
           />
         </View>

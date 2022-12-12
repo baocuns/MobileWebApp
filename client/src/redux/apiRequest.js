@@ -23,11 +23,11 @@ import {
   getUsersStart,
   getUsersSuccess,
   getUsersFail,
+  resetUser,
 } from './authSlice';
 
 // import { getUsersStart, getUsersFail, getUsersSuccess } from './userSilce';
 import {combineReducers} from 'redux';
-import {reset} from './tourSlice';
 
 export const getImageDescriptionByNameSearch = async (name, dispatch) => {
   dispatch(getInfoStart());
@@ -97,7 +97,7 @@ export const logoutUser = async (accessToken, dispatch) => {
       },
     );
     dispatch(logoutUserSuccess(res.data));
-    dispatch(reset());
+    dispatch(resetUser());
     alert('đăng xuất thành công');
     // navigation.navigate('Users');
   } catch (error) {
@@ -141,27 +141,33 @@ export const userInfo = async (
   }
 };
 
-export const sendRatingAction = async (accessToken, userID, numberStar, ratingCotent, tourID) => {
+export const sendRatingAction = async (
+  accessToken,
+  userID,
+  numberStar,
+  ratingCotent,
+  tourID,
+) => {
   try {
     const res = await axios.post(
       sendRatingRoute,
       {
         content: ratingCotent,
         rate: numberStar,
-        parent_id: tourID
+        parent_id: tourID,
       },
       {
         headers: {
           _id: userID,
           token: `Travel ${accessToken}`,
         },
-      }
-    )
+      },
+    );
     return res;
   } catch (error) {
     return error.response.data;
   }
-}
+};
 
 // export const getAllUsers = async (accessToken, dispatch) => {
 //   dispatch(getUsersStart());

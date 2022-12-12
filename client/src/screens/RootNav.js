@@ -27,7 +27,11 @@ import Setting from './Setting';
 import {NativeBaseProvider} from 'native-base';
 import {useColorScheme} from 'react-native';
 import {useSelector} from 'react-redux';
-
+import Camera from './Camera';
+import LoginGoogle from './LoginGoogle';
+import Milo from './Milo';
+import Orders from './Order/Orders';
+import Details from './Order/Details';
 const Stack = createStackNavigator();
 
 function RootNav() {
@@ -63,6 +67,13 @@ function RootNav() {
           <Stack.Screen name="Friends" component={Friends} />
           <Stack.Screen name="FavoriteService" component={FavoriteService} />
           <Stack.Screen name="LoginNew" component={LoginNew}></Stack.Screen>
+          <Stack.Screen name="Camera" component={Camera}></Stack.Screen>
+          <Stack.Screen name="Milo" component={Milo}></Stack.Screen>
+          <Stack.Screen name="Orders" component={Orders}></Stack.Screen>
+          <Stack.Screen name="Order" component={Details}></Stack.Screen>
+          <Stack.Screen
+            name="LoginGoogle"
+            component={LoginGoogle}></Stack.Screen>
           <Stack.Screen
             name="RegisterNew"
             component={RegisterNew}></Stack.Screen>

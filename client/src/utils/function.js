@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {Linking} from 'react-native';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
 
@@ -24,6 +25,24 @@ export const openLink = async nameQuery => {
     } else Linking.openURL(url);
   } catch (error) {
     Alert.alert(error.message);
+  }
+};
+
+export const loadingUser = async user => {
+  try {
+    const res = await axios.post(
+      `https://api.travels.games/api/v1/profile/show/details/${user?.username}`,
+      user?._id,
+      {
+        headers: {
+          token: `Travel ${user?.accessToken}`,
+        },
+      },
+    );
+    console.log('???', res.data.data[0]);
+    return res.data.data[0];
+  } catch (error) {
+    console.log(error);
   }
 };
 

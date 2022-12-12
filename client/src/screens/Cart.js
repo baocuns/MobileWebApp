@@ -59,7 +59,6 @@ const Cart = () => {
                   source={require('../assets/images/levi.jpg')}
                 />
               </View>
-
               <View
                 style={{
                   paddingLeft: 20,
