@@ -24,7 +24,7 @@ const RegisterNew = ({navigation}) => {
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
   return (
-    <ScrollView
+    <View
       style={{
         flex: 1,
         backgroundColor: '#ffffff',
@@ -36,13 +36,6 @@ const RegisterNew = ({navigation}) => {
           height: Dimensions.get('window').height / 2.5,
         }}>
         <View style={styles.brandView}>
-          <Icon
-            name="location-pin"
-            style={{
-              color: '#4632A1',
-              fontSize: 100,
-            }}
-          />
           <Text style={styles.brandViewText}>Vision go</Text>
         </View>
       </ImageBackground>
@@ -52,7 +45,6 @@ const RegisterNew = ({navigation}) => {
             padding: 40,
           }}>
           <Text style={{color: '#4632A1', fontSize: 34}}>Wellcome</Text>
-
           <View
             style={{
               flexDirection: 'row',
@@ -190,7 +182,6 @@ const RegisterNew = ({navigation}) => {
             <View
               style={{
                 height: 100,
-
                 justifyContent: 'center',
                 alignContent: 'center',
               }}>
@@ -210,13 +201,13 @@ const RegisterNew = ({navigation}) => {
             </View>
 
             <View>
-              <Text
+              {/* <Text
                 style={{
                   textAlign: 'center',
                 }}>
                 or Register with
-              </Text>
-              <View style={styles.socialLoginView}>
+              </Text> */}
+              {/* <View style={styles.socialLoginView}>
                 <Button icon style={{backgroundColor: 'rgb(57, 130, 228)'}}>
                   <Icon
                     type="MaterialCommunityIcons"
@@ -244,12 +235,12 @@ const RegisterNew = ({navigation}) => {
                     }}
                   />
                 </Button>
-              </View>
+              </View> */}
             </View>
           </View>
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -261,8 +252,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   brandViewText: {
-    color: '#4632A1',
-    fontSize: 40,
+    color: 'red',
+    fontSize: 70,
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },

@@ -166,7 +166,6 @@ const Cart = () => {
           style={{
             paddingLeft: 10,
           }}>
-
           <View className='mt-8'>
             {/* hình ảnh */}
             {carts.map((cart, index) => {

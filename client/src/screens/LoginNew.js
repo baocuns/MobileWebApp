@@ -23,7 +23,7 @@ const LoginNew = ({navigation}) => {
   const [isPasswordVisiable, setIsPasswordVisiable] = useState(false);
   const dispatch = useDispatch();
   return (
-    <ScrollView
+    <View
       style={{
         flex: 1,
         backgroundColor: '#ffffff',
@@ -35,13 +35,6 @@ const LoginNew = ({navigation}) => {
           height: Dimensions.get('window').height / 2.5,
         }}>
         <View style={styles.brandView}>
-          <Icon
-            name="location-pin"
-            style={{
-              color: '#000',
-              fontSize: 100,
-            }}
-          />
           <Text style={styles.brandViewText}>Vision go</Text>
         </View>
       </ImageBackground>
@@ -215,13 +208,13 @@ const LoginNew = ({navigation}) => {
             </View>
 
             <View>
-              <Text
+              {/* <Text
                 style={{
                   textAlign: 'center',
                 }}>
                 or Login with
-              </Text>
-              <View style={styles.socialLoginView}>
+              </Text> */}
+              {/* <View style={styles.socialLoginView}>
                 <Button icon style={{backgroundColor: 'rgb(57, 130, 228)'}}>
                   <Icon
                     type="MaterialCommunityIcons"
@@ -249,12 +242,12 @@ const LoginNew = ({navigation}) => {
                     }}
                   />
                 </Button>
-              </View>
+              </View> */}
             </View>
           </View>
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -267,8 +260,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   brandViewText: {
-    color: '#000',
-    fontSize: 40,
+    color: 'red',
+    fontSize: 70,
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },

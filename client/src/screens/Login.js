@@ -16,12 +16,12 @@ import {useDispatch, useSelector, useNavigate} from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
-import { loginRoute } from '../routes/APIRoute';
-import { registerRoute } from '../routes/APIRoute';
-import { loginUser } from '../redux/apiRequest';
-import { registerUser } from '../redux/apiRequest';
-import { useNavigation, useTheme } from '@react-navigation/native';
-import { loginFailed, registerFailed } from '../redux/AuthSlice';
+import {loginRoute} from '../routes/APIRoute';
+import {registerRoute} from '../routes/APIRoute';
+import {loginUser} from '../redux/apiRequest';
+import {registerUser} from '../redux/apiRequest';
+import {useNavigation, useTheme} from '@react-navigation/native';
+import {loginFailed, registerFailed} from '../redux/AuthSlice';
 import i18n from '../i18n';
 
 const windowWidth = Dimensions.get('window').width;
@@ -98,7 +98,7 @@ const BlueComponent = ({navigation}) => {
           alignItems: 'center',
         }}>
         <View
-          style={{ height: 1, width: '30%', grobackundColor: '#707070' }}></View>
+          style={{height: 1, width: '30%', grobackundColor: '#707070'}}></View>
         <Text> Or connect with </Text>
         <View
           style={{height: 1, width: '30%', backgroundColor: '#707070'}}></View>
@@ -174,7 +174,7 @@ const GreenComponent = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const { colors } = useTheme();
+  const {colors} = useTheme();
   return (
     <View
       style={{
@@ -184,7 +184,7 @@ const GreenComponent = ({navigation}) => {
         width: '100%',
       }}>
       {/* Login in your account */}
-      <Text style={{ fontSize: 24, color: colors.text, fontWeight: '600' }}>
+      <Text style={{fontSize: 24, color: colors.text, fontWeight: '600'}}>
         Login in your account
       </Text>
       {/* Email */}
@@ -276,7 +276,7 @@ const PinkComponent = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
-  const { colors } = useTheme();
+  const {colors} = useTheme();
   return (
     <View
       style={{
@@ -286,7 +286,7 @@ const PinkComponent = ({navigation}) => {
         width: '100%',
       }}>
       {/* Login in your account */}
-      <Text style={{ fontSize: 24, color: colors.text, fontWeight: '600' }}>
+      <Text style={{fontSize: 24, color: colors.text, fontWeight: '600'}}>
         Sign up a account
       </Text>
       {/* Email */}
