@@ -1,11 +1,11 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   DarkTheme,
   DefaultTheme,
   NavigationContainer,
   useTheme,
 } from '@react-navigation/native';
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Index from '.';
 import FavariteList from '../components/FavoriteList';
 import FavouriteItem from '../components/FavouriteItem';
@@ -24,14 +24,16 @@ import ProvinceDetail from './ProvinceDetail';
 import UserInfo from './UserInfo';
 import changeLanguage from '../HOC/changeLanguage';
 import Setting from './Setting';
-import {NativeBaseProvider} from 'native-base';
-import {useColorScheme} from 'react-native';
-import {useSelector} from 'react-redux';
 import Camera from './Camera';
 import LoginGoogle from './LoginGoogle';
-import Milo from './Milo';
 import Orders from './Order/Orders';
 import Details from './Order/Details';
+import { NativeBaseProvider } from 'native-base';
+import { useColorScheme } from 'react-native';
+import { useSelector } from 'react-redux';
+import Checkout from './Checkout/Checkout';
+import Payment from './Checkout/Payment';
+
 const Stack = createStackNavigator();
 
 function RootNav() {
@@ -49,7 +51,7 @@ function RootNav() {
       <NavigationContainer theme={theme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack.Navigator
           initialRouteName="Index"
-          screenOptions={{headerShown: false}}>
+          screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="Favorite" component={Favorite} />
           <Stack.Screen name="DetailPlace" component={DetailPlace} />
@@ -59,6 +61,9 @@ function RootNav() {
           <Stack.Screen name="FavouriteItem" component={FavouriteItem} />
           <Stack.Screen name="ActionRaiting" component={ActionRaiting} />
           <Stack.Screen name="Setting" component={Setting} />
+          {/* bao */}
+          <Stack.Screen name="Checkout" component={Checkout} />
+          <Stack.Screen name="Payment" component={Payment} />
           {/* Khiêm */}
           <Stack.Screen name="UserInfo" component={UserInfo} />
           <Stack.Screen name="BookNow" component={BookNow} />

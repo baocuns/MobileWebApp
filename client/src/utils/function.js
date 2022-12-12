@@ -1,6 +1,11 @@
 import axios from 'axios';
 import {Linking} from 'react-native';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+
+TimeAgo.addDefaultLocale(en)
+const timeAgo = new TimeAgo('en-US')
 
 export const openLink = async nameQuery => {
   try {
@@ -27,6 +32,7 @@ export const openLink = async nameQuery => {
     Alert.alert(error.message);
   }
 };
+
 
 export const loadingUser = async user => {
   try {
@@ -81,3 +87,12 @@ export const loadingUser = async user => {
 
 //     // localStorage.setItem('Home', JSON.stringify(resData));
 //   };
+
+export const formatTime = (time) => {
+  const milisecond = ((new Date()).getTime()) - (new Date(time).getTime());
+  return timeAgo.format(Date.now() - milisecond, 'round')
+}
+export const formatVND = (money) => {
+  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(money);
+}
+

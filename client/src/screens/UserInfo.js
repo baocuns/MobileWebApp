@@ -14,9 +14,8 @@ import {
 import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DocumentPicker from 'react-native-document-picker';
-
-const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
-import {useDispatch, useSelector} from 'react-redux';
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import FastImage from 'react-native-fast-image';
 
@@ -138,6 +137,7 @@ const UserInfo = ({route, navigation}) => {
   };
 
   // const { profile } = route.params;
+
   const {colors} = useTheme();
   const fetchData = async () => {
     console.log('Hello fen');
@@ -147,7 +147,6 @@ const UserInfo = ({route, navigation}) => {
   useEffect(() => {
     fetchData();
   }, [user]);
-
   return (
     <ScrollView>
       <View
@@ -158,7 +157,7 @@ const UserInfo = ({route, navigation}) => {
         }}>
         {profile && (
           <FastImage
-            source={{uri: profile?.images[0]}}
+            source={{ uri: profile?.images[0] }}
             style={{
               width: 50,
               height: 50,
@@ -184,7 +183,7 @@ const UserInfo = ({route, navigation}) => {
                 //   ((screenWidth - 200) / singleFile.width) * singleFile.height,
                 // width: screenWidth,
               }}
-              source={{uri: singleFile.uri}}
+              source={{ uri: singleFile.uri }}
             />
           )}
         </View>

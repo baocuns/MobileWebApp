@@ -202,7 +202,7 @@ const ProvinceDetail = ({ navigation, route }) => {
                 {name}
               </Text>
               <Text
-                style={{ marginHorizontal: 20, fontSize: 18, fontWeight: '600' }}>
+                style={{ marginHorizontal: 20, fontSize: 18, fontWeight: '600', color: colors.text }}>
                 Không tìm thấy địa điểm này
               </Text>
               <Box alignItems="center">
