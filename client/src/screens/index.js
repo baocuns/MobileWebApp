@@ -9,12 +9,10 @@ import Lottie from 'lottie-react-native';
 import i18n from '../i18n';
 import changeLanguage from '../HOC/changeLanguage';
 import {useTheme} from '@react-navigation/native';
-
 import LoginNew from './LoginNew';
 import RegisterNew from './RegisterNew';
 import Camera from './Camera';
 import LoginGoogle from './LoginGoogle';
-import Milo from './Milo';
 import BookNowX from './BookNowX';
 import BookNow from './BookNow';
 import Orders from './Orders';
