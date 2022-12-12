@@ -11,19 +11,19 @@ import {
   ImageBackground,
   Dimensions,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { loginUser } from '../redux/apiRequest';
-import { logoutUser } from '../redux/apiRequest';
-import { useNavigation } from '@react-navigation/native';
-import { useEffect } from 'react';
-import { logoutRoute } from '../routes/APIRoute';
+import {loginUser} from '../redux/apiRequest';
+import {logoutUser} from '../redux/apiRequest';
+import {useNavigation} from '@react-navigation/native';
+import {useEffect} from 'react';
+import {logoutRoute} from '../routes/APIRoute';
 import axios from 'axios';
 import FastImage from 'react-native-fast-image';
-import { userInfo } from '../redux/apiRequest';
+import {userInfo} from '../redux/apiRequest';
 import i18n from '../i18n';
 import changeLanguage from '../HOC/changeLanguage';
 import {loadingUser} from '../utils/function';
@@ -58,7 +58,6 @@ const Users = () => {
           }}>
           <View style={{}}>
             <View
-
               style={{
                 flex: 1,
                 padding: 30,
@@ -500,12 +499,5 @@ const Users = () => {
       </ImageBackground>
     </View>
   );
+};
 export default changeLanguage(Users);
-const styles = StyleSheet.create({
-  brandViewText: {
-    color: '#000',
-    fontSize: 40,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-  },
-});
