@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import React from 'react'
 import { useState } from 'react';
@@ -56,7 +56,8 @@ const Payment = ({ route }) => {
                         }
                     } else {
                         clearTimeout(idTimeout)
-                        navigation.goBack()
+                        // navigation.dispatch(StackActions.replace('Payment', { params: {} }))
+                        navigation.navigate('Order', { oid: res.data?.data[0]?._id })
                     }
                 })
                 .catch(err => {

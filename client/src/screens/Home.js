@@ -171,7 +171,7 @@ const Home = () => {
                                     onPress={() => navigation.navigate('DetailPlace', {
                                         slug: data.slug
                                     })}
-                                    style={{ width: '100%', marginVertical: 10, borderRadius: 10, backgroundColor: 'rgba(0, 255, 255, 0.7)' }}>
+                                    style={{ width: '100%', marginVertical: 10, borderRadius: 10, backgroundColor: 'white'}}>
                                     <FastImage source={{ uri: data.images[0] }} style={{ width: '100%', height: 200, borderTopLeftRadius: 10, borderTopRightRadius: 10 }} />
                                     <View style={{ margin: 10, flex: 1, justifyContent: 'space-between' }}>
                                         <View>
