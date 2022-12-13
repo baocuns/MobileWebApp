@@ -55,7 +55,7 @@ const CreatePosts = ({ user, open, handleOpenCreatePosts }) => {
             let formData = new FormData()
             formData.append('photos', fileToUpload)
             data?.content && formData.append('content', data?.content)
-            data?.address && formData.append('address', data?.address)
+            data?.location && formData.append('address', data?.location)
             // Please change file upload URL
             axios.post('https://api.travels.games/api/v1/posts/store', formData, {
                 headers: {
