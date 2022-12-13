@@ -90,8 +90,8 @@ const Cart = () => {
 
   useEffect(() => {
     loadingCart(
-      user.accessToken,
-      user._id
+      user?.accessToken,
+      user?._id
     );
 
   }, [])
