@@ -26,6 +26,34 @@ const DetailPlace = ({ navigation, route }) => {
     const [cartNumber, setCartNumber] = useState(0)
     const user = useSelector(state => state.auth.login.currentUser);
 
+    //checck checkout
+    const checkCheckout = async () => {
+        try {
+            const isCheckout = await axios.post(
+                `https://api.travels.games/api/v1/order/show/all`,
+                {
+                    a: 1
+                },
+                {
+                    headers: {
+                        _id: user._id,
+                        token: `Travel ${user.accessToken}`,
+                    },
+                },
+            );
+            let isCheck = false;
+            isCheckout.data.data.forEach(element => {
+                if (element.items.includes(item._id) && element.statusCode == "00") {
+                    isCheck = true;
+                }
+            });
+
+            return isCheck;
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
     const loadingCart = async () => {
         try {
             const res = await axios.post('https://api.travels.games/api/v1/cart/show', {
@@ -90,6 +118,23 @@ const DetailPlace = ({ navigation, route }) => {
             setIsFetching(false);
         }
     }
+    const goToRating = (idTour) => {
+        if (!user) {
+            navigation.navigate('LoginNew')
+        }
+        // checkCheckout(idTour)
+        if (checkCheckout(idTour)) {
+            navigation.navigate('ActionRaiting', {
+                tourID: idTour
+            })
+        } else {
+            Alert.alert(
+                "Travel app",
+                "Bạn đã đánh giá tour này rồi"
+            );
+        }
+
+    }
     const loadRating = async () => {
         try {
             const res = await axios.get(showAllRatingRoute + "/" + item._id);
@@ -126,7 +171,7 @@ const DetailPlace = ({ navigation, route }) => {
                                 <Text style={{ fontWeight: '600', color: colors.text, fontSize: 26 }}>{item && item.title}</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <AntDesign name='star' size={14} color='#FFD700' />
-                                    <Text style={{ color: colors.text }}>{rating?.avg}</Text>
+                                    <Text style={{ color: colors.text }}>{rating?.avg.toFixed(1)}</Text>
                                     <Text style={{ color: '#ff4500' }}>({rating?.ratings?.length} Lượt đánh giá)</Text>
                                     <Text style={{ color: colors.text }}> . </Text>
                                     <Text style={{ color: colors.text }}>3K Đã đặt</Text>
@@ -158,7 +203,7 @@ const DetailPlace = ({ navigation, route }) => {
                                         {i18n.t('rating')}
                                     </Text>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <Text style={{ color: colors.text, fontWeight: 'bold', fontSize: 26 }}>{rating?.avg}</Text>
+                                        <Text style={{ color: colors.text, fontWeight: 'bold', fontSize: 26 }}>{rating?.avg.toFixed(1)}</Text>
                                         {rating && rating.ratings.length > 0 ?
                                             <>
                                                 <Text>/5</Text>
@@ -171,9 +216,10 @@ const DetailPlace = ({ navigation, route }) => {
                                             <Text style={{ color: colors.text }}>Chưa có ai đánh giá</Text>
                                         }
                                         <Pressable style={{ flex: 1, justifyContent: "flex-end", alignItems: 'flex-end' }}
-                                            onPress={() => navigation.navigate('ActionRaiting', {
-                                                tourID: item._id
-                                            })}>
+                                            onPress={() =>
+                                                goToRating(item._id)
+                                            }
+                                        >
 
                                             <Text style={{ color: '#ff4500' }}>{i18n.t('write_rating')}</Text>
                                         </Pressable>
