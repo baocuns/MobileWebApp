@@ -6,7 +6,7 @@ import { useNavigation, useTheme } from '@react-navigation/native'
 import StarRating from 'react-native-star-rating-widget';
 import BackArrow from '../components/BackArrow'
 import { useSelector } from 'react-redux'
-import axios from 'axios'
+import axios, { Axios } from 'axios'
 import { sendRatingAction } from '../redux/apiRequest'
 
 const ActionRaiting = ({ route }) => {
@@ -30,13 +30,13 @@ const ActionRaiting = ({ route }) => {
                 },
             )
             .then(res => {
-                console.log(">>>check data: ", res.data.data[0]);
                 setProfile(res.data.data[0]);
             })
             .catch(err => {
                 console.log(err.response.data);
             });
     }
+
     const sendRating = async () => {
         // navigation.goBack()
         if (rating == 0 || !ratingCotent) {
